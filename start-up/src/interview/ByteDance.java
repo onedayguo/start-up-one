@@ -50,7 +50,6 @@ public class ByteDance {
         System.out.println("请输入二进制字符串，长度为 N+K-1：");
         String binaryStr = in.next();//长度 N+K-1
 
-
         //region 1.0
 //        Scanner in = new Scanner(System.in);
 //        System.out.println("输入N值：");
