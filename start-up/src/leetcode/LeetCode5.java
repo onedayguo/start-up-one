@@ -297,12 +297,38 @@ public class LeetCode5 {
     }
 
     //76. Minimum Window Substring Input: S = "ADOBECODEBANC", T = "ABC"  Output: "BANC"
-    public String minWindow(String s, String t) {
+    public static String minWindow(String s, String t) {
+        String lowerS = String.copyValueOf(s.toCharArray()).toLowerCase();
+        String lowerT = String.copyValueOf(t.toCharArray()).toLowerCase();
         int sLen = s.length(),tLen = t.length();
-
-        for (int i = 0; i < sLen; i++) {
+        if (tLen == 1){
+            return lowerS.indexOf(lowerT) < 0 ? "": t;
+        }
+        int min = sLen,max = 0,size = sLen-1;
+        for (int i = 0; i < sLen - tLen; i++) {
+            String tmpS = lowerS.substring(i);
+            int[] index = new int[tLen];
+            int tmpMinIndex = sLen,tmpMaxIndex = 0,tmpSize = sLen;
+            for (int j = 0; j < tLen; j++) {
+                index[j] = tmpS.indexOf(lowerT.charAt(j))+i;
+                if (index[j] < 0) break;
+                if (index[j] < tmpMinIndex) tmpMinIndex = index[j];
+                if (index[j] > tmpMaxIndex) tmpMaxIndex = index[j];
+            }
+            if (tmpMaxIndex - tmpMinIndex < size){
+                size = tmpMaxIndex;
+                min = tmpMinIndex;
+                max = tmpMaxIndex;
+            }
 
         }
-        return "result";
+
+        return s.substring(min,max+1);
+    }
+
+    public static void main(String[] args) {
+        String s = "aa";
+        String t = "aa";
+        System.out.println(minWindow(s,t));
     }
 }

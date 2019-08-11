@@ -174,6 +174,7 @@ public class LeetCode {
                 }
                 j++;
             }
+            //abbba
             while ((i - j) >= 0 && (i + j) < s.length() && s.charAt(i - j) == s.charAt(i + j - 1)) {
                 if (j > maxSize) {
                     maxSize = j;
