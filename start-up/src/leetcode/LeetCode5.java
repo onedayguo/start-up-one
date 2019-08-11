@@ -298,37 +298,39 @@ public class LeetCode5 {
 
     //76. Minimum Window Substring Input: S = "ADOBECODEBANC", T = "ABC"  Output: "BANC"
     public static String minWindow(String s, String t) {
-        String lowerS = String.copyValueOf(s.toCharArray()).toLowerCase();
-        String lowerT = String.copyValueOf(t.toCharArray()).toLowerCase();
-        int sLen = s.length(),tLen = t.length();
-        if (tLen == 1){
-            return lowerS.indexOf(lowerT) < 0 ? "": t;
+        //相当于t中字符和出现次数的映射，如 map['c'] = 4,'c'在计算机中存储为一个数字
+        int[] map = new int[128];
+        for (char c : t.toCharArray()) {
+            map[c] += 1;
         }
-        int min = sLen,max = 0,size = sLen-1;
-        for (int i = 0; i < sLen - tLen; i++) {
-            String tmpS = lowerS.substring(i);
-            int[] index = new int[tLen];
-            int tmpMinIndex = sLen,tmpMaxIndex = 0,tmpSize = sLen;
-            for (int j = 0; j < tLen; j++) {
-                index[j] = tmpS.indexOf(lowerT.charAt(j))+i;
-                if (index[j] < 0) break;
-                if (index[j] < tmpMinIndex) tmpMinIndex = index[j];
-                if (index[j] > tmpMaxIndex) tmpMaxIndex = index[j];
+        int begin = 0;//窗口开始index
+        int len = Integer.MAX_VALUE;//窗口大小
+        int count = t.length();//t的长度
+        for (int left=0, right=0; right<s.length(); right++) {
+            char c = s.charAt(right);
+            map[c]--;//对应字符次数减1
+            if(map[c] >= 0) count--;//如果某个字符在窗口中还存在，则窗口大小减1，注  原始窗口大小为t的长度
+            //当S中到某个字符时，前面已经包含了t中所有字符  Input: S = "ADOBE C ODEBANC", T = "ABC"  Output: "BANC"
+            while (count == 0) {
+                char lc = s.charAt(left);
+                map[lc]++;
+                //第一个S中对应T中字符
+                if (map[lc]>0) {
+                    if (right-left+1<len) {
+                        begin = left;
+                        len = right-left+1;
+                    }
+                    count++;
+                }
+                left++;
             }
-            if (tmpMaxIndex - tmpMinIndex < size){
-                size = tmpMaxIndex;
-                min = tmpMinIndex;
-                max = tmpMaxIndex;
-            }
-
         }
-
-        return s.substring(min,max+1);
+        return len == Integer.MAX_VALUE ? "": s.substring(begin, begin+len);
     }
 
     public static void main(String[] args) {
-        String s = "aa";
-        String t = "aa";
+        String s = "ADOBECODEBANC";
+        String t = "ABC";
         System.out.println(minWindow(s,t));
     }
 }
