@@ -1,9 +1,13 @@
 package interview;
-import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * @discription
+ * @author kami
+ * @date 2019/8/17 23:05
+ **/
 public class Tencent implements Serializable {
     public static void main(String[] args) {
         // [ ] |  HG[3|B[2|CA]]F
@@ -30,6 +34,12 @@ public class Tencent implements Serializable {
         }
     }
     //4.
+
+    /**
+     * @discription 腾讯编程第四题，给定一个正整数数组，输出每个位置能够看到其他点的个数，包括自己
+     * 例：5 3 8 3 2 5   ----> 3 3 5 4 4 4
+     * @date 2019/8/17 23:07
+     **/
     public static void seeNum1(int[] arr,int n){
         if (n == 1) System.out.print(1);
         else if (n == 2) System.out.print(2+" "+2);
@@ -42,9 +52,9 @@ public class Tencent implements Serializable {
                 int leftMax = 0 ;
                 if (i-1 >= 0) leftMax = arr[i-1];
                 for (int j = leftIndex; j >= 0 ; j--) {
-                    if (arr[leftIndex] > leftMax){
+                    if (arr[j] > leftMax){
                         count++;
-                        leftMax = arr[leftIndex];
+                        leftMax = arr[j];
                     }
                 }
 
@@ -52,9 +62,9 @@ public class Tencent implements Serializable {
                 int rightMax = 0;
                 if (i+1 < n) rightMax = arr[i+1];
                 for (int j = rightIndex; j < n; j++) {
-                    if (arr[rightIndex] > rightMax){
+                    if (arr[j] > rightMax){
                         count++;
-                        rightMax = arr[rightIndex];
+                        rightMax = arr[j];
                     }
                 }
 
