@@ -192,9 +192,9 @@ public class LeetCode {
         int left = 0, right = 0;
         //假设i为中心点
         for (int i = 0; i < s.length(); i++) {
-            //单轴中心扩展长度
+            //单轴中心扩展长度 abc y cba
             int odd = midExpand(s, i, i);
-            //双轴中心扩展长度
+            //双轴中心扩展长度 abc cba
             int even = midExpand(s, i, i + 1);
             int m = Math.max(odd, even);
             if (m > right - left) {
