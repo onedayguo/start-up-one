@@ -1,5 +1,9 @@
 package leetcode.nowcoder;
 
+import utils.Sort;
+
+import java.util.Arrays;
+
 /**
  * @Auther: kami
  * @Date: 2019/8/17 23:37
@@ -7,19 +11,31 @@ package leetcode.nowcoder;
  */
 public class NowCoder {
     public static void main(String[] args) {
-        int[] arr1 = {5,4,2,5,6,9,8,7,1,5,6,3,4,10,2,5,61,23,18};
-        int[] arr2 = {5,4,2,5,6,9,8,7,1,5,6,3,4,10,2,5,61,23,18};
-        int[] arr3 = {5,4,2,5,6,9,8,7,1,5,6,3,4,10,2,5,61,23,18};
+        int[] arr = {5,4,2,5,6,9,8,7,1,5,6,3,4,10,2,5,61,23,18};
 
+        int[] arr1 = Arrays.copyOf(arr,arr.length);
         bubbleSort(arr1);
         printArr(arr1);
 
+        int[] arr2 = Arrays.copyOf(arr,arr.length);
         selectSort(arr2);
         printArr(arr2);
 
+        int[] arr3 = Arrays.copyOf(arr,arr.length);
         quickSort(arr3,0,arr3.length-1);
         printArr(arr3);
 
+        int[] arr4 = Arrays.copyOf(arr,arr.length);
+        insertSort(arr4);
+        printArr(arr4);
+
+        int[] arr5 = Arrays.copyOf(arr,arr.length);
+        shellSort(arr5);
+        printArr(arr5);
+
+        int[] arr6 = Arrays.copyOf(arr,arr.length);
+        cutSort(arr6,0,arr6.length-1);
+        printArr(arr6);
     }
 
     /**
@@ -104,4 +120,78 @@ public class NowCoder {
         System.out.println();
     }
 
+    /**
+     * @discription 直接插入排序，一次将未排序的元素插入到已排序的序列中
+     * @date 2019/8/18 20:01
+     **/
+    public static void insertSort(int[] arr){
+        if (arr == null || arr.length == 0) return;
+        else {
+            int n = arr.length;
+            for (int i = 1; i < n; i++) {
+                int iKey = arr[i];
+                int index = i;
+                while (index > 0 && arr[index-1] > iKey){
+                    arr[index] = arr[index-1];
+                    index--;
+                }
+                if (index != i) arr[index] =iKey;
+            }
+        }
+    }
+
+    /**
+     * @discription希尔排序，直接插入排序的升级版，分组进行插入排序
+     * @date 2019/8/18 21:07
+     **/
+    public static void shellSort(int[] arr){
+        if (arr == null || arr.length == 0) return;
+        else {
+            int n = arr.length;
+            for (int step = n/2; step > 0 ; step /= 2) {
+                for (int i = step; i < n; i++) {
+                    int iKey = arr[i];
+                    int index = i;
+                    while (index-step >= 0 && arr[index-step] > iKey){
+                        arr[index] = arr[index-step];
+                        index -= step;
+                    }
+                    if (index != i) arr[index] = iKey;
+                }
+            }
+        }
+    }
+
+    /**
+     * @discription归并排序，分为两步，1.拆分 2.合并
+     * @date 2019/8/18 21:32
+     **/
+    public static void cutSort(int[] arr,int low,int high){
+        if (arr == null || arr.length == 0 || arr.length == 1) return;
+        else {
+            int mid = (low+high)/2;
+            if (low < high){
+                cutSort(arr,low,mid);
+                cutSort(arr,mid+1,high);
+                merge(arr,low,mid,high);
+            }
+        }
+    }
+    public static void merge(int[] arr,int low,int mid,int high){
+        int n = high-low+1;
+        int[] tempArr = new int[n];
+        int leftIndex = low;
+        int rightIndex = mid+1;
+        int tempArrIndex = 0;
+        while (leftIndex <= mid && rightIndex <= high){
+            if (arr[leftIndex] < arr[rightIndex]){
+                tempArr[tempArrIndex++] = arr[leftIndex++];
+            }else tempArr[tempArrIndex++] = arr[rightIndex++];
+        }
+        while (leftIndex <= mid) tempArr[tempArrIndex++] = arr[leftIndex++];
+        while (rightIndex <= high) tempArr[tempArrIndex++] = arr[rightIndex++];
+        for (int i = 0; i < n; i++) {
+            arr[i+low] = tempArr[i];
+        }
+    }
 }
