@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * @discription
+ * @discription 腾讯面试题2019校园招聘
  * @author kami
  * @date 2019/8/17 23:05
  **/
@@ -88,18 +88,21 @@ public class Tencent{
         return count;
     }
 
-    //1
-//    public static String transfer(String s){
-//        if (s==null || s.length() == 0) return "";
-//        int len = s.length();
-//        int count = 0;
-//        for (int i = 0; i < len; i++) {
-//            if (s.charAt(i) == '[') count++;
-//        }
-//        for (int i = 0; i < ; i++) {
-//
-//        }
-//    }
+    //1  HG[3|B[2|CA]]F
+    /**
+     * @discription 给定某种格式的字符串，还原字符串，如 HG[3|B[2|CA]]F，数字代表 | 后面字符的个数，入参字符串只有 [ , ], |, 数字，字母
+     *  G[3|B[2|CA]]F  ----> 还原为 GBCACABCACABCACAF
+     * @date 2019/8/18 22:06
+     **/
+    public static String decryptString(String s){
+        if (s == null || s.length() == 0) return " ";
+        int n = s.length();
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '[') count++;
+        }
+
+    }
 
     // 3.
 
