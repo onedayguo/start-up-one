@@ -328,6 +328,30 @@ public class LeetCode5 {
         return len == Integer.MAX_VALUE ? "": s.substring(begin, begin+len);
     }
 
+    //77.Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+    /**
+     * @discription 数字全排列，5,3 ---> 123,124,125,234,235,245,345
+     * @date 2019/8/20 22:37
+     **/
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (n == 0 || k == 0 || k > n) return res ;
+        if (n == k) {
+            List<Integer> item = new ArrayList<>();
+            for (int i = 1; i <= n; i++) {
+                item.add(i);
+            }
+            res.add(item);
+            return res;
+        }
+        for (int i = 0; i <= n-k+1; i++) {
+            List<Integer> item = new ArrayList<>();
+            while (item.size() <= k){
+
+            }
+        }
+    }
+
     public static void main(String[] args) {
         String s = "ADOBECODEBANC";
         String t = "ABC";

@@ -94,13 +94,14 @@ public class Tencent{
      *  G[3|B[2|CA]]F  ----> 还原为 GBCACABCACABCACAF
      * @date 2019/8/18 22:06
      **/
-    public static String decryptString(String s){
-        if (s == null || s.length() == 0) return " ";
+    public static void decryptString(String s){
+        if (s == null || s.length() == 0) return ;
         int n = s.length();
-        int count = 0;
+        Stack<Character> stack = new Stack<>();
         for (int i = 0; i < n; i++) {
-            if (s.charAt(i) == '[') count++;
+
         }
+
 
     }
 
