@@ -4,26 +4,100 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * @discription 腾讯面试题2019校园招聘
+ * @discription 腾讯面试题2019校园招聘第一次
  * @author kami
  * @date 2019/8/17 23:05
  **/
+/**
+ * @discription 腾讯面试题2019校园招聘第二次
+ * @date 2019/9/1 19:58
+ **/
 public class Tencent{
     public static void main(String[] args) {
-        // [ ] |  HG[3|B[2|CA]]F
         Scanner in = new Scanner(System.in);
-        int[][] arr = {
-                {3,6},
-                {4,7},
-                {2,5},
-                {0,3},
-                {6,9}
-        };
-        int L = 6;
-        System.out.print(minNum(arr,L));
-
+        while (in.hasNextLine()){
+            int n = in.nextInt();
+            int[] scores = new int[n];
+            for (int i = 0; i < n; i++) {
+                scores[i] = in.nextInt();
+            }
 
         }
+//        while (in.hasNextLine()){
+//            int n = in.nextInt();
+//            int m = in.nextInt();
+//            int[] boxes = new int[n];
+//            for (int i = 0; i < n; i++) {
+//                boxes[i] = in.nextInt();
+//            }
+//            int[] keys = new int[m];
+//            for (int i = 0; i < m; i++) {
+//                keys[i] = in.nextInt();
+//            }
+//            maxBox(boxes,keys);
+//        }
+    }
+
+    // 3.
+    public static void minTime(int offices,int workers,int[] boxes){
+        int sum = 0;
+        int count = 0;
+        for (int i = 0; i < offices; i++) {
+            count++;
+            while (workers - boxes[i] < 0){
+
+            }
+            workers -= boxes[i];
+        }
+    }
+
+    // 4.    7 2 4 6 5
+    public static void maxScore(int[] scores,int n){
+        int left = 0;
+        int right = 0;
+        int[][] indeAndValue = new int[n][2];
+        for (int i = 0; i < n; i++) {
+
+        }
+    }
+
+    // 2
+    public static void minUnsatify(int[][] aray){
+
+    }
+
+
+
+    public static void maxBox(int[] boxes,int[] keys){
+        int lenBoxes = boxes.length;
+        int lenKeys = keys.length;
+        boolean[] used = new boolean[lenKeys];
+        int count = 0;
+        for (int i = 0; i < lenBoxes; i++) {
+            for (int j = 0; j < lenKeys; j++) {
+                if (used[j]) continue;
+                if ((boxes[i] + keys[j]) % 2 == 1 ){
+                    count++;
+                    used[j] = true;
+                    break;
+                }
+            }
+
+        }
+        System.out.println(count);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //4
     /**
