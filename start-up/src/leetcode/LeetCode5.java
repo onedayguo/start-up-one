@@ -92,7 +92,7 @@ public class LeetCode5 {
         return sb.reverse().toString();
     }
 
-    //68. Text Justification,字符串数组按照每行最多防止的字符数存放，返回List<String>
+    //68. Text Justification,字符串数组按照每行最多放置的字符数存放，返回List<String>
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res = new ArrayList<>();
 
@@ -331,26 +331,55 @@ public class LeetCode5 {
     //77.Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
     /**
      * @discription 数字全排列，5,3 ---> 123,124,125,234,235,245,345
+     * 使用回朔算法最合适,
+     * 回溯是遍历搜索空间所有可能组态的方法。这些组态也许代表对象的所有排列或这是构建对象集合的所有可能的方法（子集）。
+     * 其他情况包括列举一个图的所有生成树，两个节点的所有路径或是把节点分类成不同颜色的所有不同的方式。
      * @date 2019/8/20 22:37
      **/
-    public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (n == 0 || k == 0 || k > n) return res ;
-        if (n == k) {
-            List<Integer> item = new ArrayList<>();
-            for (int i = 1; i <= n; i++) {
-                item.add(i);
-            }
-            res.add(item);
-            return res;
-        }
-        for (int i = 0; i <= n-k+1; i++) {
-            List<Integer> item = new ArrayList<>();
-            while (item.size() <= k){
+    public static List<List<Integer>> combine(int n, int k) {
+       List<List<Integer>> result = new ArrayList<>();
+       backtrackCombine(result,new ArrayList<>(),1,n,k);
+       return result;
+     }
 
-            }
+     public static void backtrackCombine(List<List<Integer>> result,ArrayList<Integer> item,int start,int n,int k){
+        if (k == 0){
+            result.add(new ArrayList<>(item));
+            return;
         }
-    }
+         for (int i = start; i <= n; i++) {
+             item.add(i);
+             backtrackCombine(result,item,i+1,n,k-1);
+             item.remove(item.size()-1);
+         }
+     }
+
+    /**
+     * @discription 78. Subsets， Given a set of distinct integers, nums, return all possible subsets (the power set).
+     * 给定数组，求其无重复子集
+     * @date 2019/9/6 22:23
+     **/
+     public List<List<Integer>> subsets(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 1; i <= n ; i++) {
+            backtrackSubset(result,new ArrayList<>(),nums,1,n,i);
+        }
+        return result;
+     }
+     public static void backtrackSubset(List<List<Integer>> result,List<Integer> item,int[] nums,int start,int n,int k){
+         if (k == 0){
+             result.add(new ArrayList<>(item));
+             return;
+         }
+         for (int i = 0; i < n ; i++) {
+             item.add(nums[i]);
+             backtrackSubset(result,item,nums,i+1,n,k-1);
+             item.remove(item.size()-1);
+         }
+     }
+
+
 
     public static void main(String[] args) {
         String s = "ADOBECODEBANC";
