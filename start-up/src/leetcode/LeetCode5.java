@@ -369,13 +369,14 @@ public class LeetCode5 {
      }
      public static void backtrackSubset(List<List<Integer>> result,List<Integer> item,int[] nums,int start,int n,int k){
          if (k == 0){
+
              result.add(new ArrayList<>(item));
              return;
          }
          for (int i = 0; i < n ; i++) {
-             item.add(nums[i]);
+             if (!item.contains(nums[i])) item.add(nums[i]);
              backtrackSubset(result,item,nums,i+1,n,k-1);
-             item.remove(item.size()-1);
+             if (item.size() != 0)item.remove(item.size()-1);
          }
      }
 
