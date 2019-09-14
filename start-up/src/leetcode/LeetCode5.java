@@ -362,7 +362,7 @@ public class LeetCode5 {
      public List<List<Integer>> subsets(int[] nums) {
         int n = nums.length;
         List<List<Integer>> result = new ArrayList<>();
-        for (int i = 1; i <= n ; i++) {
+        for (int i = 0; i <= n ; i++) {
             backtrackSubset(result,new ArrayList<>(),nums,1,n,i);
         }
         return result;

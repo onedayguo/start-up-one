@@ -163,7 +163,7 @@ public class NowCoder {
     }
 
     /**
-     * @discription归并排序，分为两步，1.拆分 2.合并
+     * @discription 归并排序，分为两步，1.拆分 2.合并
      * @date 2019/8/18 21:32
      **/
     public static void cutSort(int[] arr,int low,int high){
