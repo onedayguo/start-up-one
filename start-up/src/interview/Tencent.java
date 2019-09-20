@@ -16,10 +16,12 @@ public class Tencent{
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         while (in.hasNextLine()){
-            int n = in.nextInt();
-            int[] scores = new int[n];
-            for (int i = 0; i < n; i++) {
-                scores[i] = in.nextInt();
+            int t = in.nextInt();
+            //int[] nArray = new int[t];
+            for (int i = 0; i < t; i++) {
+                int len = in.nextInt();
+                String number = in.next();
+                System.out.println(toKingNumber(len,number));
             }
 
         }
@@ -36,6 +38,18 @@ public class Tencent{
 //            }
 //            maxBox(boxes,keys);
 //        }
+    }
+
+    public static String toKingNumber(int n,String number){
+        if (n < 11) return "NO";
+        else {
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                if (number.charAt(i) - '8' == 0) count++;
+                if (count >= 11) return "YES";
+            }
+            return "NO";
+        }
     }
 
     // 3.
