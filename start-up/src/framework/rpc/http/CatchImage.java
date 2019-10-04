@@ -1,4 +1,4 @@
-package rpc.http;
+package framework.rpc.http;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;

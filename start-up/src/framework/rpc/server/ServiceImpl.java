@@ -1,4 +1,4 @@
-package rpc.server;
+package framework.rpc.server;
 
 public class ServiceImpl implements HelloService {
     @Override

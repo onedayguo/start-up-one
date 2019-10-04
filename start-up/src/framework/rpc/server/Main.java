@@ -1,4 +1,4 @@
-package rpc.server;
+package framework.rpc.server;
 
 public class Main {
     public static void main(String[] args) throws Exception {

@@ -1,4 +1,4 @@
-package rpc.client;
+package framework.rpc.client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

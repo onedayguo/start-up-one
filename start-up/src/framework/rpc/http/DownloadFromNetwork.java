@@ -1,4 +1,4 @@
-package rpc.http;
+package framework.rpc.http;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
-import java.util.Timer;
 
 /**
  * Java读取并下载网络文件

@@ -1,4 +1,4 @@
-package rpc.server;
+package framework.rpc.server;
 
 /**
  * 接口

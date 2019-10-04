@@ -1,4 +1,4 @@
-package proxy;
+package advance.proxy;
 
 public interface Star {
     String sing(String name);

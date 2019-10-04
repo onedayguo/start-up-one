@@ -1,4 +1,4 @@
-package proxy;
+package advance.proxy;
 
 public class LiuDeHua implements Star {
     @Override
