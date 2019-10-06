@@ -419,6 +419,27 @@ public class LeetCode5 {
         return false;
     }
 
+    //86.Partition List排序链表，小值在前，大值在后，相对顺序不变
+    public ListNode partition(ListNode head, int x) {
+        ListNode smallHead = new ListNode(0);
+        ListNode small = smallHead;
+        ListNode bigHead = new ListNode(0);
+        ListNode big = bigHead;
+        while (head != null){
+            if (head.val < x){
+                small.next = head;
+                small = small.next;
+            }else {
+                big.next = head;
+                big = big.next;
+            }
+            head = head.next;
+        }
+        big.next = null;
+        small.next = bigHead.next;
+        return smallHead.next;
+    }
+
 
 
 
