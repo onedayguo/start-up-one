@@ -1,4 +1,4 @@
-package binarySearch;
+package advance.binarySearch;
 
 //二叉树节点
 public class BinaryTreeNode {

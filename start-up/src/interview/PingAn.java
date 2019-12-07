@@ -59,15 +59,16 @@ public class PingAn {
      **/
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()){
-            String ip1 = in.next();
-            String  ip2 = in.next();
-            int subNetCode = in.nextInt();
-
-            System.out.println(inLocalNet(ip1,ip2,subNetCode));
-
-        }
+//        Scanner in = new Scanner(System.in);
+//        while (in.hasNext()){
+//            String ip1 = in.next();
+//            String  ip2 = in.next();
+//            int subNetCode = in.nextInt();
+//
+//            System.out.println(inLocalNet(ip1,ip2,subNetCode));
+//
+//        }
+        System.out.println("hello,world");
 
     }
 
