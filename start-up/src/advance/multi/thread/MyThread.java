@@ -11,5 +11,7 @@ public class MyThread extends Thread {
     public void run(){
         System.out.println("我是子线程的MyThread,lalalallalala");
         super.run();
+
+        ///////
     }
 }
