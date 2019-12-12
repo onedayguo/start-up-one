@@ -500,6 +500,56 @@ public class LeetCode5 {
         }
     }
 
+    /**
+     * @description: 89. Gray Code
+     * The gray code is a binary numeral system where two successive values differ in only one bit
+     * Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code.
+     * A gray code sequence must begin with 0.
+        Input: 2
+        Output: [0,1,3,2]
+        Explanation:
+        00 - 0
+        01 - 1
+        11 - 3
+        10 - 2
+     * @author: kami
+     * @time: 2019/12/12 16:58
+     */   
+    public List<Integer> grayCode(int n) {
+        List<Integer> res = new ArrayList<>();
+        return res;
+    }
+
+    /**
+     * @description: Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different
+     * letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval.
+     * For each interval, CPU could finish one task or just be idle.
+     * However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals
+     * that CPU are doing different tasks or just be idle.
+     * You need to return the least number of intervals the CPU will take to finish all the given tasks.
+     * Input: tasks = ["A","A","A","B","B","B"], n = 2
+     * Output: 8
+     * Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+     * Note:
+     * The number of tasks is in the range [1, 10000].
+     * The integer n is in the range [0, 100].
+     * 思路：维护以窗口大小为n的任务书最多的n个不同任务，每次优先执行任务数最大的n个不同任务
+     * @author: kami
+     * @time: 2019/12/12 17:03
+     */   
+    public int leastInterval(char[] tasks, int n) {
+        int length = tasks.length;
+        Map<Character,Integer> charCountMap = new HashMap<>();
+        for (char ch: tasks) {
+            if (!charCountMap.containsKey(ch)){
+                charCountMap.put(ch,1);
+            }else {
+                Integer addOne = charCountMap.get(ch) + 1;
+                charCountMap.put(ch,addOne);
+            }
+        }
+        return 0;
+    }
     public static void main(String[] args) {
 
     }
