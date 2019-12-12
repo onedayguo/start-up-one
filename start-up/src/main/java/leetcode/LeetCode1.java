@@ -25,7 +25,7 @@ public class LeetCode1 {
     }
 
     //leetcode 17. Letter Combinations of a Phone Number
-    Map<String, String> phone = new HashMap<>() {{
+    Map<String, String> phone = new HashMap() {{
         put("2", "abc");
         put("3", "def");
         put("4", "ghi");

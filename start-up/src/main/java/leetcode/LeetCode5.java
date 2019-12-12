@@ -440,12 +440,50 @@ public class LeetCode5 {
         return smallHead.next;
     }
 
+    /**
+     * @description: 87. Scramble String
+     * We say that "rgeat" is a scrambled string of "great".
+     * The base case that s1 can scramble into s2 if s1== s2. If the frequencies of each characters appearing in s1 and s2 differ,
+     * then s1 can not scramble into s2.
+     * If there exist 0 <= i <= s1.length() where
+     * s1[0,i] can scramble into s2[0,i] and s1[i,length] can scramble into s2[i, length]; or
+     * s1[0,i] can scramble into s2[length - i, length] and s1[i,length] can scramble into s2[0, length - i]
+     * then, s1 can scramble into s2.
+     * @author: kami
+     * @time: 2019/12/12 9:50
+     */
+    public static boolean isScramble(String s1, String s2) {
+        if( s1.equals(s2) )
+            return true;
+        int[] s1Array = new int[26];
+        int[] s2Array = new int[26];
+        for(int i = 0; i < s1.length(); i++) {
+            char item1 = s1.charAt(i);
+            char item2 = s2.charAt(i);
+            s1Array[item1 - 'a']++;
+            s2Array[item2 - 'a']++;
+        }
+        for(int i = 0; i < 26; i++)
+            if( s1Array[i] != s2Array[i] )
+                return false;
+
+        for(int i = 1; i < s1.length(); i++) {
+            if( isScramble(s1.substring(0, i), s2.substring(0, i))
+                    && isScramble(s1.substring(i), s2.substring(i)) )
+                return true;
+            if( isScramble(s1.substring(0, i), s2.substring(s1.length() - i))
+                    && isScramble(s1.substring(i), s2.substring(0, s1.length() - i)))
+                return true;
+        }
+        return false;
+    }
 
 
 
     public static void main(String[] args) {
-        String s = "ADOBECODEBANC";
-        String t = "ABC";
-        System.out.println(minWindow(s,t));
+        String s = "great";
+        String t = "rgate";
+        System.out.println(isScramble(s,t));
+
     }
 }
