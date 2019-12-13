@@ -521,7 +521,8 @@ public class LeetCode5 {
     }
 
     /**
-     * @description: Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different
+     * @description: 621. Task Scheduler，https://leetcode.com/problems/task-scheduler/solution/
+     * Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different
      * letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval.
      * For each interval, CPU could finish one task or just be idle.
      * However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals
@@ -538,19 +539,60 @@ public class LeetCode5 {
      * @time: 2019/12/12 17:03
      */   
     public int leastInterval(char[] tasks, int n) {
-        int length = tasks.length;
-        Map<Character,Integer> charCountMap = new HashMap<>();
-        for (char ch: tasks) {
-            if (!charCountMap.containsKey(ch)){
-                charCountMap.put(ch,1);
-            }else {
-                Integer addOne = charCountMap.get(ch) + 1;
-                charCountMap.put(ch,addOne);
-            }
+
+
+        //<editor-fold desc="1.每个空闲循环对剩余数量统计排序">
+//        int[] countMap = new int[26];
+//        for (char c: tasks)
+//            countMap[c - 'A']++;
+//        Arrays.sort(countMap);
+//        int time = 0;
+//        while (countMap[25] > 0) {
+//            int i = 0;
+//            while (i <= n) {
+//                if (countMap[25] == 0)
+//                    break;
+//                if (i < 26 && countMap[25 - i] > 0)
+//                    countMap[25 - i]--;
+//                time++;
+//                i++;
+//            }
+//            Arrays.sort(countMap);
+//        }
+//        return time;
+        //</editor-fold>
+
+        int[] map = new int[26];
+        for (char c: tasks)
+            map[c - 'A']++;
+        PriorityQueue < Integer > queue = new PriorityQueue < > (26, Collections.reverseOrder());
+        for (int f: map) {
+            if (f > 0)
+                queue.add(f);
         }
-        return 0;
+        int time = 0;
+        while (!queue.isEmpty()) {
+            int i = 0;
+            List < Integer > temp = new ArrayList < > ();
+            while (i <= n) {
+                if (!queue.isEmpty()) {
+                    if (queue.peek() > 1)
+                        temp.add(queue.poll() - 1);
+                    else
+                        queue.poll();
+                }
+                time++;
+                if (queue.isEmpty() && temp.size() == 0)
+                    break;
+                i++;
+            }
+            for (int l: temp)
+                queue.add(l);
+        }
+        return time;
     }
     public static void main(String[] args) {
 
     }
+
 }
