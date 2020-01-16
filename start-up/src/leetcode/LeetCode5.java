@@ -517,6 +517,12 @@ public class LeetCode5 {
      */   
     public List<Integer> grayCode(int n) {
         List<Integer> res = new ArrayList<>();
+        res.add(0);
+        for (int i = 1; i < Math.pow(2,n); i *= 2) {
+            for (int j = res.size()-1; j >= 0 ; j--) {
+                res.add(i + res.get(j));
+            }
+        }
         return res;
     }
 
