@@ -515,7 +515,7 @@ public class LeetCode5 {
      * @author: kami
      * @time: 2019/12/12 16:58
      */   
-    public List<Integer> grayCode(int n) {
+    public static List<Integer> grayCode(int n) {
         List<Integer> res = new ArrayList<>();
         res.add(0);
         for (int i = 1; i < Math.pow(2,n); i *= 2) {
@@ -524,6 +524,29 @@ public class LeetCode5 {
             }
         }
         return res;
+    }
+    /**
+     * @description: 89格雷码，backtracking方法;
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/1 22:06
+     */
+    public static List<Integer> grayCode2(int n){
+        List<Integer> code = new ArrayList<>();
+        code.add(0);
+        genCode(code,n,0,1<<n);
+        return code;
+    }
+    private static void genCode(List<Integer> code,int n,int curr,int size){
+        if (code.size() == size) return;
+        for (int i = 0; i < n; i++) {
+            int mask = 1 << i;
+            int e1 = curr^mask;
+            if (!code.contains(e1)){
+                code.add(e1);
+                genCode(code,n,e1,size);
+            }
+        }
     }
 
     /**
@@ -628,7 +651,7 @@ public class LeetCode5 {
      * @time: 2019/12/20 11:28
      */   
     public static void main(String[] args) {
-
+        System.out.println(grayCode(3));
     }
 
 }
