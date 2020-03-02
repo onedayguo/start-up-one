@@ -550,6 +550,33 @@ public class LeetCode5 {
     }
 
     /**
+     * @description: 90. Subsets II
+     * Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set)
+     * Note: The solution set must not contain duplicate subsets.
+     * @return: 
+     * @auther: kami
+     * @date: 2020/3/2 20:33
+     */
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        List<Integer> each = new ArrayList<>();
+        helper(result,each,0,nums);
+        return result;
+    }
+    private static void helper(List<List<Integer>> result,List<Integer> each, int pos,int[] nums){
+        if (pos <= nums.length) result.add(each);
+        int i = pos;
+        while (i < nums.length){
+            each.add(nums[i]);
+            helper(result,new ArrayList<>(each),i+1,nums);
+            each.remove(each.size()-1);
+            i++;
+            while (i < nums.length && nums[i] == nums[i-1]) i++;
+        }
+    }
+
+    /**
      * @description: 621. Task Scheduler，https://leetcode.com/problems/task-scheduler/solution/
      * Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different
      * letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval.
@@ -651,7 +678,9 @@ public class LeetCode5 {
      * @time: 2019/12/20 11:28
      */   
     public static void main(String[] args) {
-        System.out.println(grayCode(3));
+        int[] nums = {1,2,2,3,4};
+        List<List<Integer>> result = subsetsWithDup(nums);
+        System.out.println(result);
     }
 
 }
