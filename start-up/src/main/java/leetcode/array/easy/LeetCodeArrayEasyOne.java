@@ -12,14 +12,6 @@ import java.util.*;
  */
 public class LeetCodeArrayEasyOne {
 
-    public static void main(String[] args) {
-        int[] array = {6,5,4,8};
-        int[] res = smallerNumbersThanCurrent(array);
-        for (int item: res) {
-            System.out.println(item);
-        }
-
-    }
     /**
      * @description: 697. Degree of an Array
      * Given a non-empty array of non-negative integers nums, the degree of this array is defined as the maximum frequency of any one of its elements.
@@ -82,5 +74,41 @@ public class LeetCodeArrayEasyOne {
             }
         }
         return countArray;
+    }
+
+    /**
+     * @description: 1313. Decompress Run-Length Encoded List
+     * Consider each adjacent pair of elements [freq, val] = [nums[2*i], nums[2*i+1]] (with i >= 0).  For each such pair,
+     * there are freq elements with value val concatenated in a sublist. Concatenate all the sublists from left to right
+     * to generate the decompressed list.
+     * Return the decompressed list.
+     * 2 <= nums.length <= 100
+     * nums.length % 2 == 0
+     * 1 <= nums[i] <= 100
+     * @return: 合并好的数组
+     * @auther: kami
+     * @date: 2020/3/14 22:35
+     */
+    public static int[] decompressRLElist(int[] nums) {
+        int sumLength = 0;
+        for (int i = 0; i < nums.length; i+=2) {
+            sumLength += nums[i];
+        }
+        int[] resArray = new int[sumLength];
+        int fromIndex = 0;
+        for (int i = 0; i < nums.length; i+=2) {
+            int endIndex = fromIndex + nums[i];
+            Arrays.fill(resArray,fromIndex,endIndex,nums[i+1]);
+            fromIndex = endIndex;
+        }
+        return resArray;
+    }
+    public static void main(String[] args) {
+        int[] array = {6,5,4,8};
+        int[] res = decompressRLElist(array);
+        for (int item: res) {
+            System.out.println(item);
+        }
+
     }
 }
