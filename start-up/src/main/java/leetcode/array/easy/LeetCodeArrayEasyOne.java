@@ -13,8 +13,11 @@ import java.util.*;
 public class LeetCodeArrayEasyOne {
 
     public static void main(String[] args) {
-        int[] array = {1,2,2,3,1};
-        System.out.println(findShortestSubArray(array));
+        int[] array = {6,5,4,8};
+        int[] res = smallerNumbersThanCurrent(array);
+        for (int item: res) {
+            System.out.println(item);
+        }
 
     }
     /**
@@ -57,5 +60,27 @@ public class LeetCodeArrayEasyOne {
             }
         }
         return length+1;
+    }
+
+    /**
+     * @description: 1365. How Many Numbers Are Smaller Than the Current Number
+     * Given the array nums, for each nums[i] find out how many numbers in the array are smaller than it. That is,
+     * for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
+     * @return: 比当前值小的元素的数量组成的数组
+     * @auther: kami
+     * @date: 2020/3/14 21:43
+     */
+    public static int[] smallerNumbersThanCurrent(int[] nums) {
+        int[] countArray = new int[nums.length];
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                if (nums[i] < nums[j]){
+                    countArray[j] += 1;
+                }else if (nums[i] > nums[j]){
+                    countArray[i] += 1;
+                }
+            }
+        }
+        return countArray;
     }
 }
