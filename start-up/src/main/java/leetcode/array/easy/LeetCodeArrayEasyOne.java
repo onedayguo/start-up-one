@@ -85,6 +85,7 @@ public class LeetCodeArrayEasyOne {
      * 2 <= nums.length <= 100
      * nums.length % 2 == 0
      * 1 <= nums[i] <= 100
+     * 思路：首先计算返回数组的总长度，然后填充数组
      * @return: 合并好的数组
      * @auther: kami
      * @date: 2020/3/14 22:35
@@ -102,6 +103,21 @@ public class LeetCodeArrayEasyOne {
             fromIndex = endIndex;
         }
         return resArray;
+    }
+
+    /**
+     * @description: 1295. Find Numbers with Even Number of Digits
+     * Given an array nums of integers, return how many of them contain an even number of digits.
+     * @return: 数组中元素位数是偶数的元素个数
+     * @auther: kami
+     * @date: 2020/3/14 23:17
+     */
+    public int findNumbers(int[] nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += String.valueOf(nums[i]).length() % 2 == 0 ? 1 : 0;
+        }
+        return sum;
     }
     public static void main(String[] args) {
         int[] array = {6,5,4,8};
