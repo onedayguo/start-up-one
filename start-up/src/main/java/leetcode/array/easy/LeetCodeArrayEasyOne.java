@@ -240,6 +240,72 @@ public class LeetCodeArrayEasyOne {
         }
         return uniqueArr;
     }
+
+    /**
+     * @description: 1380. Lucky Numbers in a Matrix
+     * Given a m * n matrix of distinct numbers, return all lucky numbers in the matrix in any order.
+     * A lucky number is an element of the matrix such that it is the minimum element in its row and maximum in its column.
+     * m == mat.length
+     * n == mat[i].length
+     * 1 <= n, m <= 50
+     * 1 <= matrix[i][j] <= 10^5.
+     * All elements in the matrix are distinct.
+     * @return: 幸运数字列表
+     * @auther: kami
+     * @date: 2020/3/15 13:36
+     */
+    public List<Integer> luckyNumbers (int[][] matrix) {
+        int row = matrix.length,col = matrix[0].length;
+        List<Integer> luckNumbers = new LinkedList<>();
+        Set<Integer> minRow = new HashSet<>();
+        for (int i = 0; i < row; i++) {
+            int minNum = matrix[i][0];
+            for (int j = 0; j < col; j++) {
+                minNum = Math.min(minNum,matrix[i][j]);
+            }
+            minRow.add(minNum);
+        }
+        for (int i = 0; i < col; i++) {
+            int maxNum = matrix[0][i];
+            for (int j = 0; j < row; j++) {
+                maxNum = Math.max(maxNum,matrix[j][i]);
+            }
+            if (minRow.contains(maxNum)){
+                luckNumbers.add(maxNum);
+            }
+        }
+        return luckNumbers;
+
+    }
+
+    /**
+     * @description: 832. Flipping an Image
+     * Given a binary matrix A, we want to flip the image horizontally, then invert it, and return the resulting image.
+     * To flip an image horizontally means that each row of the image is reversed.  For example, flipping [1, 1, 0]
+     * horizontally results in [0, 1, 1].To invert an image means that each 0 is replaced by 1, and each 1 is replaced by 0.
+     * For example, inverting [0, 1, 1] results in [1, 0, 0].
+     * @return: 翻转 反向后的数组
+     * @auther: kami
+     * @date: 2020/3/15 14:34
+     */
+    public int[][] flipAndInvertImage(int[][] A) {
+        int row = A.length,col = A[0].length;
+        int[][] B = new int[row][col];
+        // flip
+        for (int i = 0; i < row; i++) {
+            int tempCol = 0;
+            for (int j = col-1; j > -1 ; j--) {
+                B[i][tempCol++] = A[i][j];
+            }
+        }
+        //invert
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                B[i][j] = B[i][j] ^ 1;
+            }
+        }
+        return B;
+    }
     public static void main(String[] args) {
         int[][] array = {{1,1},{0,0}};
 
