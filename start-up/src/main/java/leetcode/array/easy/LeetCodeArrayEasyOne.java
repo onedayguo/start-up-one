@@ -327,11 +327,57 @@ public class LeetCodeArrayEasyOne {
         }
         return B;
     }
-    public static void main(String[] args) {
-        int[][] array = {{1,1},{0,0}};
 
-        int res = oddCells(2,2,array);
-        System.out.println(res);
+    /**
+     * @description: 977. Squares of a Sorted Array
+     * Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number,
+     * also in sorted non-decreasing order.
+     * @return: 平方后有序的数组
+     * @auther: kami
+     * @date: 2020/3/15 15:00
+     */
+    public static int[] sortedSquares(int[] A) {
+        int[] B = new int[A.length];
+        // get the index of the min num
+        int minNumIndex = 0;
+        int minNum = Math.abs(A[0]);
+        for (int i = 1; i < A.length; i++) {
+            if (Math.abs(A[i]) < minNum){
+                minNumIndex = i;
+                minNum = Math.abs(A[i]);
+            }
+        }
+        B[0] = A[minNumIndex] * A[minNumIndex];
+        int bIndex = 1;
+        int left = minNumIndex-1,right = minNumIndex+1;
+        while (left > -1 && right < A.length){
+            int leftValue = Math.abs(A[left]);
+            int rightValue = Math.abs(A[right]);
+            if (leftValue > rightValue){
+                B[bIndex++] = rightValue * rightValue;
+                right++;
+            }else {
+                B[bIndex++] = leftValue * leftValue;
+                left--;
+            }
+        }
+        while (right < A.length){
+            B[bIndex++] = A[right] * A[right];
+            right++;
+        }
+        while (left > -1){
+            B[bIndex++] = A[left] * A[left];
+            left--;
+        }
+        return B;
+    }
+    public static void main(String[] args) {
+        int[] array = {-1,2,2};
+
+        int[] res = sortedSquares(array);
+        for (int value: res) {
+            System.out.print(value + " ");
+        }
 
     }
 }
