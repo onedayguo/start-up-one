@@ -119,6 +119,32 @@ public class LeetCodeArrayEasyOne {
         }
         return sum;
     }
+
+    /**
+     * @description: 1266. Minimum Time Visiting All Points
+     * On a plane there are n points with integer coordinates points[i] = [xi, yi]. Your task is to find the minimum time
+     * in seconds to visit all points.You can move according to the next rules:
+     * In one second always you can either move vertically, horizontally by one unit or diagonally (it means to move one
+     * unit vertically and one unit horizontally in one second).
+     * You have to visit the points in the same order as they appear in the array.
+     * @return: 依次走过数组中的点所需要的总时间
+     * @auther: kami
+     * @date: 2020/3/14 23:25
+     */
+    public int minTimeToVisitAllPoints(int[][] points) {
+        int row = points.length;
+        int seconeds = 0;
+        for (int i = 1; i < row; i++) {
+            int rowDif = Math.abs(points[i][0] - points[i-1][0]);
+            int colDif = Math.abs(points[i][1] - points[i-1][1]);
+            if (rowDif == colDif){
+                seconeds += rowDif;
+            }else {
+                seconeds += (Math.min(rowDif,colDif) + Math.abs(rowDif-colDif));
+            }
+        }
+        return seconeds;
+    }
     public static void main(String[] args) {
         int[] array = {6,5,4,8};
         int[] res = decompressRLElist(array);
