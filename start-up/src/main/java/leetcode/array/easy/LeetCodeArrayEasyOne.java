@@ -410,10 +410,55 @@ public class LeetCodeArrayEasyOne {
         }
         return sumStudents;
     }
-    public static void main(String[] args) {
-        int[] array = {8,6,9,-1,2,2};
 
-        int res = heightChecker(array);
+    /**
+     * @description: 1337. The K Weakest Rows in a Matrix
+     * Given a m * n matrix mat of ones (representing soldiers) and zeros (representing civilians), return the indexes
+     * of the k weakest rows in the matrix ordered from the weakest to the strongest.
+     * A row i is weaker than row j, if the number of soldiers in row i is less than the number of soldiers in row j,
+     * or they have the same number of soldiers but i is less than j. Soldiers are always stand in the frontier of a row,
+     * that is, always ones may appear first and then zeros.
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/15 17:36
+     */
+    public static int[] kWeakestRows(int[][] mat, int k) {
+        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
+        int rows = mat.length;
+        int cols = mat[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            int j = 0;
+            while (j < cols && mat[i][j] != 0) {
+                j++;
+            }
+            if (!map.containsKey(j)) {
+                map.put(j, new ArrayList<>());
+            }
+            map.get(j).add(i);
+        }
+
+        int[] res = new int[k];
+        int i = 0;
+        while (i < k) {
+            List<Integer> list = map.get(map.firstKey());
+            for (int j = 0; j < list.size() && i < k; j++) {
+                res[i++] = list.get(j);
+            }
+            map.remove(map.firstKey());
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+        int[][] array = {
+                {1,1,0,0,0},
+                {1,1,1,1,0},
+                {1,0,0,0,0},
+                {1,1,0,0,0},
+                {1,1,1,1,1}
+                };
+
+        int[] res = kWeakestRows(array,3);
 
     }
 }
