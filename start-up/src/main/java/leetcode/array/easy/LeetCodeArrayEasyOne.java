@@ -145,6 +145,31 @@ public class LeetCodeArrayEasyOne {
         }
         return seconeds;
     }
+
+    /**
+     * @description: 1351. Count Negative Numbers in a Sorted Matrix
+     * Given a m * n matrix grid which is sorted in non-increasing order both row-wise and column-wise.
+     * Return the number of negative numbers in grid.
+     * 思路：因为列是有序的，所以按照按照列遍历，发现负数计算数量，退出进行下一列；
+     * 注意：遍历时，行列式互换的；
+     * 优化：因为列是有序的，对列的遍历可以进行二分查找
+     * @return: 数组中负数的个数
+     * @auther: kami
+     * @date: 2020/3/15 10:31
+     */
+    public int countNegatives(int[][] grid) {
+        int nonNegative = 0;
+        int rowLen = grid[0].length,colLen = grid.length;
+        for (int i = 0; i < rowLen; i++) {
+            for (int j = 0; j < colLen; j++) {
+                if (grid[j][i] < 0){
+                    nonNegative += (colLen-j);
+                    break;
+                }
+            }
+        }
+        return nonNegative;
+    }
     public static void main(String[] args) {
         int[] array = {6,5,4,8};
         int[] res = decompressRLElist(array);
