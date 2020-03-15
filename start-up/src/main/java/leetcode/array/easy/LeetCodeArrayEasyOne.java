@@ -306,6 +306,27 @@ public class LeetCodeArrayEasyOne {
         }
         return B;
     }
+
+    /**
+     * @description: 905. Sort Array By Parity
+     * Given an array A of non-negative integers, return an array consisting of all the even elements of A, followed by
+     * all the odd elements of A. You may return any answer array that satisfies this condition.
+     * @return: 偶数在前，奇数在后的数组
+     * @auther: kami
+     * @date: 2020/3/15 14:47
+     */
+    public int[] sortArrayByParity(int[] A) {
+        int[] B = new int[A.length];
+        int left = 0, right = 0;
+        for (int i=0; i < A.length; i++) {
+            if (A[i] % 2 == 0){
+                B[left++] = A[i];
+            }else {
+                B[A.length-1-(right++)] = A[i];
+            }
+        }
+        return B;
+    }
     public static void main(String[] args) {
         int[][] array = {{1,1},{0,0}};
 
