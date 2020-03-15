@@ -371,6 +371,23 @@ public class LeetCodeArrayEasyOne {
         }
         return B;
     }
+
+    /**
+     * @description: 561. Array Partition I
+     * Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1),
+     * (a2, b2), ..., (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+     * @return: 配对后组合的最小值的和
+     * @auther: kami
+     * @date: 2020/3/15 17:05
+     */
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i+=2) {
+            sum += nums[i];
+        }
+        return sum;
+    }
     public static void main(String[] args) {
         int[] array = {-1,2,2};
 
