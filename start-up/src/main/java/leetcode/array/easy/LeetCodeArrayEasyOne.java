@@ -170,12 +170,61 @@ public class LeetCodeArrayEasyOne {
         }
         return nonNegative;
     }
-    public static void main(String[] args) {
-        int[] array = {6,5,4,8};
-        int[] res = decompressRLElist(array);
-        for (int item: res) {
-            System.out.println(item);
+
+    /**
+     * @description: 1299. Replace Elements with Greatest Element on Right Side
+     * Given an array arr, replace every element in that array with the greatest element among the elements to its right,
+     * and replace the last element with -1. After doing so, return the array.
+     * @return: 替换后的数组
+     * @auther: kami
+     * @date: 2020/3/15 12:00
+     */
+    public int[] replaceElements(int[] arr) {
+        int lastIndex = arr.length -1;
+        int maxRight = arr[lastIndex];
+        int left ;
+        arr[lastIndex] = -1;
+        for (int i = lastIndex -1; i > -1; i--) {
+            left = arr[i];
+            arr[i] = maxRight;
+            maxRight = Math.max(left,maxRight);
         }
+        return arr;
+    }
+
+    /**
+     * @description: 1252. Cells with Odd Values in a Matrix
+     * Given n and m which are the dimensions of a matrix initialized by zeros and given an array indices where
+     * indices[i] = [ri, ci]. For each pair of [ri, ci] you have to increment all cells in row ri and column ci by 1.
+     * Return the number of cells with odd values in the matrix after applying the increment to all indices.
+     * @return: 改变后的数组中的奇数的数量
+     * @auther: kami
+     * @date: 2020/3/15 12:11
+     */
+    public static int oddCells(int n, int m, int[][] indices) {
+        int[] row = new int[n],col = new int[m];
+        for (int i = 0; i < indices.length; i++) {
+            row[indices[i][0]]++;
+            col[indices[i][1]]++;
+        }
+        int countOdd = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int value = row[i] + col[j];
+                if (value % 2 == 1){
+                    countOdd++;
+                }
+            }
+        }
+        return countOdd;
+
+
+    }
+    public static void main(String[] args) {
+        int[][] array = {{1,1},{0,0}};
+
+        int res = oddCells(2,2,array);
+        System.out.println(res);
 
     }
 }
