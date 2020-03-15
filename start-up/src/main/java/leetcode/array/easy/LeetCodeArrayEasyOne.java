@@ -388,13 +388,32 @@ public class LeetCodeArrayEasyOne {
         }
         return sum;
     }
-    public static void main(String[] args) {
-        int[] array = {-1,2,2};
 
-        int[] res = sortedSquares(array);
-        for (int value: res) {
-            System.out.print(value + " ");
+    /**
+     * @description: 1051. Height Checker
+     * Students are asked to stand in non-decreasing order of heights for an annual photo.
+     * Return the minimum number of students that must move in order for all students to be standing in non-decreasing order of height.
+     * Notice that when a group of students is selected they can reorder in any possible way between themselves and the non selected
+     * students remain on their seats.
+     * @return: 移动最少的步骤数
+     * @auther: kami
+     * @date: 2020/3/15 17:11
+     */
+    public static int heightChecker(int[] heights) {
+        int[] copyHeights = Arrays.copyOf(heights,heights.length);
+        Arrays.sort(heights);
+        int sumStudents = 0;
+        for (int i = 0; i < heights.length; i++) {
+            if (heights[i] != copyHeights[i]){
+                sumStudents++;
+            }
         }
+        return sumStudents;
+    }
+    public static void main(String[] args) {
+        int[] array = {8,6,9,-1,2,2};
+
+        int res = heightChecker(array);
 
     }
 }
