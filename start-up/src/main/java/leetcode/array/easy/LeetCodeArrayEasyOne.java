@@ -220,6 +220,26 @@ public class LeetCodeArrayEasyOne {
 
 
     }
+
+    /**
+     * @description: 1304. Find N Unique Integers Sum up to Zero
+     * Given an integer n, return any array containing n unique integers such that they add up to 0.
+     * @return: 元素和为0的数组
+     * @auther: kami
+     * @date: 2020/3/15 13:26
+     */
+    public int[] sumZero(int n) {
+        int[] uniqueArr = new int[n];
+        int halfN = n / 2;
+        for (int i = 1,j = 0; i <= halfN; i++,j+=2) {
+            uniqueArr[j] = -i;
+            uniqueArr[j+1] = i;
+        }
+        if (n % 2 > 0){
+            uniqueArr[n-1] = 0;
+        }
+        return uniqueArr;
+    }
     public static void main(String[] args) {
         int[][] array = {{1,1},{0,0}};
 
