@@ -483,6 +483,37 @@ public class LeetCodeArrayEasyOne {
         }
         return B;
     }
+
+    /**
+     * @description: 1122. Relative Sort Array
+     * Given two arrays arr1 and arr2, the elements of arr2 are distinct, and all elements in arr2 are also in arr1.
+     * Sort the elements of arr1 such that the relative ordering of items in arr1 are the same as in arr2.
+     * Elements that don't appear in arr2 should be placed at the end of arr1 in ascending order.
+     * @return: 合并排序后的数组
+     * @auther: kami
+     * @date: 2020/3/16 8:46
+     */
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        int[] bulket = new int[1001];
+        int[] result = new int[arr1.length];
+        for (int i: arr1) {
+            bulket[i]++;
+        }
+        int index = 0;
+        for (int i: arr2) {
+            while (bulket[i]-- > 0){
+                result[index++] = i;
+            }
+        }
+        for (int i = 0;i < 1001;i++) {
+            if (bulket[i] > 0){
+                while (bulket[i]-- > 0){
+                    result[index++] = i;
+                }
+            }
+        }
+        return result;
+    }
     public static void main(String[] args) {
         int[][] array = {
                 {1,1,0,0,0},
