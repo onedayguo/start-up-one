@@ -449,6 +449,40 @@ public class LeetCodeArrayEasyOne {
         }
         return res;
     }
+
+    /**
+     * @description: 922. Sort Array By Parity II
+     * Given an array A of non-negative integers, half of the integers in A are odd, and half of the integers are even.
+     * Sort the array so that whenever A[i] is odd, i is odd; and whenever A[i] is even, i is even.
+     * You may return any answer array that satisfies this condition.
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/16 8:34
+     */
+    public int[] sortArrayByParityII(int[] A) {
+        int[] B = new int[A.length];
+        int oddIndex = 1;
+        int evenIndex = 0;
+        int i = 0;
+        while (oddIndex < A.length && evenIndex < A.length-1){
+            if (A[i] % 2 == 0){
+                B[evenIndex] = A[i++];
+                evenIndex += 2;
+            }else {
+                B[oddIndex] = A[i++];
+                oddIndex += 2;
+            }
+        }
+        while (oddIndex < A.length){
+            B[oddIndex] = A[i++];
+            oddIndex += 2;
+        }
+        while (evenIndex < A.length -1){
+            B[evenIndex] = A[i++];
+            evenIndex += 2;
+        }
+        return B;
+    }
     public static void main(String[] args) {
         int[][] array = {
                 {1,1,0,0,0},
