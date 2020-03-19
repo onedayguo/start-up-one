@@ -514,16 +514,44 @@ public class LeetCodeArrayEasyOne {
         }
         return result;
     }
+
+    /**
+     * @description: 1160. Find Words That Can Be Formed by Characters
+     * You are given an array of strings words and a string chars.
+     * A string is good if it can be formed by characters from chars (each character can only be used once).
+     * Return the sum of lengths of all good strings in words.
+     * @return: 好字符串总长度
+     * @auther: kami
+     * @date: 2020/3/16 22:33
+     */
+    public static int countCharacters(String[] words, String chars) {
+        int[] charsArray = new int[26];
+        for (char i:chars.toCharArray()) {
+            charsArray[i-'a']++;
+        }
+        int[][] wordsArray = new int[words.length][26];
+        for (int i = 0; i < words.length; i++) {
+            for (char j:words[i].toCharArray()) {
+                wordsArray[i][j-'a']++;
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < words.length; i++) {
+            int len = words[i].length();
+            sum += len;
+            for (int j = 0; j < 26; j++) {
+                if (wordsArray[i][j] > charsArray[j]){
+                    sum -= len;
+                    break;
+                }
+            }
+        }
+        return sum;
+    }
     public static void main(String[] args) {
-        int[][] array = {
-                {1,1,0,0,0},
-                {1,1,1,1,0},
-                {1,0,0,0,0},
-                {1,1,0,0,0},
-                {1,1,1,1,1}
-                };
-
-        int[] res = kWeakestRows(array,3);
-
+        String[] words = {"cat","bt","hat","tree"};
+        String chars = "atach";
+        int sum = countCharacters(words,chars);
+        System.out.println(sum);
     }
 }
