@@ -1,5 +1,8 @@
 package leetcode.hashtable.easy;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @Description: hashtable简单级别的LeetCode题目
  * @Auther: kami
@@ -20,6 +23,24 @@ public class HashTableEasy {
      * @date: 2020/3/19 8:24
      */
     public int numJewelsInStones(String J, String S) {
-        return 0;
+        Set<Character> set = new HashSet<>();
+        for (char a:J.toCharArray()) {
+            set.add(a);
+        }
+        int sum = 0;
+        for (char a:S.toCharArray()) {
+            if (set.contains(a)){
+                sum++;
+            }
+        }
+        return sum;
+    }
+    public int numJewelsInStones1(String J, String S) {
+        if(J.isEmpty()) return 0;
+        int cnt = 0;
+        for(int i = 0 ; i < S.length() ; i++) {
+            if(J.indexOf(S.charAt(i)) != -1) cnt++;
+        }
+        return cnt;
     }
 }
