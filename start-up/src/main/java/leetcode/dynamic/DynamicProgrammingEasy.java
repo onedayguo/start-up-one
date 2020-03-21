@@ -34,18 +34,12 @@ public class DynamicProgrammingEasy {
      * @date: 2020/3/21 18:29
      */
     public static int maxProfit(int[] prices) {
-        int lastIndex = prices.length-1;
-        int max = prices[0],min = prices[lastIndex];
-        int priceDif = max - min;
-        for (int i = 0,j = lastIndex; i < prices.length && j > 0;i++,j--) {
-            if (prices[i] > max){
-                max = prices[i];
-            }
-            if (prices[j] < min){
-                min = prices[j--];
-            }
+        int maxCur = 0, maxSoFar = 0;
+        for(int i = 1; i < prices.length; i++) {
+            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
+            maxSoFar = Math.max(maxCur, maxSoFar);
         }
-        return max-min;
+        return maxSoFar;
     }
 
     public static void main(String[] args) {

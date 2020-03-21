@@ -24,7 +24,6 @@ public class Leetcode {
     public static boolean canMeasureWater(int x, int y, int z) {
         if (x+y < z) return false;
         if (x == z || y == z || x+y == z) return true;
-        int gcd = gcd(x,y);
         return z%gcd(x,y) == 0;
 
     }
