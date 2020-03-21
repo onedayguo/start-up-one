@@ -8,8 +8,6 @@ import java.util.Set;
  * @Auther: kami
  * @Date: 2020/3/19 08:24
  * @Version: 1.0.0
- * @Company: 威富通科技有限公司
- * @Copyright: SwiftPass Technologies Co., LTD. Rights Reserved
  */
 public class HashTableEasy {
     /**

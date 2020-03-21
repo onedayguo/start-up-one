@@ -9,8 +9,6 @@ import java.util.Set;
  * @Auther: kami
  * @Date: 2020/3/20 00:04
  * @Version: 1.0.0
- * @Company: 威富通科技有限公司
- * @Copyright: SwiftPass Technologies Co., LTD. Rights Reserved
  */
 public class BinarySearchEasy {
     /**
