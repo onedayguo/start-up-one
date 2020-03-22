@@ -58,8 +58,42 @@ public class DynamicProgrammingEasy {
         return maxProfit;
     }
 
+    /**
+     * @description: 198. House Robber
+     * You are a professional robber planning to rob houses along a street. Each house has a certain amount of money
+     * stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system
+     * connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+     * Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount
+     * of money you can rob tonight without alerting the police.
+     * 解决思路：https://leetcode.com/problems/house-robber/discuss/156523/From-good-to-great.-How-to-approach-most-of-DP-problems.
+     * @return: 抢劫的最大收益
+     * @auther: kami
+     * @date: 2020/3/22 10:13
+     */
+    public static int rob(int[] nums) {
+        if (nums.length == 0)return 0;
+        int pre1 = 0;
+        int pre2 = 0;
+        for (int num:nums) {
+            int temp = pre1;
+            pre1 = Math.max(pre1,num+pre2);
+            pre2 = temp;
+        }
+        return pre1;
+    }
+
+    /**
+     * @description: 746. Min Cost Climbing Stairs
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/22 16:17
+     */
+    public int minCostClimbingStairs(int[] cost) {
+
+    }
     public static void main(String[] args) {
-        int[] arr = {7,1,5,3,6,4};
-        int am = maxProfit(arr);
+        int[] arr = {1, 2, 3, 1};
+        int am = rob(arr);
+        System.out.println(am);
     }
 }
