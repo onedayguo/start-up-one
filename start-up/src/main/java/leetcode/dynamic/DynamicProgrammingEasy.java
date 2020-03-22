@@ -132,6 +132,35 @@ public class DynamicProgrammingEasy {
         }
         return true;
     }
+
+    /**
+     * @description: 1314. Matrix Block Sum
+     * Given a m * n matrix mat and an integer K, return a matrix answer where each answer[i][j] is the sum of all
+     * elements mat[r][c] for i - K <= r <= i + K, j - K <= c <= j + K, and (r, c) is a valid position in the matrix.
+     * @return: 新的数组：原矩阵方形范围内和组成的新矩阵
+     * @auther: kami
+     * @date: 2020/3/22 17:20
+     */
+    public int[][] matrixBlockSum(int[][] mat, int K) {
+        int row = mat.length,col = mat[0].length;
+        int[][] matrixBlockSum = new int[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                int sum = 0;
+                int rowFrom = Math.max(0,i-K);
+                int rowTo = Math.min(row-1,i+K);
+                int colFrom = Math.max(0,j-K);
+                int colTo = Math.min(col-1,j+K);
+                for (int k = rowFrom; k <= rowTo ; k++) {
+                    for (int l = colFrom; l <= colTo ; l++) {
+                        sum += mat[k][l];
+                    }
+                }
+                matrixBlockSum[i][j] = sum;
+            }
+        }
+        return matrixBlockSum;
+    }   
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 1};
         int am = rob(arr);
