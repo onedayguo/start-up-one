@@ -41,6 +41,22 @@ public class DynamicProgrammingEasy {
         }
         return maxSoFar;
     }
+    //纪录两个状态, 一个是最大利润, 另一个是遍历过的子序列的最小值。知道之前的最小值我们就可以算出当前天可能的最大利润是多少
+    public int maxProfit1(int[] prices) {
+        // 7,1,5,3,6,4
+        int maxProfit = 0;
+        int minNum = Integer.MAX_VALUE;
+        for (int i = 0; i < prices.length; i++) {
+            if (Integer.MAX_VALUE != minNum && prices[i] - minNum > maxProfit) {
+                maxProfit = prices[i] - minNum;
+            }
+
+            if (prices[i] < minNum) {
+                minNum = prices[i];
+            }
+        }
+        return maxProfit;
+    }
 
     public static void main(String[] args) {
         int[] arr = {7,1,5,3,6,4};
