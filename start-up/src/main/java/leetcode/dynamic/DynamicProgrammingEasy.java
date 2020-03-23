@@ -185,9 +185,37 @@ public class DynamicProgrammingEasy {
         }
         return count;
     }
+
+    /**
+     * @description: 338. Counting Bits
+     * Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number
+     * of 1's in their binary representation and return them as an array.
+     * @return: 元素1的个数组成的数组
+     * @auther: kami
+     * @date: 2020/3/23 22:03
+     */
+    public int[] countBits(int num) {
+        int[] count = new int[num+1];
+        for (int i = 0; i <= num ; i++) {
+            int sum = 0;
+            String binary = Integer.toBinaryString(i);
+            for (char j:binary.toCharArray()) {
+                sum += (j-'0');
+            }
+            count[i] = sum;
+        }
+        return count;
+    }
+    public int[] countBitsPlus(int num){
+        int[] res = new int[num+1];
+        for (int i = 1; i <= num ; i++) {
+            res[i] = res[i>>1] + (i & 1);
+        }
+        return res;
+    }
+    
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 1};
-        int am = rob(arr);
-        System.out.println(am);
+        Integer am = 5;
+        System.out.println(am.toBinaryString(2));
     }
 }
