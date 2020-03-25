@@ -3,7 +3,7 @@ package interview;
 import java.util.Scanner;
 
 public class ByteDance {
-
+/*
     public static void main(String[] args) {
         //region 3.0
 //        Scanner in = new Scanner(System.in);
@@ -88,5 +88,13 @@ public class ByteDance {
 
     }
 
+*/
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNext()){
+            int n = in.nextInt();
+
+        }
+    }
 
 }
