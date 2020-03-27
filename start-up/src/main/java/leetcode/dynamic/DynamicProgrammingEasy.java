@@ -1,5 +1,6 @@
 package leetcode.dynamic;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -245,7 +246,54 @@ public class DynamicProgrammingEasy {
         }
         return res;
     }
-    
+
+    /**
+     * @description: 877. Stone Game
+     * Alex and Lee play a game with piles of stones.  There are an even number of piles arranged in a row, and each pile
+     * has a positive integer number of stones piles[i].
+     * The objective of the game is to end with the most stones.  The total number of stones is odd, so there are no ties.
+     * Alex and Lee take turns, with Alex starting first.  Each turn, a player takes the entire pile of stones from either
+     * the beginning or the end of the row.  This continues until there are no more piles left, at which point the person
+     * with the most stones wins.
+     * Assuming Alex and Lee play optimally, return True if and only if Alex wins the game.
+     * 两个人轮流从一个数组的两头取值，谁最后取值大，谁赢
+     *  Alex is first to pick pile.
+     * piles.length is even, and this lead to an interesting fact:
+     * Alex can always pick odd piles or always pick even piles!
+     * For example,
+     * If Alex wants to pick even indexed piles piles[0], piles[2], ....., piles[n-2],
+     * he picks first piles[0], then Lee can pick either piles[1] or piles[n - 1].
+     * Every turn, Alex can always pick even indexed piles and Lee can only pick odd indexed piles.
+     * In the description, we know that sum(piles) is odd.
+     * If sum(piles[even]) > sum(piles[odd]), Alex just picks all evens and wins.
+     * If sum(piles[even]) < sum(piles[odd]), Alex just picks all odds and wins.
+     * So, Alex always defeats Lee in this game.
+     * @return: Alex是否赢
+     * @auther: kami
+     * @date: 2020/3/27 21:20
+     */
+    public boolean stoneGame(int[] p) {
+        int n = p.length;
+        int[][] dp  = new int[n][n];
+        for (int i = 0; i < n; i++) dp[i][i] = p[i];
+        for (int d = 1; d < n; d++)
+            for (int i = 0; i < n - d; i++)
+                dp[i][i + d] = Math.max(p[i] - dp[i + 1][i + d], p[i + d] - dp[i][i + d - 1]);
+        return dp[0][n - 1] > 0;
+    }
+    /**
+     * @description: 1D DP
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/27 22:18
+     */
+    public boolean stoneGame1(int[] p) {
+        int[] dp = Arrays.copyOf(p, p.length);;
+        for (int d = 1; d < p.length; d++)
+            for (int i = 0; i < p.length - d; i++)
+                dp[i] = Math.max(p[i] - dp[i + 1], p[i + d] - dp[i]);
+        return dp[0] > 0;
+    }
     public static void main(String[] args) {
         int[] arr = {6,2,4};
         System.out.println(mctFromLeafValues(arr));
