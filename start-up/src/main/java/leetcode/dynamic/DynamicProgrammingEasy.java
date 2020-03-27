@@ -1,5 +1,7 @@
 package leetcode.dynamic;
 
+import java.util.Stack;
+
 /**
  * @Description: 动态规划
  * @Auther: kami
@@ -213,9 +215,39 @@ public class DynamicProgrammingEasy {
         }
         return res;
     }
+
+    /**
+     * @description: 1130. Minimum Cost Tree From Leaf Values
+     * Given an array arr of positive integers, consider all binary trees such that:
+     * Each node has either 0 or 2 children;
+     * The values of arr correspond to the values of each leaf in an in-order traversal of the tree.
+     * (Recall that a node is a leaf if and only if it has 0 children.)
+     * The value of each non-leaf node is equal to the product of the largest leaf value in its left and right subtree respectively.
+     * Among all possible binary trees considered, return the smallest possible sum of the values of each non-leaf node.
+     * It is guaranteed this sum fits into a 32-bit integer.
+     * @return: 
+     * @auther: kami
+     * @date: 2020/3/23 22:52
+     */
+    public static int mctFromLeafValues(int[] A) {
+        int res = 0;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(Integer.MAX_VALUE);
+        for (int a : A) {
+            while (stack.peek() <= a) {
+                int mid = stack.pop();
+                res += mid * Math.min(stack.peek(), a);
+            }
+            stack.push(a);
+        }
+        while (stack.size() > 2) {
+            res += stack.pop() * stack.peek();
+        }
+        return res;
+    }
     
     public static void main(String[] args) {
-        Integer am = 5;
-        System.out.println(am.toBinaryString(2));
+        int[] arr = {6,2,4};
+        System.out.println(mctFromLeafValues(arr));
     }
 }

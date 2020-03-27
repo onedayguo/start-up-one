@@ -46,7 +46,7 @@ public class Leetcode2 {
     //leetcode 31 Next Permutation
     public static void nextPermutation(int[] nums) {
         int len = nums.length;
-        if (nums == null || len == 0 || len == 1) return;
+        if (len == 0 || len == 1) return;
         boolean isDesc = true;
         for (int i = 0; i < len -1 ; i++) {
             if (nums[i] < nums[i+1]) isDesc = false;
