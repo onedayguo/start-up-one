@@ -178,7 +178,19 @@ public class LeetCode {
         return true;
     }
 
-    //3.2  Sliding Window
+    /**
+     * @description: 3.Longest Substring Without Repeating Characters
+     * 思路：Sliding Window，这个思路更容易理解，和人思考的过程类似
+     *     1.新建一个Set集合用于存储已经遍历的字符
+     *     2.维护两个下标，一个是开始下标，一个是结束下标
+     *          1.判断当前set集合是否包含end节点的值
+     *              1.如果不包含，则把当前节点值加入set，更新最大长度
+     *              2.如果包含，则把开始节点值从set集合中移除
+     *     3.返回最大长度
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/29 23:04
+     */
     public int lengthOfLongestSubstring2(String s) {
         int n = s.length();
         Set<Character> set = new HashSet<>();//用来存储不重复子字符串
@@ -194,7 +206,7 @@ public class LeetCode {
         }
         return ans;
     }
-    //endregion
+
 
     // leetcode 4
     public double findMedianSortedArrays(int[] A, int[] B) {
