@@ -287,7 +287,7 @@ public class DynamicProgrammingEasy {
      * @auther: kami
      * @date: 2020/3/27 22:18
      */
-    public boolean stoneGame1(int[] p) {
+    public static boolean stoneGame1(int[] p) {
         int[] dp = Arrays.copyOf(p, p.length);;
         for (int d = 1; d < p.length; d++)
             for (int i = 0; i < p.length - d; i++)
@@ -295,7 +295,7 @@ public class DynamicProgrammingEasy {
         return dp[0] > 0;
     }
     public static void main(String[] args) {
-        int[] arr = {6,2,4};
-        System.out.println(mctFromLeafValues(arr));
+        int[] arr = {6,2,4,5,6,3,2,8,5,4,1,9,6,5,4,2,8,5    };
+        System.out.println(stoneGame1(arr));
     }
 }
