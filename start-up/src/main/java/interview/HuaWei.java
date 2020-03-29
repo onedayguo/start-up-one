@@ -159,21 +159,31 @@ public class HuaWei {
         Scanner in = new Scanner(System.in);
         while (in.hasNextInt()) {
             int a = in.nextInt();
-
+            allPremution(a);
         }
     }
 
 
-    private void allPremution(int n){
-        List<String> list = new ArrayList<>();
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 1; i <= n; i++) {
-            stack.push(i);
+    private static void allPremution(int n){
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(res,n,new ArrayList<>());
+        for (List<Integer> out:res) {
+            for (Integer in:out) {
+                System.out.print(in);
+            }
         }
-
     }
-    private void dfs(Stack<Integer> stack,List<String> list){
-
-
+    private static void dfs(List<List<Integer>> lists,int n,List<Integer> tempList){
+        if (tempList.size() == n){
+            lists.add(new ArrayList<>(tempList));
+        }else {
+            for (int i = 1; i <= n; i++) {
+                if (!tempList.contains(i)){
+                    tempList.add(i);
+                    dfs(lists,n,tempList);
+                    tempList.remove(tempList.size()-1);
+                }
+            }
+        }
     }
 }
