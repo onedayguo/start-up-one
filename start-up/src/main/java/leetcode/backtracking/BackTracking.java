@@ -1,9 +1,6 @@
 package leetcode.backtracking;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @Description: 回朔法
@@ -132,5 +129,34 @@ public class BackTracking {
         return ret;
     }
 
+    /**
+     * @description: 1079. Letter Tile Possibilities
+     * You have a set of tiles, where each tile has one letter tiles[i] printed on it.  Return the number of possible
+     * non-empty sequences of letters you can make.
+     * @return: 全排列个数
+     * @auther: kami
+     * @date: 2020/3/29 11:32
+     */
+    public int numTilePossibilities(String tiles) {
+        int[] count = new int[26];
+        for (char ch:tiles.toCharArray()) {
+            count[ch-'A']++;
+        }
+        return dfs(count);
+
+
+    }
+    private int dfs(int[] count){
+        int sum = 0;
+        for (int i = 0; i < 26; i++) {
+            if (count[i] > 0){
+                sum++;
+                count[i]--;
+                sum += dfs(count);
+                count[i]++;
+            }
+        }
+        return sum;
+    }
 }
 

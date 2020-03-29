@@ -137,21 +137,40 @@ public class LeetCode {
 
     //endregion
 
-    //region 3.Longest Substring Without Repeating Characters，给定字符串找出其中最长的无重复的子字符串的长度
-    //3.1 暴力破解， O(n^3)，
+    /**
+     * @description: 3.Longest Substring Without Repeating Characters 给定字符串找出其中最长的无重复的子字符串的长度
+     * 暴力破解， O(n^3)
+     * 思路：1.第一重for循环遍历字符串
+     *      2.第二重for循环遍历从当前字符往后计算是否有充福字符串，如果没有重复则更新 最大长度
+     * 优化：1.第二重循环中，可以改为如果发现有重复的字符再更新 最大长度，避免每次没有重复字符都要更新
+     *      2.时间复杂度过高，通不过LeetCode
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/29 22:47
+     */
     public int lengthOfLongestSubstring1(String s) {
         int n = s.length();//获取字符串长度
         int ans = 0;        //最长不重复字符串的长度
         for (int i = 0; i < n; i++)
-            for (int j = i + 1; j <= n; j++)
-                if (allUnique(s, i, j))
+            for (int j = i + 1; j <= n; j++){
+                if (allUnique(s, i, j)){
                     ans = Math.max(ans, j - i);
+//                    break;
+                }
+
+            }
         return ans;
     }
 
+    /**
+     * @description: 判断字符串从索引start到end是否有重复字符
+     * @return: 是否有重复字符
+     * @auther: kami
+     * @date: 2020/3/29 22:37
+     */
     public boolean allUnique(String s, int start, int end) {
         Set<Character> set = new HashSet<>();
-        for (int i = start; i < end; i++) {
+        for (int i = start; i <= end; i++) {
             Character ch = s.charAt(i);
             if (set.contains(ch)) return false;
             set.add(ch);

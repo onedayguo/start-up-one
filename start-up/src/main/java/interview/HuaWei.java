@@ -147,23 +147,12 @@ public class HuaWei {
         return words;
     }
 
-
-
-
-
-
-
-
-
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNextInt()) {
-            int a = in.nextInt();
-            allPremution(a);
-        }
-    }
-
-
+    /**
+     * @description: 华为笔试题
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/29 20:31
+     */
     private static void allPremution(int n){
         List<List<Integer>> res = new ArrayList<>();
         dfs(res,n,new ArrayList<>());
@@ -186,4 +175,33 @@ public class HuaWei {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextInt()) {
+            int a = in.nextInt();
+            allPremution(a);
+        }
+    }
+
 }
