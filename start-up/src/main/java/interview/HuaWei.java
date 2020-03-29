@@ -2,9 +2,7 @@ package interview;
 
 import com.sun.deploy.util.StringUtils;
 
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Auther: kami
@@ -149,13 +147,33 @@ public class HuaWei {
         return words;
     }
 
+
+
+
+
+
+
+
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        while (in.hasNext()){
-            String word = in.nextLine();
-            System.out.println(lengthOfLastWord(word));
+        while (in.hasNextInt()) {
+            int a = in.nextInt();
+
+        }
+    }
+
+
+    private void allPremution(int n){
+        List<String> list = new ArrayList<>();
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 1; i <= n; i++) {
+            stack.push(i);
         }
 
     }
+    private void dfs(Stack<Integer> stack,List<String> list){
 
+
+    }
 }
