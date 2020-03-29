@@ -25,7 +25,9 @@ public class LeetCode {
     public int[] twoSum2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], i);
+            if (!map.containsKey(nums[i])){
+                map.put(nums[i], i);
+            }
         }
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
@@ -68,7 +70,13 @@ public class LeetCode {
         }
     }
 
-    //region 2.1  O(max(m,n))，虚拟头结点，进位
+
+    /**
+     * @description: 2.1  O(max(m,n))，虚拟头结点，进位
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/29 22:22
+     */
     public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         ListNode dummyHead = new ListNode(0);//返回链表的虚拟头结点
         ListNode p = l1, q = l2, curr = dummyHead;
@@ -89,7 +97,42 @@ public class LeetCode {
         }
         return dummyHead.next;
     }
-    //endregion
+
+    /**
+     * @description: 2.Add Two Numbers
+     * 思路：1.新建一个虚拟头结点，遍历量表1，2，计算当前节点之和，计算个位数字，放在尾结点后
+     *      2.总和 除以10取整拿到进位，再累加当前节点之和，取个位数字放在尾结点后
+     *      3.循环第2步，直到链表1,2都遍历完
+     *      4.计算剩余进位，如果有，放在尾结点
+     *      5.返回虚拟头结点的下一节点
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/29 22:20
+     */
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        ListNode c1 = l1;
+        ListNode c2 = l2;
+        ListNode sentinel = new ListNode(0);
+        ListNode d = sentinel;
+        int sum = 0;
+        while (c1 != null || c2 != null) {
+            sum /= 10;
+            if (c1 != null) {
+                sum += c1.val;
+                c1 = c1.next;
+            }
+            if (c2 != null) {
+                sum += c2.val;
+                c2 = c2.next;
+            }
+            d.next = new ListNode(sum % 10);
+            d = d.next;
+        }
+        if (sum / 10 == 1)
+            d.next = new ListNode(1);
+        return sentinel.next;
+    }
+
 
 
     //endregion
