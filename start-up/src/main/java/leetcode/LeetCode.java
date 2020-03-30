@@ -207,7 +207,6 @@ public class LeetCode {
         return ans;
     }
 
-
     // leetcode 4
     public double findMedianSortedArrays(int[] A, int[] B) {
         int lenA = A.length;

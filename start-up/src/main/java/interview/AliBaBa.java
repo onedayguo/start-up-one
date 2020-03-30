@@ -92,9 +92,6 @@ public class AliBaBa {
         System.out.print(sum);
     }
 
-
-
-
     /**
      * @description: 排列组合
      * 链接：https://www.nowcoder.com/discuss/389778
