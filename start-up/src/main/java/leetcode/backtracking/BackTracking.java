@@ -188,6 +188,64 @@ public class BackTracking {
         return true;
     }
 
+    /**
+     * @description: 126. Word Ladder II
+     *Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s)
+     *  from beginWord to endWord, such that:
+     * Only one letter can be changed at a time
+     * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+     * Note:
+     * Return an empty list if there is no such transformation sequence.
+     * All words have the same length.
+     * All words contain only lowercase alphabetic characters.
+     * You may assume no duplicates in the word list.
+     * You may assume beginWord and endWord are non-empty and are not the same.
+     * @return:
+     * @auther: kami
+     * @date: 2020/3/31 22:16
+     */
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(beginWord) || !wordList.contains(endWord)) return new ArrayList<>();
+        int len = wordList.size();
+        for (int i = 0; i < len; i++) {
+            
+        }
+        return null;
+    }
+
+    private void backTrackFindLadders(List<List<String>> res,List<String> wordList,String currentWord,int nextIndex,String endWord,
+                                      List<String> tempList){
+        if (tempList.contains(endWord)){
+            res.add(new ArrayList<>(tempList));
+        }else {
+            String nextWord = wordList.get(nextIndex);
+            if (oneBitDiff(currentWord,nextWord)){
+                tempList.add(nextWord);
+                for (int i = 0; i < 10; i++) {
+                    
+                }
+                backTrackFindLadders(res,wordList,nextWord,nextIndex+1,endWord,tempList);
+                tempList.remove(nextIndex);
+            }
+        }
+
+
+    }
+
+    private boolean oneBitDiff(String a,String b){
+        int len = a.length();
+        int count = 0;
+        for (int i = 0; i < len; i++) {
+            if (count > 1){
+                return false;
+            }else {
+                if (a.charAt(i) != b.charAt(i)){
+                    count++;
+                }
+            }
+        }
+        return true;
+    }
 
 }
 
