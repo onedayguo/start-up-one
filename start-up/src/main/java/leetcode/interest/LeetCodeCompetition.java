@@ -1,5 +1,8 @@
 package leetcode.interest;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @Description: LeetCode30天挑战赛，每天一道题，UTC-8零点开始
  * @Auther: kami
@@ -39,7 +42,27 @@ public class LeetCodeCompetition {
      * @auther: kami
      * @date: 2020/4/3 8:03
      */
-    public boolean isHappy(int n) {
+    public static boolean isHappy(int n) {
+        boolean notHappy = true;
+        char[] nChar = String.valueOf(n).toCharArray();
+        Set<Integer> set = new HashSet<>();
+        while (notHappy){
+            int sum = 0;
+            for (char i:nChar) {
+                sum += Math.pow(i-'0',2);
+            }
+            if (sum == 1) return true;
+            if (set.contains(sum)){
+                return false;
+            }else {
+                set.add(sum);
+            }
+            nChar = String.valueOf(sum).toCharArray();
+        }
+        return false;
+    }
 
+    public static void main(String[] args) {
+        System.out.print(isHappy(19));
     }
 }
