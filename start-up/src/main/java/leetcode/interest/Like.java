@@ -1,12 +1,9 @@
 package leetcode.interest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Like {
-    public static void main(String[] args) {
-
-        printRectangle(4);
-
-    }
-
     /**
      * 在一个二维数组中（每个一维数组的长度相同），
      * 每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
@@ -193,4 +190,43 @@ public class Like {
         }
     }
 
+    /**
+     * @description: 全排列再复习
+     * 思想：1.使用深度优先遍历思想
+     *      2.一般需要额外数组记录使用情况
+     *      3.dfs方法第一行要确定更新结果集的条件，符合条件要更新结果集
+     *      3.遍历数组，满足条件的加入临时单个结果，更新状态，调用DFS，调用后恢复调用前的状态
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/5 23:49
+     */
+    public static void printAllPremuim(char[] abc){
+        List<StringBuilder> list = new ArrayList<>();
+        boolean[] used = new boolean[abc.length];
+        dfs(list,abc,used,new StringBuilder());
+        for (StringBuilder str:list) {
+            System.out.println(str);
+        }
+    }
+
+    private static void dfs(List<StringBuilder> list,char[] abc,boolean[] used,StringBuilder str){
+        if (str.length() == abc.length){
+            list.add(new StringBuilder(str));
+            return;
+        }
+        for (int j = 0; j < abc.length; j++) {
+            if (!used[j]){
+                str.append(abc[j]);
+                used[j] = true;
+                dfs(list,abc,used,str);
+                str.deleteCharAt(str.length()-1);
+                used[j] = false;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        char[] acv = {'a','b','c'};
+        printAllPremuim(acv);
+
+    }
 }
