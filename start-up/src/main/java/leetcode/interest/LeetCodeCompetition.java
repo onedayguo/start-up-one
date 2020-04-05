@@ -62,6 +62,47 @@ public class LeetCodeCompetition {
         return false;
     }
 
+    /**
+     * @description: Maximum Subarray
+     * Given an integer array nums, find the contiguous subarray (containing at least one number)
+     * which has the largest sum and return its sum.
+     * If you have figured out the O(n) solution, try coding another solution using the divide and conquer
+     * approach, which is more subtle.
+     * @return: 子序列最大和
+     * @auther: kami
+     * @date: 2020/4/5 17:13
+     */
+    public int maxSubArrayBase(int[] nums) {
+        int sum = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            int temp = 0;
+            for (int j = i; j < nums.length; j++) {
+                temp += nums[j];
+                sum = Math.max(temp,sum);
+            }
+        }
+        return sum;
+    }
+    /**
+     * @description: 动态规划版
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/5 18:00
+     */
+    public int maxSubArrayMid(int[] nums) {
+        int maxsum, maxhere;
+        maxsum = maxhere = nums[0];   //初始化最大和为a【0】
+        for (int i=1; i<nums.length; i++) {
+            if (maxhere <= 0)
+                maxhere = nums[i];  //如果前面位置最大连续子序列和小于等于0，则以当前位置i结尾的最大连续子序列和为a[i]
+            else
+                maxhere += nums[i]; //如果前面位置最大连续子序列和大于0，则以当前位置i结尾的最大连续子序列和为它们两者之和
+            if (maxhere > maxsum) {
+                maxsum = maxhere;  //更新最大连续子序列和
+            }
+        }
+        return maxsum;
+    }
     public static void main(String[] args) {
         System.out.print(isHappy(19));
     }
