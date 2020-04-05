@@ -1,7 +1,6 @@
 package leetcode.interest;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Description: LeetCode30天挑战赛，每天一道题，UTC-8零点开始
@@ -10,28 +9,6 @@ import java.util.Set;
  * @Version: 1.0.0
  */
 public class LeetCodeCompetition {
-    /**
-     * @description:  Single Number
-     * Given a non-empty array of integers, every element appears twice except for one. Find that single one.
-     * Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
-     * @return:
-     * @auther: kami
-     * @date: 2020/4/2 22:48
-     */
-    public int singleNumber(int[] nums) {
-        int res = 0;
-        for (int i:nums) {
-            res ^= i;
-        }
-        return res;
-    }
-    public int singleNumber1(int[] nums) {
-        for (int i = 1; i < nums.length; i++) {
-            nums[0] ^= nums[i];
-        }
-        return nums[0];
-    }
-
     /**
      * @description: Happy Number
      * Write an algorithm to determine if a number is "happy".
@@ -63,6 +40,29 @@ public class LeetCodeCompetition {
     }
 
     /**
+     * @description:  Single Number
+     * Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+     * Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/2 22:48
+     */
+    public int singleNumber(int[] nums) {
+        int res = 0;
+        for (int i:nums) {
+            res ^= i;
+        }
+        return res;
+    }
+
+    public int singleNumber1(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            nums[0] ^= nums[i];
+        }
+        return nums[0];
+    }
+
+    /**
      * @description: Maximum Subarray
      * Given an integer array nums, find the contiguous subarray (containing at least one number)
      * which has the largest sum and return its sum.
@@ -83,6 +83,7 @@ public class LeetCodeCompetition {
         }
         return sum;
     }
+
     /**
      * @description: 动态规划版
      * @return:
@@ -92,7 +93,7 @@ public class LeetCodeCompetition {
     public int maxSubArrayMid(int[] nums) {
         int maxsum, maxhere;
         maxsum = maxhere = nums[0];   //初始化最大和为a【0】
-        for (int i=1; i<nums.length; i++) {
+        for (int i=1; i< nums.length; i++) {
             if (maxhere <= 0)
                 maxhere = nums[i];  //如果前面位置最大连续子序列和小于等于0，则以当前位置i结尾的最大连续子序列和为a[i]
             else
@@ -103,7 +104,42 @@ public class LeetCodeCompetition {
         }
         return maxsum;
     }
-    public static void main(String[] args) {
-        System.out.print(isHappy(19));
+
+    /**
+     * @description: Move Zeroes
+     * iven an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+     * You must do this in-place without making a copy of the array.
+     * Minimize the total number of operations.
+     * @return: 把0移动到尾部的数组
+     * @auther: kami
+     * @date: 2020/4/5 21:54
+     */
+    public static void moveZeroes(int[] nums) {
+        List<Integer> indexList = new ArrayList<>();
+        indexList.add(0);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) indexList.add(i);
+        }
+        int pre = 0,next = 0;
+        int size = indexList.size();
+        for (int i = 0; i < nums.length; i++) {
+            if (next < size-1 && i > indexList.get(next)){
+                pre++;
+                next = pre+1;
+            }
+            if (indexList.get(pre) < i && i < indexList.get(next)){
+                nums[i-pre] = nums[i];
+            }else if (i > indexList.get(next)){
+                nums[i-next] = nums[i];
+            }
+        }
+        Arrays.fill(nums,nums.length-size+1,nums.length,0);
     }
+
+    public static void main(String[] args) {
+        int[] arr = {2,0,5,7,4,0,5,6,3,0,4,0,2,5,0,8,5,8,7,0,1,5};
+        moveZeroes(arr);
+        System.out.print("end");
+    }
+
 }
