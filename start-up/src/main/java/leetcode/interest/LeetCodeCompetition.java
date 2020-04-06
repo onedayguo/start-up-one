@@ -124,6 +124,26 @@ public class LeetCodeCompetition {
         }
     }
 
+    /**
+     * @description: Best Time to Buy and Sell Stock II
+     * Say you have an array for which the ith element is the price of a given stock on day i.
+     * Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one
+     * and sell one share of the stock multiple times).
+     * Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+     * @return: 最大利润
+     * @auther: kami
+     * @date: 2020/4/6 11:40
+     */
+    public int maxProfit(int[] prices) {
+        int res = 0;
+        for (int i = 0; i < prices.length-1; i++) {
+            if (prices[i] < prices[i+1]){
+                res += (prices[i+1]-prices[i]);
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int[] arr = {2,0,5,7,4,0,5,6,3,0,4,0,2,5,0,8,5,8,7,0,1,5};
         int[] arr1 = {0,1};
