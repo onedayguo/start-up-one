@@ -240,6 +240,7 @@ public class Like {
         for (int k = 1; k < 4; ++k) {
             if (s.length() >= k){
                 int val = Integer.parseInt(s.substring(0, k));
+                //保证在0-255，另外保证不会是01，因为“01”->int 1
                 if (val < 256 && k == String.valueOf(val).length()) {
                     String outNew = out + s.substring(0, k) + (partIndex == 3 ? "" : ".");
                     helper(s.substring(k), partIndex + 1, outNew, res);
