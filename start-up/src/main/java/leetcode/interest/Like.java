@@ -203,13 +203,12 @@ public class Like {
     public static void printAllPremuim(char[] abc){
         List<StringBuilder> list = new ArrayList<>();
         boolean[] used = new boolean[abc.length];
-        dfs(list,abc,used,new StringBuilder());
+        dfsAll(list,abc,used,new StringBuilder());
         for (StringBuilder str:list) {
             System.out.println(str);
         }
     }
-
-    private static void dfs(List<StringBuilder> list,char[] abc,boolean[] used,StringBuilder str){
+    private static void dfsAll(List<StringBuilder> list,char[] abc,boolean[] used,StringBuilder str){
         if (str.length() == abc.length){
             list.add(new StringBuilder(str));
             return;
@@ -218,15 +217,41 @@ public class Like {
             if (!used[j]){
                 str.append(abc[j]);
                 used[j] = true;
-                dfs(list,abc,used,str);
+                dfsAll(list,abc,used,str);
                 str.deleteCharAt(str.length()-1);
                 used[j] = false;
             }
         }
     }
+
+    public static void restoreIpAddress(String ip){
+        List<String> res = new ArrayList<String>();
+        helper(ip, 0, "", res);
+        for (String str:res) {
+            System.out.println(str);
+        }
+
+    }
+    public static void helper(String s, int partIndex, String out, List<String> res) {
+        if (partIndex == 4) {
+            if (s.isEmpty()) res.add(out);
+            return;
+        }
+        for (int k = 1; k < 4; ++k) {
+            if (s.length() >= k){
+                int val = Integer.parseInt(s.substring(0, k));
+                if (val < 256 && k == String.valueOf(val).length()) {
+                    String outNew = out + s.substring(0, k) + (partIndex == 3 ? "" : ".");
+                    helper(s.substring(k), partIndex + 1, outNew, res);
+                }
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
-        char[] acv = {'a','b','c'};
-        printAllPremuim(acv);
+        String ip = "19216801";
+        restoreIpAddress(ip);
 
     }
 }
