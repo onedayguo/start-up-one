@@ -115,29 +115,18 @@ public class LeetCodeCompetition {
      * @date: 2020/4/5 21:54
      */
     public static void moveZeroes(int[] nums) {
-        List<Integer> indexList = new ArrayList<>();
-        indexList.add(0);
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) indexList.add(i);
-        }
-        int pre = 0,next = 0;
-        int size = indexList.size();
-        for (int i = 0; i < nums.length; i++) {
-            if (next < size-1 && i > indexList.get(next)){
-                pre++;
-                next = pre+1;
-            }
-            if (indexList.get(pre) < i && i < indexList.get(next)){
-                nums[i-pre] = nums[i];
-            }else if (i > indexList.get(next)){
-                nums[i-next] = nums[i];
+        for (int i = 0,j = 0; i < nums.length; ++i) {
+            if (nums[i] != 0){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j++] = temp;
             }
         }
-        Arrays.fill(nums,nums.length-size+1,nums.length,0);
     }
 
     public static void main(String[] args) {
         int[] arr = {2,0,5,7,4,0,5,6,3,0,4,0,2,5,0,8,5,8,7,0,1,5};
+        int[] arr1 = {0,1};
         moveZeroes(arr);
         System.out.print("end");
     }
