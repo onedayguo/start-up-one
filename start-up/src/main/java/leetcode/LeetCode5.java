@@ -681,7 +681,24 @@ public class LeetCode5 {
      * @date: 2020/4/7 22:42
      */
     public void rotate(int[][] matrix) {
-
+        int length = matrix.length;
+        //以对角线旋转
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        //每行以行中心做翻转
+        int halfLen = length >> 1;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < halfLen; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][length-j-1];
+                matrix[i][length-j-1] = temp;
+            }
+        }
     }
 
     /**
