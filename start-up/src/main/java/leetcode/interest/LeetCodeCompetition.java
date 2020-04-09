@@ -144,6 +144,36 @@ public class LeetCodeCompetition {
         return res;
     }
 
+    /**
+     * @description:  Group Anagrams
+     * Given an array of strings, group anagrams together.
+     * Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+     * Output:
+     * [
+     *   ["ate","eat","tea"],
+     *   ["nat","tan"],
+     *   ["bat"]
+     * ]
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/9 21:51
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map = new HashMap<>();
+        for (String s:strs) {
+            int[] arr = new int[26];
+            for (int i = 0,len=s.length(); i < len; i++) {
+                arr[s.charAt(i)-'a']++;
+            }
+            String strKey = Arrays.toString(arr);
+            List<String> tempList = map.getOrDefault(strKey, new LinkedList<>());
+            tempList.add(s);
+            map.put(strKey,tempList);
+        }
+        return new LinkedList<>(map.values());
+    }
+
+
     public static void main(String[] args) {
         int[] arr = {2,0,5,7,4,0,5,6,3,0,4,0,2,5,0,8,5,8,7,0,1,5};
         int[] arr1 = {0,1};
