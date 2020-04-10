@@ -1,4 +1,5 @@
 package interview;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,11 +15,53 @@ public class AliBaBa {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
-            int nmk = Integer.parseInt(in.nextLine());
-            String nums = in.nextLine();
-            maxSub(nmk,nums);
+            String nHitT = in.nextLine();
+            String hpStr = in.nextLine();
+            maxCount(nHitT,hpStr);
         }
     }
+
+    private static void maxCount(String nHitT,String hpStr){
+
+        String[] nHitTStrArr = nHitT.split(" ");
+        int n = Integer.parseInt(nHitTStrArr[0]);
+        int hit = Integer.parseInt(nHitTStrArr[1]);
+        int t = Integer.parseInt(nHitTStrArr[2]);
+
+        String[] hps = hpStr.split(" ");
+        int[] hpArr = new int[n];
+        for (int i = 0; i < n; i++) {
+            hpArr[i] = Integer.parseInt(hps[i]);
+        }
+        Arrays.sort(hpArr);
+        int count = 0;
+        for (int i = 0; i < n && t > 0; i++) {
+            while (hpArr[i] > 0 && t > 0){
+                hpArr[i] -= hit;
+                t--;
+            }
+            if (hpArr[i] <= 0) count++;
+        }
+        System.out.println(count);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
