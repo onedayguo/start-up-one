@@ -31,4 +31,23 @@ public class NewCoder {
         }
         return false;
     }
+
+    /**
+     * @description: 替换空格
+     * 请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.
+     * 则经过替换之后的字符串为We%20Are%20Happy。
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/11 22:57
+     */
+    public String replaceSpace(StringBuffer str) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int lent = str.length();
+        for (int i = 0; i < lent; i++) {
+            char ichar = str.charAt(i);
+            Object o = ichar == ' ' ? "%20":ichar;
+            stringBuilder.append(o);
+        }
+        return stringBuilder.toString();
+    }
 }
