@@ -349,18 +349,18 @@ public class LeetCode {
         }
 
         if (firstPos) {
-            long result = Long.valueOf(str.substring(1, indexEnd));
+            long result = Long.parseLong(str.substring(1, indexEnd));
             if (result > 1 << 31 - 1 || result < -1 << 31) return 0;
             else return (int) result;
         }
         if (firstNeg) {
             String s = str.substring(1, indexEnd);
-            long result = Long.valueOf(str.substring(1, indexEnd));
+            long result = Long.parseLong(str.substring(1, indexEnd));
             if (result > 1 << 31 - 1 || result < -1 << 31) return 0;
             else return (int) -result;
         }
 
-        long last = Long.valueOf(str.substring(0, indexEnd));
+        long last = Long.parseLong(str.substring(0, indexEnd));
         if (last > 1 << 31 - 1 || last < -1 << 31) return 0;
         return (int) last;
 
