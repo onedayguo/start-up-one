@@ -173,6 +173,33 @@ public class LeetCodeCompetition {
         return new LinkedList<>(map.values());
     }
 
+    /**
+     * @description: Counting Elements
+     * Given an integer array arr, count element x such that x + 1 is also in arr.
+     * If there're duplicates in arr, count them seperately.
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/11 23:40
+     */
+    public int countElements(int[] arr) {
+        int count = 0;
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i:arr) {
+            int tempCount = map.get(i);
+            if (map.containsKey(i)){
+                map.put(i,tempCount+1);
+            }else {
+                map.put(i,0);
+            }
+        }
+        for (Map.Entry<Integer, Integer> item:map.entrySet()) {
+            if (map.containsKey(item.getKey()+1)){
+                count += item.getValue();
+            }
+        }
+        return count;
+    }
+
 
     public static void main(String[] args) {
         int[] arr = {2,0,5,7,4,0,5,6,3,0,4,0,2,5,0,8,5,8,7,0,1,5};
