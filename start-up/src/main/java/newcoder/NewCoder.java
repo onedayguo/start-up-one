@@ -1,5 +1,8 @@
 package newcoder;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * @Description: 牛客剑指offer
  * @Auther: kami
@@ -49,5 +52,31 @@ public class NewCoder {
             stringBuilder.append(o);
         }
         return stringBuilder.toString();
+    }
+
+
+   public static class ListNode {
+       int val;
+       ListNode next = null;
+       ListNode(int val) {
+           this.val = val;
+       }
+    }
+
+    /**
+     * @description: 从尾到头打印链表
+     * 输入一个链表，按链表从尾到头的顺序返回一个ArrayList。
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/11 23:05
+     */
+    public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        ArrayList<Integer> list = new ArrayList<>();
+        while (listNode != null){
+            list.add(listNode.val);
+            listNode = listNode.next;
+        }
+        Collections.reverse(list);
+        return list;
     }
 }
