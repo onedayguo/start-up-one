@@ -254,6 +254,47 @@ public class LeetCodeCompetition {
         }
         return sStack.equals(tStack);
     }
+
+    /**
+     * @description: Min Stack
+     * Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+     * push(x) -- Push element x onto stack.
+     * pop() -- Removes the element on top of the stack.
+     * top() -- Get the top element.
+     * getMin() -- Retrieve the minimum element in the stack.
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/12 12:27
+     */
+    class MinStack {
+        Stack<Integer> stack;
+        int min = Integer.MAX_VALUE;
+        /** initialize your data structure here. */
+        public MinStack() {
+            stack = new Stack<>();
+        }
+
+        public void push(int x) {
+            min = Math.min(x,min);
+            stack.push(x);
+        }
+
+        public void pop() {
+            stack.pop();
+            min = Integer.MAX_VALUE;
+            for (Integer i:stack) {
+                min = Math.min(min,i);
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return min;
+        }
+    }
     public static void main(String[] args) {
         int[] arr = {1,2,3};
         int count = countElements(arr);
