@@ -87,18 +87,6 @@ public class NewCoder {
         TreeNode right;
         TreeNode(int x) { val = x; }
     }
-    /**
-     * @description: 重建二叉树
-     * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
-     * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
-     * @return: 二叉树
-     * @auther: kami
-     * @date: 2020/4/11 23:13
-     */
-    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
-        return reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
-    }
-
     private TreeNode reConstructBinaryTree(int [] pre,int startPre,int endPre,int [] in,int startIn,int endIn) {
         if(startPre>endPre||startIn>endIn)
             return null;
@@ -111,5 +99,17 @@ public class NewCoder {
             }
 
         return root;
+    }
+
+    /**
+     * @description: 重建二叉树
+     * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+     * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+     * @return: 二叉树
+     * @auther: kami
+     * @date: 2020/4/11 23:13
+     */
+    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+        return reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
     }
 }
