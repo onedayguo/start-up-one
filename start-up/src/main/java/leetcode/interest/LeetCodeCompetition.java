@@ -315,7 +315,6 @@ public class LeetCodeCompetition {
         getDepth(root);
         return diameter;
     }
-
     // 此函数是返回树的最大深度
     private int getDepth(TreeNode root) {
         if (root == null)
@@ -325,6 +324,7 @@ public class LeetCodeCompetition {
         diameter = Math.max(diameter, l + r);
         return Math.max(l, r) + 1;
     }
+
 
 
     public static void main(String[] args) {
