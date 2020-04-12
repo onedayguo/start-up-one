@@ -1,5 +1,7 @@
 package leetcode;
 
+import leetcode.tree.Tree;
+
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,40 @@ public class LeetCodeTop100 {
         }
 
         return dp[n - 1];
+    }
+
+    class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+    }
+    /**
+     * @description: 98. Validate Binary Search Tree中等难度
+     * Given a binary tree, determine if it is a valid binary search tree (BST).
+     * Assume a BST is defined as follows:
+     * The left subtree of a node contains only nodes with keys less than the node's key.
+     * The right subtree of a node contains only nodes with keys greater than the node's key.
+     * Both the left and right subtrees must also be binary search trees.
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/12 23:40
+     */
+    public boolean isValidBST(TreeNode root) {
+        return helperIsValid(root,null);
+    }
+    private static boolean helperIsValid(TreeNode node, TreeNode parent){
+        if (node == null) return true;
+        boolean leftValid  = true,rightValid = true;
+        if (node.left != null ){
+            if (parent!=null){
+                leftValid = node.left.val < node.val && node.left.val > parent.val;
+            }else {
+                leftValid = node.left.val < node.val;
+            }
+        }
+        if (node.right != null) rightValid = node.right.val > node.val;
+        return leftValid && rightValid && helperIsValid(node.left,node) && helperIsValid(node.right,node);
     }
 
     public static void main(String[] args) {
