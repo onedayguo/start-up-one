@@ -295,6 +295,38 @@ public class LeetCodeCompetition {
             return min;
         }
     }
+
+    public class TreeNode {
+          int val;
+          TreeNode left;
+          TreeNode right;
+          TreeNode(int x) { val = x; }
+    }
+    /**
+     * @description: Diameter of Binary Tree
+     * Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary tree
+     * is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+     * @return: 两节点最长距离
+     * @auther: kami
+     * @date: 2020/4/12 12:28
+     */
+    int diameter = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        getDepth(root);
+        return diameter;
+    }
+
+    // 此函数是返回树的最大深度
+    private int getDepth(TreeNode root) {
+        if (root == null)
+            return 0;
+        int l = getDepth(root.left);
+        int r = getDepth(root.right);
+        diameter = Math.max(diameter, l + r);
+        return Math.max(l, r) + 1;
+    }
+
+
     public static void main(String[] args) {
         int[] arr = {1,2,3};
         int count = countElements(arr);
