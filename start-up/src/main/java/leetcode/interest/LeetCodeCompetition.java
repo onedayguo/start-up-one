@@ -224,6 +224,36 @@ public class LeetCodeCompetition {
         }
         return slow;
     }
+
+    /**
+     * @description: Backspace String Compare
+     * Given two strings S and T, return if they are equal when both are typed into empty text editors.
+     * # means a backspace character.
+     * @return: 
+     * @auther: kami
+     * @date: 2020/4/12 11:53
+     */
+    public boolean backspaceCompare(String S, String T) {
+        Stack<Character> sStack = new Stack<>();
+        Stack<Character> tStack = new Stack<>();
+        for (int i = 0,len=S.length(); i < len; i++) {
+            char ch = S.charAt(i);
+            if (ch != '#'){
+                sStack.push(ch);
+            }else if (!sStack.isEmpty()){
+                sStack.pop();
+            }
+        }
+        for (int i = 0,len=T.length(); i < len; i++) {
+            char ch = T.charAt(i);
+            if (ch != '#'){
+                tStack.push(ch);
+            }else if (!tStack.isEmpty()){
+                tStack.pop();
+            }
+        }
+        return sStack.equals(tStack);
+    }
     public static void main(String[] args) {
         int[] arr = {1,2,3};
         int count = countElements(arr);
