@@ -181,15 +181,14 @@ public class LeetCodeCompetition {
      * @auther: kami
      * @date: 2020/4/11 23:40
      */
-    public int countElements(int[] arr) {
+    public static int countElements(int[] arr) {
         int count = 0;
         Map<Integer,Integer> map = new HashMap<>();
         for (int i:arr) {
-            int tempCount = map.get(i);
             if (map.containsKey(i)){
-                map.put(i,tempCount+1);
+                map.put(i,map.get(i)+1);
             }else {
-                map.put(i,0);
+                map.put(i,1);
             }
         }
         for (Map.Entry<Integer, Integer> item:map.entrySet()) {
@@ -202,10 +201,9 @@ public class LeetCodeCompetition {
 
 
     public static void main(String[] args) {
-        int[] arr = {2,0,5,7,4,0,5,6,3,0,4,0,2,5,0,8,5,8,7,0,1,5};
-        int[] arr1 = {0,1};
-        moveZeroes(arr);
-        System.out.print("end");
+        int[] arr = {1,2,3};
+        int count = countElements(arr);
+        System.out.print(count);
     }
 
 }
