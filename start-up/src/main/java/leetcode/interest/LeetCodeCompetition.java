@@ -199,7 +199,31 @@ public class LeetCodeCompetition {
         return count;
     }
 
-
+    static class ListNode {
+          int val;
+          ListNode next;
+          ListNode(int x) { val = x; }
+    }
+    /**
+     * @description:  Middle of the Linked List 双指针--快慢指针
+     * Given a non-empty, singly linked list with head node head, return a middle node of linked list.
+     * If there are two middle nodes, return the second middle node.
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/12 10:55
+     */
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode quick = head;
+        while (quick.next != null && quick.next.next!= null){
+            slow = slow.next;
+            quick = quick.next.next;
+        }
+        if (quick.next != null){
+            slow = slow.next;
+        }
+        return slow;
+    }
     public static void main(String[] args) {
         int[] arr = {1,2,3};
         int count = countElements(arr);
