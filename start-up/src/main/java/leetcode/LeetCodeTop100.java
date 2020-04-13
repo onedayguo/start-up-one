@@ -93,20 +93,21 @@ public class LeetCodeTop100 {
      * @date: 2020/4/12 23:40
      */
     public boolean isValidBST(TreeNode root) {
-        return helperIsValid(root,null);
+        return helperIsValid(root,null,false);
     }
-    private static boolean helperIsValid(TreeNode node, TreeNode parent){
+    private static boolean helperIsValid(TreeNode node, TreeNode parent,boolean fromRight){
         if (node == null) return true;
         boolean leftValid  = true,rightValid = true;
         if (node.left != null ){
-            if (parent!=null){
+            if (parent!=null && fromRight){
                 leftValid = node.left.val < node.val && node.left.val > parent.val;
             }else {
                 leftValid = node.left.val < node.val;
             }
         }
         if (node.right != null) rightValid = node.right.val > node.val;
-        return leftValid && rightValid && helperIsValid(node.left,node) && helperIsValid(node.right,node);
+        return leftValid && rightValid && helperIsValid(node.left,node,false)
+                && helperIsValid(node.right,node,true);
     }
 
     public static void main(String[] args) {
