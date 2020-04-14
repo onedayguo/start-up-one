@@ -455,7 +455,7 @@ public class LeetCode {
         for (int i = 0; i <len -1 ; i++) {
             for (int j = i+1; j < len ; j++) {
                 int minHeight = Math.min(height[i],height[j]);
-                max = (j-i)*minHeight > max ? (j-i)*minHeight : max;
+                max = Math.max((j - i) * minHeight, max);
             }
         }
         return max;
@@ -493,7 +493,7 @@ public class LeetCode {
     //leetcode 13 Roman to Integer "MCMXCIV" -> 1994
     public int romanToInt(String s) {
         //int[] N = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
-        Map<Character,Integer> map = new HashMap();
+        Map<Character,Integer> map = new HashMap<>();
         map.put('M',1000);
         map.put('D',500);
         map.put('C',100);

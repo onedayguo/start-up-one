@@ -203,6 +203,7 @@ public class HuaWei {
             String str = in.nextLine();
             System.out.println(str);
         }
+        System.out.println(120);
     }
 
     /**
@@ -223,28 +224,11 @@ public class HuaWei {
 
     static int sum = 0;
     private static void printAllGroup(String str){
-        Map<Character,Integer> map = new HashMap<>();
-        for (char chr:str.toCharArray()) {
-            if (map.containsKey(chr)){
-                map.put(chr,map.get(chr)+1);
-            }else {
-                map.put(chr,1);
-            }
-        }
-        int sum = 1;
-        int size = map.size();
-        int noRepeat = jiecheng(size);
-
-        System.out.println(noRepeat);
 
     }
-    private static int jiecheng(int n){
-        int sum = 1;
-        while (n > 1){
-            sum *= n;
-            n--;
-        }
-        return sum;
+    private void dfs(String str,StringBuilder tempStr,List<StringBuilder> list,int bigin){
+        
     }
+
 
 }
