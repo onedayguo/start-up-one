@@ -102,6 +102,17 @@ public class LeetCodeTop100 {
         return isValidBST(root.left, minVal, root.val) && isValidBST(root.right, root.val, maxVal);
     }
 
+    /**
+     * @description: 96. Unique Binary Search Trees
+     * Given n, how many structurally unique BST's (binary search trees) that store values 1 ... n?
+     * @return: 
+     * @auther: kami
+     * @date: 2020/4/14 14:29
+     */
+    public int numTrees(int n) {
+        return 0;
+    }
+
     public static void main(String[] args) {
         String s = "cars";
         List<String> list = new ArrayList<>();

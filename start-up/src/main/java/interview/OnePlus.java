@@ -9,11 +9,13 @@ import java.util.Scanner;
  * @Version: 1.0.0
  */
 public class OnePlus {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
 
         }
+        Thread.sleep(00);
+
     }
 
 

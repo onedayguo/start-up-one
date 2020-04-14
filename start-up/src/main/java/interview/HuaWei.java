@@ -58,6 +58,8 @@ public class HuaWei {
 //        }
 //    }
     //1.
+
+
     public static void pairAB(int[] a,int[] b,int r){
         StringBuilder res = new StringBuilder();
         int aLength = a.length;
@@ -198,9 +200,51 @@ public class HuaWei {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         while (in.hasNextInt()) {
-            int a = in.nextInt();
-            allPremution(a);
+            String str = in.nextLine();
+            System.out.println(str);
         }
+    }
+
+    /**
+     * @description: 1.爬楼梯
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/14 20:00
+     */
+    private static void countMethod(int n){
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i < n+1; i++) {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        System.out.println(dp[n]);
+    }
+
+    static int sum = 0;
+    private static void printAllGroup(String str){
+        Map<Character,Integer> map = new HashMap<>();
+        for (char chr:str.toCharArray()) {
+            if (map.containsKey(chr)){
+                map.put(chr,map.get(chr)+1);
+            }else {
+                map.put(chr,1);
+            }
+        }
+        int sum = 1;
+        int size = map.size();
+        int noRepeat = jiecheng(size);
+
+        System.out.println(noRepeat);
+
+    }
+    private static int jiecheng(int n){
+        int sum = 1;
+        while (n > 1){
+            sum *= n;
+            n--;
+        }
+        return sum;
     }
 
 }
