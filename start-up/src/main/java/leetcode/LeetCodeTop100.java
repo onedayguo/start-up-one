@@ -158,26 +158,31 @@ public class LeetCodeTop100 {
      * @date: 2020/4/17 7:34
      */
     public List<Integer> topKFrequent(int[] nums, int k) {
-        class KetFrequency {
-            int key;
-            int frequency;
-            public KetFrequency(int key){
-                this.key = key;
-            }
+        // build hash map : character and how often it appears
+        HashMap<Integer, Integer> count = new HashMap<>();
+        for (int n: nums) {
+            count.put(n, count.getOrDefault(n, 0) + 1);
         }
-        PriorityQueue<KetFrequency> queue = new PriorityQueue<>(new Comparator<KetFrequency>() {
-            @Override
-            public int compare(KetFrequency o1, KetFrequency o2) {
-                return o2.frequency-o1.frequency;
-            }
-        });
-        for (int i = 0; i < nums.length; i++) {
-            if (queue.contains(new KetFrequency(i))){
-//                queue.p
-            }
+
+        // init heap 'the less frequent element first'
+        PriorityQueue<Integer> heap =
+                new PriorityQueue<Integer>((n1, n2) -> count.get(n1) - count.get(n2));
+
+        // keep k top frequent elements in the heap
+        for (int n: count.keySet()) {
+            heap.add(n);
+            if (heap.size() > k)
+                heap.poll();
         }
-        return null;
+
+        // build output list
+        List<Integer> top_k = new LinkedList<>();
+        while (!heap.isEmpty())
+            top_k.add(heap.poll());
+        Collections.reverse(top_k);
+        return top_k;
     }
+
 
     public static void main(String[] args) {
         String s = "cars";
