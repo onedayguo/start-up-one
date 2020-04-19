@@ -376,8 +376,7 @@ public class LeetCodeTop100 {
 //        return isMirrorRecursive(root,root);
         return isMirrorIteration(root);
     }
-
-
+    
     /**
      * @discription 镜像判断，递归性判断 Recursive
      * @date 2020/4/19 18:57
@@ -416,6 +415,31 @@ public class LeetCodeTop100 {
             q.add(t2.left);
         }
         return true;
+    }
+
+    /**
+     * @description: 560. Subarray Sum Equals K
+     * Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose
+     * sum equals to k.
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/19 19:08
+     */
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int tempSum = nums[i];
+            if (tempSum == k) {
+                count++;
+            }
+            for (int j = i+1; j < nums.length; j++) {
+                tempSum += nums[j];
+                if (tempSum == k){
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     public static void main(String[] args) {
