@@ -649,7 +649,8 @@ public class LeetCode5 {
     }
 
     /**
-     * @description: 171. Excel Sheet Column Number,Given a column title as appear in an Excel sheet, return its corresponding column number.
+     * @description: 171. Excel Sheet Column Number,Given a column title as appear in an Excel sheet, return its
+     * corresponding column number.
      *      A -> 1
      *     B -> 2
      *     C -> 3
