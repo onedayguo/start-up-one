@@ -353,6 +353,70 @@ public class LeetCodeTop100 {
         return dp[sum];
     }
 
+    /**
+     * @description: 101. Symmetric Tree
+     * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+     * For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+     *     1
+     *    / \
+     *   2   2
+     *  / \ / \
+     * 3  4 4  3
+     * But the following [1,2,2,null,3,null,3] is not:
+     *     1
+     *    / \
+     *   2   2
+     *    \   \
+     *    3    3
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/19 16:16
+     */
+    public boolean isSymmetric(TreeNode root) {
+//        return isMirrorRecursive(root,root);
+        return isMirrorIteration(root);
+    }
+
+
+    /**
+     * @discription 镜像判断，递归性判断 Recursive
+     * @date 2020/4/19 18:57
+     **/
+    private static boolean isMirrorRecursive(TreeNode left,TreeNode right){
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        return left.val == right.val
+                && isMirrorRecursive(left.left,right.right)
+                && isMirrorRecursive(left.right,right.left);
+    }
+
+    /**
+     * @discription 镜像判断，迭代性判断
+     * Instead of recursion, we can also use iteration with the aid of a queue. Each two consecutive nodes in the queue
+     * should be equal, and their subtrees a mirror of each other. Initially, the queue contains root and root. Then the
+     * algorithm works similarly to BFS, with some key differences. Each time, two nodes are extracted and their values
+     * compared. Then, the right and left children of the two nodes are inserted in the queue in opposite order. The
+     * algorithm is done when either the queue is empty, or we detect that the tree is not symmetric (i.e. we pull out
+     * two consecutive nodes from the queue that are unequal).
+     * @date 2020/4/19 18:59
+     **/
+    private static boolean isMirrorIteration(TreeNode root){
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode t1 = q.poll();
+            TreeNode t2 = q.poll();
+            if (t1 == null && t2 == null) continue;
+            if (t1 == null || t2 == null) return false;
+            if (t1.val != t2.val) return false;
+            q.add(t1.left);
+            q.add(t2.right);
+            q.add(t1.right);
+            q.add(t2.left);
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         boolean[] am = new boolean[10];
