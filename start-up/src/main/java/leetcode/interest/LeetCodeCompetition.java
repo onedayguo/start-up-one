@@ -360,7 +360,30 @@ public class LeetCodeCompetition {
         return queue.isEmpty() ? 0:queue.peek();
     }
 
+    /**
+     * @description: Contiguous Array
+     * Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/22 22:46
+     */
+    public int findMaxLength(int[] nums) {
+        //dp[i][0]:到第i个数位置 0的个数，dp[i][0]:1的个数
+        int[][] dp = new int[nums.length][2];
+        int zero = 0;
+        int one = 0;
+        for (int i = 0; i < nums.length; i++) {
+            dp[i][0] = nums[i] == 0 ? ++zero:zero;
+            dp[i][1] = nums[i] == 1 ? ++one:one;
+        }
+        for (int i = 0; i < nums.length/2; i++) {
+            int zeroTemp = dp[nums.length-i-1][0] - dp[i][0];
+            int oneTemp = dp[nums.length-i-1][1] - dp[i][1];
+            if (zeroTemp == oneTemp) return zeroTemp;
+        }
+        return 2;
 
+    }
 
     public static void main(String[] args) {
         PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
