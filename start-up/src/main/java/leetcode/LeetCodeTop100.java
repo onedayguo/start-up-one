@@ -502,14 +502,57 @@ public class LeetCodeTop100 {
      * @date: 2020/4/22 6:50
      */
     public int[] maxSlidingWindow(int[] nums, int k) {
+        return maxSlidingWindowBruteForce(nums,k);
+    }
+    /**
+     * @description: 239. Sliding Window Maximum 暴力破解
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/22 20:06
+     */
+    private int[] maxSlidingWindowBruteForce(int[] nums,int k){
         int resLen = nums.length-k+1;
         int[] resArr = new int[resLen];
-        List<Integer> slidList = new LinkedList<>();
-
-        int count = 0;
-        for (int i = 0; i < nums.length; i++) {
-            while (slidList.isEmpty() || slidList.get)
+        for (int i = 0; i < resLen; i++) {
+            int max = Integer.MIN_VALUE;
+            for (int j = 0; j < k; j++) {
+                max = Math.max(max,nums[i+j]);
+            }
+            resArr[i] = max;
         }
+        return resArr;
+    }
+    /**
+     * @description: 队列
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/22 21:31
+     */
+    public int[] maxSlidingWindowDeque(int[] a, int k) {
+        if (a == null || k <= 0) {
+            return new int[0];
+        }
+        int n = a.length;
+        int[] resArr = new int[n-k+1];
+        int resIndex = 0;
+        // store index
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < a.length; i++) {
+            // remove numbers out of range k
+            while (!q.isEmpty() && q.peek() < i - k + 1) {
+                q.poll();
+            }
+            // remove smaller numbers in k range as they are useless
+            while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
+                q.pollLast();
+            }
+            // q contains index... r contains content
+            q.offer(i);
+            if (i >= k - 1) {
+                resArr[resIndex++] = a[q.peek()];
+            }
+        }
+        return resArr;
     }
 
     public static void main(String[] args) {
