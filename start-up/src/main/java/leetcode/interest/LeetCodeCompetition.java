@@ -1,6 +1,7 @@
 package leetcode.interest;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @Description: LeetCode30天挑战赛，每天一道题，UTC-8零点开始
@@ -325,12 +326,57 @@ public class LeetCodeCompetition {
         return Math.max(l, r) + 1;
     }
 
+    /**
+     * @description: week2.5  Last Stone Weight
+     * We have a collection of stones, each stone has a positive integer weight.
+     * Each turn, we choose the two heaviest stones and smash them together.  Suppose the stones have weights x and y
+     * with x <= y.  The result of this smash is:
+     * If x == y, both stones are totally destroyed;
+     * If x != y, the stone of weight x is totally destroyed, and the stone of weight y has new weight y-x.
+     * At the end, there is at most 1 stone left.  Return the weight of this stone (or 0 if there are no stones left.)
+     * @return: 最后剩余的石头的重量
+     * @auther: kami
+     * @date: 2020/4/22 22:07
+     */
+    public int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        for (int weight:stones) {
+            queue.add(weight);
+        }
+        while (queue.size() > 1){
+            int max = queue.poll();
+            int maxNext = queue.poll();
+            if (max != maxNext){
+                queue.add(max-maxNext);
+            }
+        }
+
+
+        return queue.isEmpty() ? 0:queue.peek();
+    }
+
 
 
     public static void main(String[] args) {
-        int[] arr = {1,2,3};
-        int count = countElements(arr);
-        System.out.print(count);
+        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        queue.add(5);
+        queue.add(9);
+        queue.add(3);
+        queue.add(7);
+        queue.add(3);
+        while (!queue.isEmpty()){
+            System.out.println(queue.poll());
+        }
     }
 
 }
