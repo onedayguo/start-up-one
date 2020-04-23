@@ -363,27 +363,35 @@ public class LeetCodeCompetition {
     /**
      * @description: Contiguous Array
      * Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
-     * @return:
+     *
+     * The idea is to change 0 in the original array to -1. Thus, if we find SUM[i, j] == 0 then we know there are even
+     * number of -1 and 1 between index i and j. Also put the sum to index mapping to a HashMap to make search faster.
+     * @return: 0 1 相同数量最大宽度
      * @auther: kami
      * @date: 2020/4/22 22:46
      */
     public int findMaxLength(int[] nums) {
-        //dp[i][0]:到第i个数位置 0的个数，dp[i][0]:1的个数
-        int[][] dp = new int[nums.length][2];
-        int zero = 0;
-        int one = 0;
-        for (int i = 0; i < nums.length; i++) {
-            dp[i][0] = nums[i] == 0 ? ++zero:zero;
-            dp[i][1] = nums[i] == 1 ? ++one:one;
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] == 0) nums[i] = -1;
         }
-        for (int i = 0; i < nums.length/2; i++) {
-            int zeroTemp = dp[nums.length-i-1][0] - dp[i][0];
-            int oneTemp = dp[nums.length-i-1][1] - dp[i][1];
-            if (zeroTemp == oneTemp) return zeroTemp;
-        }
-        return 2;
 
+        int res = 0, sum = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+
+        for(int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if(map.containsKey(sum)) {
+                res = Math.max(res, i-map.get(sum));
+            }
+            else {
+                map.put(sum, i);
+            }
+        }
+
+        return res;
     }
+
 
     public static void main(String[] args) {
         PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
