@@ -392,22 +392,47 @@ public class LeetCodeCompetition {
         return res;
     }
 
+    /**
+     * @description: Perform String Shifts
+     * You are given a string s containing lowercase English letters, and a matrix shift, where
+     * shift[i] = [direction, amount]:
+     * direction can be 0 (for left shift) or 1 (for right shift).
+     * amount is the amount by which string s is to be shifted.
+     * A left shift by 1 means remove the first character of s and append it to the end.
+     * Similarly, a right shift by 1 means remove the last character of s and add it to the beginning.
+     * Return the final string after all operations.
+     * 提示：
+     * Intuitively performing all shift operations is acceptable due to the constraints.
+     * You may notice that left shift cancels the right shift, so count the total left shift times (may be negative if
+     * the final result is right shift), and perform it once.
+     * @return: 偏移后的字符串
+     * @auther: kami
+     * @date: 2020/4/23 20:48
+     */
+    public String stringShift(String s, int[][] shift) {
+        int offset = 0;
+        for (int i = 0; i < shift.length; i++) {
+            if (shift[i][0] == 0){
+                offset -= shift[i][1];
+            }else {
+                offset += shift[i][1];
+            }
+        }
+        int strLen = s.length();
+        int absOffset = Math.abs(offset) % strLen;
+        if (offset < 0){
+            return s.substring(absOffset).concat(s.substring(0,absOffset));
+        }else if (offset > 0){
+            return s.substring(strLen-absOffset).concat(s.substring(0,strLen-absOffset));
+        }
+        return s;
+
+    }
 
     public static void main(String[] args) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
-            }
-        });
-        queue.add(5);
-        queue.add(9);
-        queue.add(3);
-        queue.add(7);
-        queue.add(3);
-        while (!queue.isEmpty()){
-            System.out.println(queue.poll());
-        }
+        LeetCodeCompetition main = new LeetCodeCompetition();
+        int[][] shift = {{0,7},{1,7},{1,0},{1,3},{0,3},{0,6},{1,2}};
+        System.out.println(main.stringShift("wpdhhcj",shift));
     }
 
 }
