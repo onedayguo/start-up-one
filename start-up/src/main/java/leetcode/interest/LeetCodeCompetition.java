@@ -458,6 +458,95 @@ public class LeetCodeCompetition {
         }
         return res;
     }
+
+    /**
+     * @description: Valid Parenthesis String
+     * Given a string containing only three types of characters: '(', ')' and '*', write a function to check whether
+     * this string is valid. We define the validity of a string by these rules:
+     *
+     * Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+     * Any right parenthesis ')' must have a corresponding left parenthesis '('.
+     * Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+     * '*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string.
+     * An empty string is also valid.
+     * @return: 是否有效
+     * @auther: kami
+     * @date: 2020/4/24 21:29
+     */
+    public boolean checkValidString(String s) {
+        return usingStack(s);
+    }
+
+    /**
+     * @description: Valid Parenthesis String
+     * 用一个栈来维护左括号，另一个维护* 的index， 如果栈空时可以启用count来用迄今为止累计的来继续抵消右括号，接替栈的作用。
+     * 遍历至结尾需要连续pop出所有还剩下的左括号，用剩下的来match，并保证（出现在 *左边。最后*可以剩下但left不能剩。
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/25 7:56
+     */
+    private boolean usingStack(String s){
+        Stack<Integer> leftIndex = new Stack<>();
+        Stack<Integer> startIndex = new Stack<>();
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            switch (s.charAt(i)){
+                case '(':
+                    leftIndex.push(i);
+                    break;
+                case '*':
+                    startIndex.push(i);
+                    break;
+                case ')':
+                    if (!leftIndex.isEmpty()){
+                        leftIndex.pop();
+                    }else if (!startIndex.isEmpty()){
+                        startIndex.pop();
+                    }else {
+                        return false;
+                    }
+                    break;
+                default:
+                    return false;
+            }
+        }
+        while (!leftIndex.isEmpty() && !startIndex.isEmpty()){
+            int leftTopIndex = leftIndex.pop();
+            int startTopIndex = startIndex.pop();
+            if (startTopIndex < leftTopIndex) return false;
+        }
+        return leftIndex.isEmpty();
+    }
+
+    /**
+     * @description: Valid Parenthesis String
+    这里维护了两个变量low和high，其中low表示在有左括号的情况下，将星号当作右括号时左括号的个数(这样做的原因是尽量不多增加右括号的个数)，
+    而high表示将星号当作左括号时左括号的个数。是不是很绕，没办法。那么当high小于0时，说明就算把星号都当作左括号了，还是不够抵消右括号，
+    返回false。而当low大于0时，说明左括号的个数太多了，没有足够多的右括号来抵消，返回false。那么开始遍历字符串，当遇到左括号时，
+    low和high都自增1；当遇到右括号时，只有当low大于0时，low才自减1，保证了low不会小于0，而high直接自减1；当遇到星号时，只有当low大于0时，
+    low才自减1，保证了low不会小于0，而high直接自增1，因为high把星号当作左括号。当此时high小于0，说明右括号太多，返回false。当循环退出后，
+    我们看low是否为0，参见代码如下：
+     * @return:
+     * @auther: kami
+     * @date: 2020/4/25 8:33
+     */
+    private boolean usingLowAndHigh(String s){
+        int low = 0,high = 0;
+        for (char c:s.toCharArray()) {
+            if (c == '('){
+                high++;
+                low++;
+            }else if (c == ')'){
+                if (low > 0) low--;
+                high--;
+            }else if (c == '*'){
+                if (low > 0) low--;
+                high++;
+            }
+            if (high < 0) return false;
+        }
+        return  low == 0;
+    }
     public static void main(String[] args) {
         LeetCodeCompetition main = new LeetCodeCompetition();
         int[][] shift = {{0,7},{1,7},{1,0},{1,3},{0,3},{0,6},{1,2}};
