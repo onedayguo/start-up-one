@@ -600,6 +600,20 @@ public class LeetCodeCompetition {
 
         }
     }
+
+    /**
+     * @description: Minimum Path Sum
+     * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes
+     * the sum of all numbers along its path.
+     *
+     * Note: You can only move either down or right at any point in time.
+     * @return: 从左上到右下最短路径
+     * @auther: kami
+     * @date: 2020/4/26 7:52
+     */
+    public int minPathSum(int[][] grid) {
+
+    }
     public static void main(String[] args) {
         LeetCodeCompetition main = new LeetCodeCompetition();
         int[][] shift = {{0,7},{1,7},{1,0},{1,3},{0,3},{0,6},{1,2}};
