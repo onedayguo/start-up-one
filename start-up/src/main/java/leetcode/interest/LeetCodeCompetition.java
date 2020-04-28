@@ -620,6 +620,45 @@ public class LeetCodeCompetition {
                 dp[i] = (i==0 ? dp[i] : Math.min(dp[i], dp[i-1])) + grid[i][j];
         return dp[grid.length-1];
     }
+
+    /**
+     * @description: Search in Rotated Sorted Array
+     * (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+     * You are given a target value to search. If found in the array return its index, otherwise return -1.
+     * You may assume no duplicate exists in the array.
+     * Your algorithm's runtime complexity must be in the order of O(log n).
+     * @return: 目标值的下标索引
+     * @auther: kami
+     * @date: 2020/4/28 7:26
+     */
+    public int search(int[] nums, int target) {
+        if(nums==null || nums.length==0)
+            return -1;
+        int l = 0;
+        int r = nums.length-1;
+        while(l<=r)
+        {
+            int m = (l+r)/2;
+            if(target == nums[m])
+                return m;
+            if(nums[m]<nums[r])
+            {
+                if(target>nums[m] && target<=nums[r])
+                    l = m+1;
+                else
+                    r = m-1;
+            }
+            else
+            {
+                if(target>=nums[l] && target<nums[m])
+                    r = m-1;
+                else
+                    l = m+1;
+            }
+        }
+        return -1;
+
+    }
     public static void main(String[] args) {
         LeetCodeCompetition main = new LeetCodeCompetition();
         int[][] shift = {{0,7},{1,7},{1,0},{1,3},{0,3},{0,6},{1,2}};
