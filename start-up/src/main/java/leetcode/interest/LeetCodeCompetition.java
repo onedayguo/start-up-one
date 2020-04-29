@@ -298,10 +298,16 @@ public class LeetCodeCompetition {
     }
 
     public class TreeNode {
-          int val;
-          TreeNode left;
-          TreeNode right;
-          TreeNode(int x) { val = x; }
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+             this.val = val;
+             this.left = left;
+             this.right = right;
+        }
     }
     /**
      * @description: Diameter of Binary Tree
@@ -658,6 +664,50 @@ public class LeetCodeCompetition {
         }
         return -1;
 
+    }
+
+    /**
+     * @description: Construct Binary Search Tree from Preorder Traversal
+     * Return the root node of a binary search tree that matches the given preorder traversal.
+     * (Recall that a binary search tree is a binary tree where for every node, any descendant of node.left has a
+     * value < node.val, and any descendant of node.right has a value > node.val.  Also recall that a preorder traversal
+     * displays the value of the node first, then traverses node.left, then traverses node.right.)
+     * Note:
+     * 1 <= preorder.length <= 100
+     * The values of preorder are distinct.
+     * @return: 前序遍历的二叉树
+     * @auther: kami
+     * @date: 2020/4/29 7:06
+     */
+    public TreeNode bstFromPreorder(int[] preorder) {
+        /**
+         * @description: 首先将第一个数据root压栈
+         *
+         * 然后逐个处理剩下的，与当前节点比较（栈顶就是当前处理的节点，因为是刚压进去的）
+         * 1）如果比栈顶小，直接放左边
+         * 2）否则，就应该放在右边，这时候应该往上找第一个比新数据小的【对应内部while循环】找到后，就放在右边
+         * 刚处理的节点压栈，继续处理
+         * @return: leetcode.interest.LeetCodeCompetition.TreeNode
+         * @auther: kami
+         * @date: 2020/4/29 7:46
+         */
+        if(preorder == null || preorder.length == 0) return null;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode root = new TreeNode(preorder[0]);
+        stack.add(root);    // 根压栈
+        for (int i = 1; i < preorder.length; i ++){
+            TreeNode node = stack.peek();   // 当前节点
+            if (node.val > preorder[i]){    // 新的数据小于当前节点
+                node.left = new TreeNode(preorder[i]);  // 新的节点放左边
+                stack.add(node.left);   // 压栈
+            }else{
+                // 往上找，找到第一个比新数据小的
+                while(!stack.isEmpty() && stack.peek().val < preorder[i]) node = stack.pop();
+                node.right = new TreeNode(preorder[i]);
+                stack.add(node.right);
+            }
+        }
+        return root;
     }
     public static void main(String[] args) {
         LeetCodeCompetition main = new LeetCodeCompetition();
