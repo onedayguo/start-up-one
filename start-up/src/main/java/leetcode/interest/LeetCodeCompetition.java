@@ -729,14 +729,48 @@ public class LeetCodeCompetition {
      * @date: 2020/4/29 20:45
      */
     public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
+        List<Integer> dimensions = binaryMatrix.dimensions();
+        int m = dimensions.get(0);
+        int n = dimensions.get(1);
 
+        int leftmost = 101;
+
+        for (int i = 0; i < m; i++) {
+            int left, right, mid;
+            left = 0;
+            right = n - 1;
+            while (left < right) {
+                mid = (left + right) >> 1;
+                if (binaryMatrix.get(i, mid) == 1)
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+            if (binaryMatrix.get(i, left) == 1 && left < leftmost)
+                leftmost = left;
+            if (leftmost == 101)
+                leftmost = -1;
+        }
+
+        return leftmost;
     }
 
+    /**
+     * @description: Bitwise AND of Numbers Range
+     * Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
+     * @return: 相与之后的值
+     * @auther: kami
+     * @date: 2020/5/5 12:41
+     */
+    public static int rangeBitwiseAnd(int m, int n) {
+        int res = m;
+        for (int i = m+1; i <= n ; i++) {
+            res &= i;
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
-        LeetCodeCompetition main = new LeetCodeCompetition();
-        int[][] shift = {{0,7},{1,7},{1,0},{1,3},{0,3},{0,6},{1,2}};
-        System.out.println(main.stringShift("wpdhhcj",shift));
+        System.out.println(rangeBitwiseAnd(5,7));
     }
-
 }
