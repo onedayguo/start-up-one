@@ -555,15 +555,42 @@ public class LeetCodeTop100 {
         return resArr;
     }
 
+    /**
+     * @description: 581. Shortest Unsorted Continuous Subarray
+     * Given an integer array, you need to find one continuous subarray that if you only sort this subarray
+     * in ascending order, then the whole array will be sorted in ascending order, too.
+     * You need to find the shortest such subarray and output its length.
+     * @return:
+     * @auther: kami
+     * @date: 2020/5/6 21:19
+     */
+    public static int findUnsortedSubarray(int[] nums) {
+        int length = nums.length;
+        int lowIndex = -1;
+        int highIndex = -1;
+
+        int[] copy = Arrays.copyOf(nums,length);
+        Arrays.sort(copy);
+
+        for (int i = 0; i < length; i++) {
+            if (nums[i] != copy[i]) {
+                lowIndex = i;
+                break;
+            }
+        }
+        for (int i = length-1; i > 0; i--) {
+            if (nums[i] != copy[i]) {
+                highIndex = i;
+                break;
+            }
+        }
+        int diff = highIndex-lowIndex;
+        return diff == 0?0:diff+1;
+    }
+
     public static void main(String[] args) {
-        ListNode head = new ListNode(4);
-        ListNode head1 = new ListNode(2);
-        ListNode head2 = new ListNode(1);
-        ListNode head3 = new ListNode(3);
-        head.next = head1;
-        head1.next = head2;
-        head2.next = head3;
-        System.out.println();
+        int[] nums = {2,6,4,8,10,9,15};
+        System.out.println(findUnsortedSubarray(nums));
 
     }
 }
