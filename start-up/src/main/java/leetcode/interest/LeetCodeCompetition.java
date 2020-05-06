@@ -763,14 +763,129 @@ public class LeetCodeCompetition {
      * @date: 2020/5/5 12:41
      */
     public static int rangeBitwiseAnd(int m, int n) {
-        int res = m;
-        for (int i = m+1; i <= n ; i++) {
-            res &= i;
+        int offset = 0;
+        while (m != n) {
+            m >>= 1;
+            n >>= 1;
+            ++offset;
         }
-        return res;
+        return m << offset;
     }
 
+    /**
+     * @description: LruCache的双向链表
+     * @return:
+     * @auther: kami
+     * @date: 2020/5/6 17:09
+     */
+    class LinkNode{
+        Integer key;
+        Integer value;
+        LinkNode front;
+        LinkNode next;
+        public LinkNode(Integer key,Integer value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+    /**
+     * @description: LRU Cache
+     * Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following
+     * operations: get and put.
+     * get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+     * put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity,
+     * it should invalidate the least recently used item before inserting a new item.
+     * The cache is initialized with a positive capacity.
+     * @return:
+     * @auther: kami
+     * @date: 2020/5/5 17:31
+     */
+    class LRUCache {
+        private int capacity;
+        Map<Integer,LinkNode> map = new HashMap<>();
+        LinkNode head = new LinkNode(0,0); // 虚拟头结点
+        LinkNode tail = new LinkNode(0,0); // 虚拟尾结点
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            head.next = tail;
+            tail.front = head;
+        }
+
+
+        public int get(int key) {
+            if (map.containsKey(key)){
+                LinkNode node = map.get(key);
+                moveToTop(node);
+                return node.value;
+            }else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (!map.containsKey(key)){
+                if (map.size() >= this.capacity) removeLastNode();
+
+                LinkNode tempSecond = head.next;
+                LinkNode newNode = new LinkNode(key,value);
+                head.next = newNode;
+                newNode.front = head;
+                newNode.next = tempSecond;
+                tempSecond.front = newNode;
+
+                map.put(key,newNode);
+            }else {
+                LinkNode node = map.get(key);
+                node.value = value;
+                moveToTop(node);
+            }
+        }
+        private void removeLastNode(){
+            LinkNode lastNode = tail.front;
+            lastNode.front.next = tail;
+            tail.front = lastNode.front;
+            map.remove(lastNode.key);
+        }
+
+        private void moveToTop(LinkNode node){
+            node.front.next = node.next;
+            node.next.front = node.front;
+
+            LinkNode headNodeSource = head.next;
+            head.next = node;
+            node.front = head;
+
+            node.next = headNodeSource;
+            headNodeSource.front = node;
+        }
+    }
+    
+    /**
+     * @description: Jump Game
+     * Given an array of non-negative integers, you are initially positioned at the first index of the array.
+     * Each element in the array represents your maximum jump length at that position.
+     * Determine if you are able to reach the last index.
+     * 1 <= nums.length <= 3 * 10^4
+     * 0 <= nums[i][j] <= 10^5
+     * @return: 能否到达最后
+     * @auther: kami
+     * @date: 2020/5/6 18:25
+     */
+    public static boolean canJump(int[] nums) {
+        if (nums == null || nums.length == 0) return false;
+        int reach = 0;
+
+        for (int i = 0; i <= reach && i < nums.length; i++) {
+            reach = Math.max(nums[i]+i,reach);
+        }
+        if (reach < nums.length-1)return false;
+        return true;
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(rangeBitwiseAnd(5,7));
+        int[] nums = {2,3,1,1,4};
+        System.out.println(canJump(nums));
     }
 }
