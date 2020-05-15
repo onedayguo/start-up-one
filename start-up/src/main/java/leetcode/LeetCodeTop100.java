@@ -77,7 +77,13 @@ public class LeetCodeTop100 {
       int val;
       TreeNode left;
       TreeNode right;
-      TreeNode(int x) { val = x; }
+      TreeNode() {}
+      TreeNode(int val) { this.val = val; }
+      TreeNode(int val, TreeNode left, TreeNode right) {
+              this.val = val;
+              this.left = left;
+              this.right = right;
+      }
     }
     /**
      * @description: 98. Validate Binary Search Tree中等难度
@@ -638,6 +644,35 @@ public class LeetCodeTop100 {
         }
     }
 
+    /**
+     * @description: 617. Merge Two Binary Trees
+     * Given two binary trees and imagine that when you put one of them to cover the other, some nodes of the two trees
+     * are overlapped while the others are not.
+     * You need to merge them into a new binary tree. The merge rule is that if two nodes overlap, then sum node values
+     * up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of new tree.
+     * @return: 合并后的树节点
+     * @auther: kami
+     * @date: 2020/5/15 22:26
+     */
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        return helperMergeTrees(new TreeNode(),t1,t2);
+
+    }
+
+    private TreeNode helperMergeTrees(TreeNode curr,TreeNode node1,TreeNode node2){
+        if (node1 != null && node2 != null){
+            curr.val = node1.val+node2.val;
+            TreeNode left = helperMergeTrees(new TreeNode(),node1.left,node2.left);
+            curr.left = left;
+            TreeNode right = helperMergeTrees(new TreeNode(),node1.right,node2.right);
+            curr.right = right;
+        }else if (node1 != null){
+            curr = node1;
+        }else {
+            curr = node2;
+        }
+        return curr;
+    }
     public static void main(String[] args) {
         int[] nums = {2,6,4,8,10,9,15};
         System.out.println(findUnsortedSubarray(nums));
