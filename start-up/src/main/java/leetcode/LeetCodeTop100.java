@@ -656,9 +656,7 @@ public class LeetCodeTop100 {
      */
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         return helperMergeTrees(new TreeNode(),t1,t2);
-
     }
-
     private TreeNode helperMergeTrees(TreeNode curr,TreeNode node1,TreeNode node2){
         if (node1 != null && node2 != null){
             curr.val = node1.val+node2.val;
@@ -672,6 +670,30 @@ public class LeetCodeTop100 {
             curr = node2;
         }
         return curr;
+    }
+
+    /**
+     * @description: 104. Maximum Depth of Binary Tree
+     * Given a binary tree, find its maximum depth.
+     * The maximum depth is the number of nodes along the longest path from the root node down to the
+     * farthest leaf node.
+     * Note: A leaf is a node with no children.
+     * @return: 树的深度
+     * @auther: kami
+     * @date: 2020/5/15 23:24
+     */
+    public int maxDepth(TreeNode root) {
+        return helperMaxDepth(root,0);
+    }
+    private int helperMaxDepth(TreeNode node,int depth){
+        if (node != null){
+            depth++;
+            depth += helperMaxDepth(node.left,0);
+            depth += helperMaxDepth(node.right,0);
+        }else {
+            return 0;
+        }
+        return depth;
     }
     public static void main(String[] args) {
         int[] nums = {2,6,4,8,10,9,15};
