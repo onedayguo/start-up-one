@@ -683,21 +683,60 @@ public class LeetCodeTop100 {
      * @date: 2020/5/15 23:24
      */
     public int maxDepth(TreeNode root) {
-        return helperMaxDepth(root,0);
-    }
-    private int helperMaxDepth(TreeNode node,int depth){
-        if (node != null){
-            depth++;
-            depth += helperMaxDepth(node.left,0);
-            depth += helperMaxDepth(node.right,0);
-        }else {
+        // 递归
+        if(root==null){
             return 0;
         }
-        return depth;
+        return 1+Math.max(maxDepth(root.left),maxDepth(root.right));
     }
-    public static void main(String[] args) {
-        int[] nums = {2,6,4,8,10,9,15};
-        System.out.println(findUnsortedSubarray(nums));
+    public int maxDepthIterative(TreeNode root){
+        TreeNode node = root;
+        Stack<TreeNode> nodeStack = new Stack<>();
+        Stack<Integer> depthStack = new Stack<>();
 
+        int max = 0;
+        int depth = 1;
+        while (node != null || nodeStack.size() > 0)
+        {
+            if (node != null)
+            {
+                nodeStack.push(node);
+                depthStack.push(depth);
+                node = node.left;
+                depth++;
+            }
+            else
+            {
+                node = nodeStack.pop();
+                depth = depthStack.pop();
+
+                if (depth > max) max = depth;
+
+                node = node.right;
+                depth++;
+            }
+        }
+
+        return max;
+    }
+
+    public static void main(String[] args) {
+        method(null);
+
+    }
+    public static void method(String param) {
+        switch (param) {
+            // 肯定不是进入这里
+            case "sth":
+                System.out.println("it's sth");
+                break;
+            // 也不是进入这里
+            case "null":
+                System.out.println("it's null");
+                break;
+            // 也不是进入这里
+            default:
+                System.out.println("default");
+        }
     }
 }
