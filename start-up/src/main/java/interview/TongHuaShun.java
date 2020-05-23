@@ -17,11 +17,16 @@ public class TongHuaShun {
         }
     }
 
+    /**
+     * @description: 合并两个有序的数组，并去重
+     * @return: 合并后的数组
+     * @auther: kami
+     * @date: 2020/5/18 17:43
+     */
     private static int[] mergeArray(int[] arr1,int[] arr2){
         if (arr1 == null || arr2 == null){
             return null;
         }
-
         int len1 = arr1.length;
         int len2 = arr2.length;
         int resLen = len1+len2;
@@ -45,7 +50,6 @@ public class TongHuaShun {
         while (index2 < len2){
             resArr[resIndex++] = arr2[index2++];
         }
-
         return resArr;
     }
 }
