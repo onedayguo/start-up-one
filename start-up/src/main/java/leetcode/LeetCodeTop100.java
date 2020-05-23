@@ -751,6 +751,39 @@ public class LeetCodeTop100 {
             mirrorFlip(parentNode.left,parentNode.left.left,parentNode.left.right);
         }
     }
+    
+    // Definition for singly-linked list.
+    class ListNode {
+          int val;
+          ListNode next;
+          ListNode() {}
+          ListNode(int val) { this.val = val; }
+          ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+      }
+    /**
+     * @description: 206. Reverse Linked List
+     * Reverse a singly linked list.
+     * @return: 反转链表
+     * @auther: kami
+     * @date: 2020/5/23 21:11
+     */ 
+    public ListNode reverseList(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        ListNode copyHead = head;
+        ListNode resHead = head;
+        while (head != null){
+            list.add(head.val);
+            head = head.next;
+        }
+        int size = list.size();
+        int i = 1;
+        while (copyHead != null){
+            copyHead.val = list.get(size-i);
+            copyHead = copyHead.next;
+            i++;
+        }
+        return resHead;
+    }
 
     public static void main(String[] args) {
         method(null);
