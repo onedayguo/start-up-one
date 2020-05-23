@@ -720,6 +720,38 @@ public class LeetCodeTop100 {
         return max;
     }
 
+    /**
+     * @description: 226. Invert Binary Tree
+     * Invert a binary tree.
+     * @return: 树
+     * @auther: kami
+     * @date: 2020/5/23 20:17
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) return root;
+        mirrorFlip(root,root.left,root.right);
+        return root;
+    }
+    private void mirrorFlip(TreeNode parentNode,TreeNode leftNode,TreeNode rightNode){
+        if (parentNode == null || (leftNode == null && rightNode == null)){
+            return;
+        }else if (leftNode != null && rightNode != null){
+            TreeNode leftTemp = leftNode;
+            parentNode.left = parentNode.right;
+            parentNode.right = leftTemp;
+            mirrorFlip(parentNode.right,parentNode.right.left,parentNode.right.right);
+            mirrorFlip(parentNode.left,parentNode.left.left,parentNode.left.right);
+        }else if (leftNode != null){
+            parentNode.right = leftNode;
+            parentNode.left = null;
+            mirrorFlip(parentNode.right,parentNode.right.left,parentNode.right.right);
+        }else {
+            parentNode.left = rightNode;
+            parentNode.right = null;
+            mirrorFlip(parentNode.left,parentNode.left.left,parentNode.left.right);
+        }
+    }
+
     public static void main(String[] args) {
         method(null);
 
