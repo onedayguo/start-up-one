@@ -92,11 +92,10 @@ public class AmberAi {
     public static void recursionArrange(char[] arrayA,int start,int end){
 
         if(start == end){
-            for(int i = 0;i < arrayA.length;i++)
+            for (int i = 0;i < arrayA.length;i++)
                 System.out.print(arrayA[i]);
             System.out.println();
-        }
-        else{
+        } else{
             for(int i = start;i <= end;i++){
                 if (i != start) swap(arrayA,i,start); //交换
                 recursionArrange(arrayA,start+1,end);//
@@ -110,6 +109,11 @@ public class AmberAi {
         char temp = arrayA[m];
         arrayA[m] = arrayA[n];
         arrayA[n] = temp;
+    }
+
+    public static void main(String[] args) {
+        String str = "abcde";
+        recursionArrange(str.toCharArray(),0,str.length()-1);
     }
 
 }
