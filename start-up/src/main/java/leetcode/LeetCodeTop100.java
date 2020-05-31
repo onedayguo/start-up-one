@@ -824,12 +824,25 @@ public class LeetCodeTop100 {
      * @date: 2020/5/23 21:34
      */
     public List<Integer> findDisappearedNumbers(int[] nums) {
-        return null;
-        //hello world
+        List<Integer> ret = new ArrayList<>();
+
+        for(int i = 0; i < nums.length; i++) {
+            int val = Math.abs(nums[i]) - 1;
+            if(nums[val] > 0) {
+                nums[val] = -nums[val];
+            }
+        }
+
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] > 0) {
+                ret.add(i+1);
+            }
+        }
+        return ret;
     }
 
     public static void main(String[] args) {
-        method(null);
+
 
     }
     public static void method(String param) {
