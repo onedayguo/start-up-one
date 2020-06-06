@@ -910,6 +910,45 @@ public class LeetCodeTop100 {
         return false;
     }
 
+    /**
+     * @description: 160. Intersection of Two Linked Lists
+     * Write a program to find the node at which the intersection of two singly linked lists begins.
+     * For example, the following two linked lists:
+     * @return: 交叉点的节点
+     * @author: kami
+     * @date: 2020/6/6 16:28
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        /**
+         * @description: I found most solutions here preprocess linkedlists to get the difference in len.
+         * Actually we don't care about the "value" of difference, we just want to make sure two pointers reach the
+         * intersection node at the same time.
+         *
+         * We can use two iterations to do that. In the first iteration, we will reset the pointer of one linkedlist to
+         * the head of another linkedlist after it reaches the tail node. In the second iteration, we will move two
+         * pointers until they points to the same node. Our operations in first iteration will help us counteract the
+         * difference. So if two linkedlist intersects, the meeting point in second iteration must be the intersection
+         * point. If the two linked lists have no intersection at all, then the meeting pointer in second iteration must
+         * be the tail node of both lists, which is null
+         * @return: leetcode.LeetCodeTop100.ListNode
+         * @author: kami
+         * @date: 2020/6/6 16:58
+         */
+        //boundary check
+        if(headA == null || headB == null) return null;
+
+        ListNode a = headA;
+        ListNode b = headB;
+
+        //if a & b have different len, then we will stop the loop after second iteration
+        while( a != b){
+            //for the end of first iteration, we just reset the pointer to the head of another linkedlist
+            a = a == null? headB : a.next;
+            b = b == null? headA : b.next;
+        }
+        return a;
+    }
+
     public static void main(String[] args) {
 
 
