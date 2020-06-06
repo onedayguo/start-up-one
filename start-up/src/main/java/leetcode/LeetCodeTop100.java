@@ -841,23 +841,51 @@ public class LeetCodeTop100 {
         return ret;
     }
 
+    /**
+     * @description: 437. Path Sum III
+     * You are given a binary tree in which each node contains an integer value.
+     * Find the number of paths that sum to a given value.
+     * The path does not need to start or end at the root or a leaf, but it must go downwards
+     * (traveling only from parent nodes to child nodes).
+     * The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
+     * @return: 加和为sum的路径数量
+     * @author: kami
+     * @date: 2020/5/31 12:10
+     */
+    public int pathSum(TreeNode root, int sum) {
+        HashMap<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0,1);
+        return helper(root, 0, sum, preSum);
+    }
+    private int helper(TreeNode root, int currSum, int target, HashMap<Integer, Integer> preSum) {
+        /**
+         * @description: So the idea is similar as Two sum, using HashMap to store ( key : the prefix sum, value : how
+         * many ways get to this prefix sum) , and whenever reach a node, we check if prefix sum - target exists in
+         * hashmap or not, if it does, we added up the ways of prefix sum - target into res.
+         * For instance : in one path we have 1,2,-1,-1,2, then the prefix sum will be: 1, 3, 2, 1, 3, let's say we want
+         * to find target sum is 2, then we will have{2}, {1,2,-1}, {2,-1,-1,2} and {2}ways.
+         *
+         * I used global variable count, but obviously we can avoid global variable by passing the count from bottom up.
+         * The time complexity is O(n). This is my first post in discuss, open to any improvement or criticism. :)
+         * @return: int
+         * @author: kami
+         * @date: 2020/6/6 11:25
+         */
+        if (root == null) {
+            return 0;
+        }
+        currSum += root.val;
+        int res = preSum.getOrDefault(currSum - target, 0);
+        preSum.put(currSum, preSum.getOrDefault(currSum, 0) + 1);
+
+        res += helper(root.left, currSum, target, preSum) + helper(root.right, currSum, target, preSum);
+        preSum.put(currSum, preSum.get(currSum) - 1);
+        return res;
+    }
+
     public static void main(String[] args) {
 
 
     }
-    public static void method(String param) {
-        switch (param) {
-            // 肯定不是进入这里
-            case "sth":
-                System.out.println("it's sth");
-                break;
-            // 也不是进入这里
-            case "null":
-                System.out.println("it's null");
-                break;
-            // 也不是进入这里
-            default:
-                System.out.println("default");
-        }
-    }
+
 }
