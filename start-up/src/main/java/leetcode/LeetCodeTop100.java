@@ -1014,12 +1014,16 @@ public class LeetCodeTop100 {
      * @description: 215. Kth Largest Element in an Array
      * Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order,
      * not the kth distinct element.
-     * @return:
+     * @return: 第K大的值
      * @author: kami
      * @date: 2020/6/6 17:32
      */
     public int findKthLargest(int[] nums, int k) {
-        return 0;
+        if (nums == null) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        return nums[nums.length - k];
     }
     public static void main(String[] args) {
 
