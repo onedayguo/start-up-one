@@ -949,6 +949,70 @@ public class LeetCodeTop100 {
         return a;
     }
 
+    /**
+     * @description: 234. Palindrome Linked List
+     * Given a singly linked list, determine if it is a palindrome.
+     * @return: 是否是回文链表
+     * @author: kami
+     * @date: 2020/6/6 17:10
+     */
+    public boolean isPalindrome(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        if (fast != null) { // odd nodes: let right half smaller
+            slow = slow.next;
+        }
+        slow = reverse(slow);
+        fast = head;
+
+        while (slow != null) {
+            if (fast.val != slow.val) {
+                return false;
+            }
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+    private ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+    /**
+     * @description: 234. Palindrome Linked List 使用数组实现
+     * @return: 是否是回文链表
+     * @author: kami
+     * @date: 2020/6/6 17:25
+     */
+    private boolean usingArray(ListNode head){
+        if (head == null) {
+            return true;
+        }
+        ListNode newHead = head;
+        List<Integer> nodeList = new ArrayList<>();
+        while (head!=null){
+            nodeList.add(head.val);
+            head = head.next;
+        }
+        int size = nodeList.size();
+        int halfSize = size >> 1;
+        for (int i = 0; i <halfSize ; i++) {
+            if (!nodeList.get(i).equals(nodeList.get(size-i-1))){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
 
 
