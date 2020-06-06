@@ -883,6 +883,33 @@ public class LeetCodeTop100 {
         return res;
     }
 
+    /**
+     * @description: 141. Linked List Cycle
+     * Given a linked list, determine if it has a cycle in it.
+     * To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed)
+     * in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+     * @return: 是否链内有环
+     * @author: kami
+     * @date: 2020/6/6 14:51
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode slow = head;
+        ListNode quick = head.next;
+        while (quick != null){
+            if (quick.equals(slow)){
+                return true;
+            }
+            slow = slow.next;
+            if (quick.next != null){
+                quick = quick.next.next;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
 
 
