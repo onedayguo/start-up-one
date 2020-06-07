@@ -1061,6 +1061,38 @@ public class LeetCodeTop100 {
         }
         return res.toArray(new int[people.length][]);
     }
+
+    /**
+     * @description: 739. Daily Temperatures
+     * Given a list of daily temperatures T, return a list such that, for each day in the input, tells you how many days
+     * you would have to wait until a warmer temperature. If there is no future day for which this is possible, put 0 instead.
+     * For example, given the list of temperatures T = [73, 74, 75, 71, 69, 72, 76, 73], your output should be [1, 1, 4, 2, 1, 1, 0, 0].
+     * Note: The length of temperatures will be in the range [1, 30000]. Each temperature will be an integer in the range [30, 100].
+     * @return: int[]
+     * @author: kami
+     * @date: 2020/6/7 8:48
+     */
+    public int[] dailyTemperatures(int[] T) {
+        /**
+         * @description: 解法：栈，递减栈Descending Stack，新建一个长度和T相等的数组res，来记录天数。遍历数组，如果栈为空，直接入栈。
+         * 如果栈不为空，且当前数字大于栈顶元素，pop出栈顶元素，求出下标差，也就是升温的天数，把这个差值记录给栈顶元素在res中的位置。
+         * 然后继续看新的栈顶元素，直到当前数字小于等于栈顶元素停止。然后将当前数字入栈。最后返回res。
+         * @return: int[]
+         * @author: kami
+         * @date: 2020/6/7 9:42
+         */
+        int m = T.length;
+        int[] ans = new int[m];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < m; i++) {
+            while (!stack.empty() &&  T[i] > T[stack.peek()]) {
+                int idx = stack.pop();
+                ans[idx] = i - idx;
+            }
+            stack.push(i);
+        }
+        return ans;
+    }
     public static void main(String[] args) {
         int[][] arr = {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
         reconstructQueue(arr);
