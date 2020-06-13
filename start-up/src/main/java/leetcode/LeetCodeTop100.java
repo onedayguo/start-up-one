@@ -1093,6 +1093,65 @@ public class LeetCodeTop100 {
         }
         return ans;
     }
+
+    /**
+     * @description: 94. Binary Tree Inorder Traversal
+     * Given a binary tree, return the inorder traversal of its nodes' values.
+     * @return: 中序遍历节点
+     * @author: kami
+     * @date: 2020/6/12 22:16
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if (root == null) {
+            return new LinkedList<>();
+        }
+        List<Integer> res = new LinkedList<>();
+        recursiveInOrder(root,res);
+        return res;
+    }
+
+    /**
+     * @description: 94. Binary Tree Inorder Traversal 递归实现
+     * @return:
+     * @author: kami
+     * @date: 2020/6/12 22:22
+     */
+    private void recursiveInOrder(TreeNode root,List<Integer> res){
+        if (root == null) {
+        }else {
+            recursiveInOrder(root.left,res);
+            res.add(root.val);
+            recursiveInOrder(root.right,res);
+        }
+    }
+
+    /**
+     * @description: 4. Binary Tree Inorder Traversal 迭代实现
+     * @return:
+     * @author: kami
+     * @date: 2020/6/12 22:30
+     */
+    private List<Integer> iterativeInOrder(TreeNode root){
+        ArrayList<Integer> result = new ArrayList<>();
+
+        if(root != null){
+            Stack<TreeNode> stack = new Stack<>();
+            TreeNode p = root;
+            while(!stack.isEmpty() || p != null){
+
+                if(p != null){      // push left most nodes to stack
+                    stack.push(p);
+                    p = p.left;
+                }else{              // when reach the left end, pop, do something and go right
+                    p = stack.pop();
+                    result.add(p.val);
+                    p = p.right;
+                }
+            }
+        }
+        return result;
+    }
+    
     public static void main(String[] args) {
         int[][] arr = {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
         reconstructQueue(arr);
