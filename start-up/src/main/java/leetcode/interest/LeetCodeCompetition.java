@@ -812,7 +812,6 @@ public class LeetCodeCompetition {
             tail.front = head;
         }
 
-
         public int get(int key) {
             if (map.containsKey(key)){
                 LinkNode node = map.get(key);
@@ -825,7 +824,9 @@ public class LeetCodeCompetition {
 
         public void put(int key, int value) {
             if (!map.containsKey(key)){
-                if (map.size() >= this.capacity) removeLastNode();
+                if (map.size() >= this.capacity) {
+                    removeLastNode();
+                }
 
                 LinkNode tempSecond = head.next;
                 LinkNode newNode = new LinkNode(key,value);
