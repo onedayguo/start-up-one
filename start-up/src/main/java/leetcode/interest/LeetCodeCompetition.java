@@ -555,7 +555,7 @@ public class LeetCodeCompetition {
     }
 
     /**
-     * @description: Number of Islands
+     * @description: 200 Number of Islands
      * Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by
      * water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges
      * of the grid are all surrounded by water.
@@ -611,20 +611,24 @@ public class LeetCodeCompetition {
      * @description: Minimum Path Sum
      * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes
      * the sum of all numbers along its path.
-     *
      * Note: You can only move either down or right at any point in time.
      * @return: 从左上到右下最短路径
      * @auther: kami
      * @date: 2020/4/26 7:52
      */
     public int minPathSum(int[][] grid) {
-        int[] dp = new int[grid.length];
+        int row = grid.length,col = grid[0].length;
+        int[] dp = new int[row];
         dp[0] = grid[0][0];
-        for(int i=1; i<grid.length; i++) dp[i] = grid[i][0]+dp[i-1];
-        for(int j=1; j<grid[0].length; j++)
-            for(int i=0; i<grid.length; i++)
+        for(int i=1; i<row; i++) {
+            dp[i] = grid[i][0]+dp[i-1];
+        }
+        for(int j=1; j<col; j++) {
+            for(int i=0; i<col; i++) {
                 dp[i] = (i==0 ? dp[i] : Math.min(dp[i], dp[i-1])) + grid[i][j];
-        return dp[grid.length-1];
+            }
+        }
+        return dp[row-1];
     }
 
     /**

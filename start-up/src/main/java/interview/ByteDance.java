@@ -2,6 +2,12 @@ package interview;
 
 import java.util.Scanner;
 
+/**
+ * @Description: 字节跳动
+ * @Author: kami
+ * @Date: 2020/6/21 13:28
+ * @Version: 1.0.0
+ */
 public class ByteDance {
 /*
     public static void main(String[] args) {
