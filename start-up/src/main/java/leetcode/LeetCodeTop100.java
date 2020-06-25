@@ -1231,7 +1231,40 @@ public class LeetCodeTop100 {
         root.right = helper(preStart + inIndex - inStart + 1, inIndex + 1, inEnd, preorder, inorder);
         return root;
     }
-    
+
+    /**
+     * @description: 647. Palindromic Substrings 判断回文字符串子串的个数
+     * Given a string, your task is to count how many palindromic substrings in this string.
+     * The substrings with different start indexes or end indexes are counted as different substrings even they consist
+     * of same characters.
+     * @return:
+     * @author: kami
+     * @date: 2020/6/25 16:39
+     */
+    public int countSubstrings(String s) {
+        if(s == null || s.length()==0) {
+            return 0;
+        }
+        int count = s.length();
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            for (int j = len-1; j > i ; j--) {
+                if (isPalindromicSub(i,j,s)){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private boolean isPalindromicSub(int startIndex,int endIndex,String str){
+        while (startIndex < endIndex){
+            if (str.charAt(startIndex++) != str.charAt(endIndex--)){
+                return false;
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) {
         int[][] arr = {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
         reconstructQueue(arr);
