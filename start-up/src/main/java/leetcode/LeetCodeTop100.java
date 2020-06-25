@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description: LeetCode最受欢迎100题
@@ -70,7 +71,7 @@ public class LeetCodeTop100 {
         return dp[n - 1];
     }
 
-    class TreeNode {
+    static class TreeNode {
       int val;
       TreeNode left;
       TreeNode right;
@@ -1265,9 +1266,44 @@ public class LeetCodeTop100 {
         }
         return true;
     }
-    public static void main(String[] args) {
-        int[][] arr = {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
-        reconstructQueue(arr);
+
+    /**
+     * @description: 230. Kth Smallest Element in a BST
+     * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+     * Input: root = [5,3,6,2,4,null,null,1], k = 3
+     *        5
+     *       / \
+     *      3   6
+     *     / \
+     *    2   4
+     *   /
+     *  1
+     * Output: 3
+     * @author: kami
+     * @date: 2020/6/25 17:19
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        deepSearch(root,minHeap);
+        for (int i = 0; i < k-1; i++) {
+            minHeap.poll();
+        }
+        return minHeap.peek();
+    }
+    private void deepSearch(TreeNode root,PriorityQueue<Integer> heap){
+        if (root != null){
+            heap.add(root.val);
+            deepSearch(root.left,heap);
+            deepSearch(root.right,heap);
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(1);
+        root.right = new TreeNode(4);
+        root.left.right = new TreeNode(2);
+//        kthSmallest(root,2);
 
     }
 
