@@ -1298,13 +1298,84 @@ public class LeetCodeTop100 {
         }
     }
 
+    /**
+     * @description: 287. Find the Duplicate Number
+     * Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive),
+     * prove that at least one duplicate number must exist. Assume that there is only one duplicate number,
+     * find the duplicate one.
+     * You must not modify the array (assume the array is read only).
+     * You must use only constant, O(1) extra space.
+     * Your runtime complexity should be less than O(n2).
+     * There is only one duplicate number in the array, but it could be repeated more than once.
+     * @return:
+     * @author: kami
+     * @date: 2020/6/25 18:34
+     */
+    public int findDuplicate(int[] nums) {
+        /**
+         * @description: 巧妙的利用坐标和数值之间相互转换，而由于重复数字的存在，那么一定会形成环，用快慢指针可以找到环并确定环的起始位置，
+         * 确实是太巧妙了！
+         * @return: int
+         * @author: kami
+         * @date: 2020/6/26 11:12
+         */
+        if(nums.length ==0 ) {
+            return 0;
+        }
+        int slow=0, fast=0;
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+        while(slow != fast){
+            if(slow == nums[slow]) {
+                return slow;
+            }
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+        fast = 0;
+        while(slow != fast){
+            if(slow == nums[slow]) {
+                return slow;
+            }
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+
+    /**
+     * @description: 287. Find the Duplicate Number
+     * @return: 
+     * @author: kami
+     * @date: 2020/6/26 11:10
+     */
+    public int findDuplicate2(int[] nums){
+        int left = 1,right = nums.length;
+        while (left < right){
+            int mid = left + (right-left) >> 1;
+            int cnt = 0;
+            for (int num:nums) {
+                if (num <= mid){
+                    ++cnt;
+                }
+            }
+            if (cnt <= mid){
+                left = mid+1;
+            }else {
+                right = mid;
+            }
+        }
+        return right;
+    }
+
     public static void main(String[] args) throws InterruptedException {
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(1);
         root.right = new TreeNode(4);
         root.left.right = new TreeNode(2);
 //        kthSmallest(root,2);
-
+        // 11 1
+        System.out.println(4^5);
     }
 
 }
