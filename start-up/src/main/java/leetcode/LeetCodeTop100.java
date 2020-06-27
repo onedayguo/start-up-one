@@ -1384,7 +1384,9 @@ public class LeetCodeTop100 {
         return Math.max(num[0], num[1]);
     }
     private int[] dfs(TreeNode x) {
-        if (x == null) return new int[2];
+        if (x == null) {
+            return new int[2];
+        }
         int[] left = dfs(x.left);
         int[] right = dfs(x.right);
         int[] res = new int[2];
