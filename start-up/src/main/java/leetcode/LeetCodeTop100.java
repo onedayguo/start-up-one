@@ -1395,6 +1395,43 @@ public class LeetCodeTop100 {
         return res;
     }
 
+    /**
+     * @description: 114. Flatten Binary Tree to Linked List 变换二叉树为链表
+     * Given a binary tree, flatten it to a linked list in-place.
+     * For example, given the following tree:
+     *     1
+     *    / \
+     *   2   5
+     *  / \   \
+     * 3   4   6
+     * The flattened tree should look like:
+     * 1
+     *  \
+     *   2
+     *    \
+     *     3
+     *      \
+     *       4
+     *        \
+     *         5
+     *          \
+     *           6
+     * @return: 单向链表
+     * @author: kami
+     * @date: 2020/7/25 17:49
+     */
+    private TreeNode prev = null;
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        flatten(root.right);
+        flatten(root.left);
+        root.right = prev;
+        root.left = null;
+        prev = root;
+    }
+
     public static void main(String[] args) throws InterruptedException {
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(1);
