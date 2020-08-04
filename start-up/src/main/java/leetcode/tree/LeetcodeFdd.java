@@ -27,7 +27,7 @@ public class LeetcodeFdd {
      * To represent a cycle in the given linked list, we use an integer pos which represents the position
      * (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
      * Note: Do not modify the linked list.
-     * @return:
+     * @return: 环链起始节点
      * @author: kami
      * @date: 2020/8/4 21:33
      */
@@ -45,5 +45,17 @@ public class LeetcodeFdd {
             slow = slow.next;
         }
         return null;
+    }
+
+    /**
+     * @description: 152. Maximum Product Subarray
+     * Given an integer array nums, find the contiguous subarray within an array (containing at least one number)
+     * which has the largest product.
+     * @return:
+     * @author: kami
+     * @date: 2020/8/4 22:30
+     */
+    public int maxProduct(int[] nums) {
+        return 0;
     }
 }
