@@ -1575,6 +1575,7 @@ public class LeetCodeTop100 {
 
         return pseudoHead.next;
     }
+
     public static void main(String[] args) throws InterruptedException, NoSuchAlgorithmException {
         
         TreeNode root = new TreeNode(3);
