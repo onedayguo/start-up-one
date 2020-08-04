@@ -2,6 +2,8 @@ package leetcode;
 
 import org.w3c.dom.Node;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -1573,7 +1575,8 @@ public class LeetCodeTop100 {
 
         return pseudoHead.next;
     }
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, NoSuchAlgorithmException {
+        
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(1);
         root.right = new TreeNode(4);
