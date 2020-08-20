@@ -72,14 +72,26 @@ public class LeetcodeFdd {
     /**
      * @Description: 207. Course Schedule
      * here are a total of numCourses courses you have to take, labeled from 0 to numCourses-1.
-     * Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+     * Some courses may have prerequisites, for example to take course 0 you have to first take course 1,
+     * which is expressed as a pair: [0,1]
      * Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
      * @Param: numCourses总共要修的课程数，prerequisites课程要求
      * @Return: 能否修完课程
-     * @Author: kami
+     * @Author: kami 2 [1,0]
      * @Date: 2020/8/20 18:16
      */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        return false;
+        Set<Integer> finished = new HashSet<>(prerequisites.length);
+        int curFinishCnt = 0;
+        for (int i = 0; i < prerequisites.length; i++) {
+            if (finished.contains(prerequisites[i][1])) {
+                curFinishCnt = finished.size()+1;
+                finished.add(prerequisites[i][0]);
+            }else {
+                finished.add(prerequisites[i][0]);
+                finished.add(prerequisites[prerequisites[i][1]][0]);
+            }
+        }
+        return curFinishCnt>=numCourses;
     }
 }
