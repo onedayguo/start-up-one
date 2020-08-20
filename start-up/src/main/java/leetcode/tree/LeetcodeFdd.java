@@ -1,8 +1,6 @@
 package leetcode.tree;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -40,8 +38,8 @@ public class LeetcodeFdd {
             }else if (slowStepHistory.contains(fast.next.next)) {
                 return fast.next.next;
             }
-            fast = fast.next.next;
             slowStepHistory.add(slow);
+            fast = fast.next.next;
             slow = slow.next;
         }
         return null;
@@ -51,7 +49,7 @@ public class LeetcodeFdd {
      * @description: 152. Maximum Product Subarray
      * Given an integer array nums, find the contiguous subarray within an array (containing at least one number)
      * which has the largest product.
-     * @return:
+     * @return: 连续数组最大乘积
      * @author: kami
      * @date: 2020/8/4 22:30
      */
@@ -69,5 +67,19 @@ public class LeetcodeFdd {
             }
         }
         return result;
+    }
+
+    /**
+     * @Description: 207. Course Schedule
+     * here are a total of numCourses courses you have to take, labeled from 0 to numCourses-1.
+     * Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+     * Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+     * @Param: numCourses总共要修的课程数，prerequisites课程要求
+     * @Return: 能否修完课程
+     * @Author: kami
+     * @Date: 2020/8/20 18:16
+     */
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        return false;
     }
 }

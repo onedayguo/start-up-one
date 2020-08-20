@@ -17,7 +17,7 @@ public class GeneralRule {
     * @date: 2019/12/7 21:18
     */
     private static void easyToMixError(){
-        long i = 1l;
+        long i = 1L;
         System.out.println("i 的两倍是："+(i+i));
     }
 
