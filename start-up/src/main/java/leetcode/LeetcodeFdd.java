@@ -81,17 +81,25 @@ public class LeetcodeFdd {
      * @Date: 2020/8/20 18:16
      */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Set<Integer> finished = new HashSet<>(prerequisites.length);
-        int curFinishCnt = 0;
-        for (int i = 0; i < prerequisites.length; i++) {
-            if (finished.contains(prerequisites[i][1])) {
-                curFinishCnt = finished.size()+1;
-                finished.add(prerequisites[i][0]);
-            }else {
-                finished.add(prerequisites[i][0]);
-                finished.add(prerequisites[prerequisites[i][1]][0]);
+        boolean[] canFinish = new boolean[numCourses]; // history
+        boolean[] waitingList = new boolean[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            if (!canFinishThisCourse(i,prerequisites,waitingList,canFinish)) { return false; }
+        }
+        return true;
+    }
+    public boolean canFinishThisCourse(int course, int[][] prerequisites, boolean[] waitingList, boolean[] canFinish) {
+        if (canFinish[course]) { return true; }
+        if (waitingList[course]) { return false; } // find circle
+        // dfs backtracking
+        waitingList[course] = true;
+        for (int[] pair : prerequisites) {
+            if (pair[0] == course) {
+                if (!canFinishThisCourse(pair[1],prerequisites,waitingList,canFinish)) { return false; }
             }
         }
-        return curFinishCnt>=numCourses;
+        waitingList[course] = false;
+        canFinish[course] = true;
+        return true;
     }
 }
