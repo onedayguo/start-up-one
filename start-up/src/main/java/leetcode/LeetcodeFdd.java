@@ -1,4 +1,4 @@
-package leetcode.tree;
+package leetcode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -101,5 +101,38 @@ public class LeetcodeFdd {
         waitingList[course] = false;
         canFinish[course] = true;
         return true;
+    }
+
+    /**
+     * @Description: 208. Implement Trie (Prefix Tree)
+     * @Author: kami
+     * @Date: 2020/8/28 10:44
+     */
+    class Trie {
+        Set<String> set;
+        /** Initialize your data structure here. */
+        public Trie() {
+            this.set = new HashSet<>();
+        }
+
+        /** Inserts a word into the trie. */
+        public void insert(String word) {
+            set.add(word);
+        }
+
+        /** Returns if the word is in the trie. */
+        public boolean search(String word) {
+            return set.contains(word);
+        }
+
+        /** Returns if there is any word in the trie that starts with the given prefix. */
+        public boolean startsWith(String prefix) {
+            for (String s:set) {
+                if (s.startsWith(prefix)){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
