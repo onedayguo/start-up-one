@@ -208,6 +208,19 @@ public class LeetcodeFdd {
         String word;
     }
 
+    /**
+     * @Description: 221. Maximal Square
+     * Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+     * @Param: 01矩阵
+     * @Return: 1组成的最大矩形的1的数量
+     * @Author: kami
+     * @Date: 2020/9/21 16:49
+     */
+    public int maximalSquare(char[][] matrix) {
+
+        return 0;
+    }
+
     public static void main(String[] args) {
         String[] words = {"happy","hp","hello","nothing"};
 
