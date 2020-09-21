@@ -217,8 +217,49 @@ public class LeetcodeFdd {
      * @Date: 2020/9/21 16:49
      */
     public int maximalSquare(char[][] matrix) {
-
-        return 0;
+        int max = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == '1') {
+                max = 1;
+                break;
+            }
+        }
+        if (matrix.length > 0){
+            for (int i = 0; i < matrix[0].length; i++) {
+                if (max == 1 || matrix[0][i] == '1'){
+                    max = 1;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < matrix.length-1; i++) {
+            for (int j = 0; j < matrix[0].length-1; j++) {
+                max = Math.max(max, getMaxArea(matrix,i,j));
+            }
+        }
+        return max;
+    }
+    /**
+     * @Description: 获取以char[rowIndex][colIndex]为左上角的最大矩形的面积
+     * @Param: 矩阵，行号，列号
+     * @Return: 最大面积
+     * @Author: kami
+     * @Date: 2020/9/21 16:54
+     */
+    private int getMaxArea(char[][] matrix,int rowIndex,int colIndex) {
+        int count = 1;
+        int area = 1;
+        if (matrix[rowIndex][colIndex] == '0') {
+            return 0;
+        }
+        while (rowIndex+1 < matrix.length && colIndex+1 < matrix[0].length &&
+                matrix[rowIndex+1][colIndex] == '1' && matrix[rowIndex][colIndex+1] == '1' && matrix[rowIndex+1][colIndex+1] == '1'){
+            area = (int) Math.pow((count+1),2);
+            count++;
+            rowIndex++;
+            colIndex++;
+        }
+        return area;
     }
 
     public static void main(String[] args) {
