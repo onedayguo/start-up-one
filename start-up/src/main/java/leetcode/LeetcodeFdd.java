@@ -211,55 +211,41 @@ public class LeetcodeFdd {
     /**
      * @Description: 221. Maximal Square
      * Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+     * 解决思路：动态规划，从第2行第2列的点开始遍历，记录每个以此点为组成矩形的右下角，如果组不成矩形就记录为0，否则记录为1，依次累加，得到最终组成矩形的长度
      * @Param: 01矩阵
      * @Return: 1组成的最大矩形的1的数量
      * @Author: kami
      * @Date: 2020/9/21 16:49
      */
     public int maximalSquare(char[][] matrix) {
-        int max = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            if (matrix[i][0] == '1') {
-                max = 1;
-                break;
-            }
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
         }
-        if (matrix.length > 0){
-            for (int i = 0; i < matrix[0].length; i++) {
-                if (max == 1 || matrix[0][i] == '1'){
-                    max = 1;
-                    break;
+
+        int max = 0, n = matrix.length, m = matrix[0].length;
+
+        // dp(i, j) represents the length of the square
+        // whose lower-right corner is located at (i, j)
+        // dp(i, j) = min{ dp(i-1, j-1), dp(i-1, j), dp(i, j-1) }
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (matrix[i - 1][j - 1] == '1') {
+                    int leftUp = dp[i-1][j-1];
+                    int left = dp[i][j-1];
+                    int up = dp[i-1][j];
+                    dp[i][j] = getMinValue(leftUp,left,up) + 1;
+                    max = Math.max(max, dp[i][j]);
                 }
             }
         }
-        for (int i = 0; i < matrix.length-1; i++) {
-            for (int j = 0; j < matrix[0].length-1; j++) {
-                max = Math.max(max, getMaxArea(matrix,i,j));
-            }
-        }
-        return max;
+
+        // return the area
+        return max * max;
     }
-    /**
-     * @Description: 获取以char[rowIndex][colIndex]为左上角的最大矩形的面积
-     * @Param: 矩阵，行号，列号
-     * @Return: 最大面积
-     * @Author: kami
-     * @Date: 2020/9/21 16:54
-     */
-    private int getMaxArea(char[][] matrix,int rowIndex,int colIndex) {
-        int count = 1;
-        int area = 1;
-        if (matrix[rowIndex][colIndex] == '0') {
-            return 0;
-        }
-        while (rowIndex+1 < matrix.length && colIndex+1 < matrix[0].length &&
-                matrix[rowIndex+1][colIndex] == '1' && matrix[rowIndex][colIndex+1] == '1' && matrix[rowIndex+1][colIndex+1] == '1'){
-            area = (int) Math.pow((count+1),2);
-            count++;
-            rowIndex++;
-            colIndex++;
-        }
-        return area;
+    private int getMinValue(int value1,int value2,int value3){
+       return Math.min(value1, Math.min(value2, value3));
     }
 
     public static void main(String[] args) {
