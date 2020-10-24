@@ -1,7 +1,6 @@
 package leetcode.interest;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * @Description: LeetCode30天挑战赛，每天一道题，UTC-8零点开始
@@ -298,9 +297,9 @@ public class LeetCodeCompetition {
     }
 
     public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
         TreeNode() {}
         TreeNode(int val) { this.val = val; }
         TreeNode(int val, TreeNode left, TreeNode right) {

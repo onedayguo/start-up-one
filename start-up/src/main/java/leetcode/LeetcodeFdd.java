@@ -1,5 +1,7 @@
 package leetcode;
 
+import leetcode.interest.LeetCodeCompetition.TreeNode;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -246,6 +248,24 @@ public class LeetcodeFdd {
     }
     private int getMinValue(int value1,int value2,int value3){
        return Math.min(value1, Math.min(value2, value3));
+    }
+    /**
+     * @Description: 236. Lowest Common Ancestor of a Binary Tree寻找二叉树中两个节点最近的公共祖先
+     * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+     *
+     * According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and
+     * q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+     * 最近公共祖先定义为：节点T同时有P和Q作为子节点，且T到P，Q的距离之和最小，这个T节点可能是P和Q中的一个，因为自身也是自身的一个子节点
+     * @Param:
+     * @Return: 
+     * @Author: kami
+     * @Date: 2020/10/24 12:33
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        return left == null ? right : right == null ? left : root;
     }
 
     public static void main(String[] args) {
