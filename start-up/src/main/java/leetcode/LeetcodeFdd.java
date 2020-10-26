@@ -327,6 +327,28 @@ public class LeetcodeFdd {
         }
         return list;
     }
+    /**
+     * @Description:  97. Interleaving String
+     * Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
+     * An interleaving of two strings s and t is a configuration where they are divided into non-empty substrings such that:
+     * s = s1 + s2 + ... + sn
+     * t = t1 + t2 + ... + tm
+     * |n - m| <= 1
+     * The interleaving is s1 + t1 + s2 + t2 + s3 + t3 + ... or t1 + s1 + t2 + s2 + t3 + s3 + ...
+     * Note: a + b is the concatenation of strings a and b.
+     * @Param:
+     * @Return: 
+     * @Author: kami
+     * @Date: 2020/10/26 18:22
+     */
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int s1Len = s1.length();
+        int s2L2n = s2.length();
+        int s3Len = s3.length();
+        if (s1Len+s2L2n != s3Len) return false;
+
+
+    }
     public static void main(String[] args) {
         LeetcodeFdd fdd = new LeetcodeFdd();
         List<TreeNode> treeNodes = fdd.generateTrees(5);
