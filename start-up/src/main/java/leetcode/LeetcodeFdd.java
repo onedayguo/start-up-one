@@ -307,11 +307,12 @@ public class LeetcodeFdd {
      * @Date: 2020/10/26 16:35
      */
     public List<TreeNode> generateTrees(int n) {
+        if (n==0)return new LinkedList<>();
         return genTreeList(1,n);
     }
 
     private List<TreeNode> genTreeList (int start, int end) {
-        List<TreeNode> list = new ArrayList<TreeNode>();
+        List<TreeNode> list = new LinkedList<>();
         if (start > end) {
             list.add(null);
         }
@@ -320,10 +321,7 @@ public class LeetcodeFdd {
             List<TreeNode> rightList = genTreeList(idx + 1, end);
             for (TreeNode left : leftList) {
                 for(TreeNode right: rightList) {
-                    TreeNode root = new TreeNode(idx);
-                    root.left = left;
-                    root.right = right;
-                    list.add(root);
+                    list.add(new TreeNode(idx,left,right));
                 }
             }
         }
@@ -332,6 +330,6 @@ public class LeetcodeFdd {
     public static void main(String[] args) {
         LeetcodeFdd fdd = new LeetcodeFdd();
         List<TreeNode> treeNodes = fdd.generateTrees(5);
-        System.out.println();
+        System.out.println("hello world");
     }
 }
