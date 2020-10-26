@@ -21,6 +21,7 @@ public class LeetcodeFdd {
               val = x;
               next = null;
           }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
     /**
@@ -252,12 +253,9 @@ public class LeetcodeFdd {
     /**
      * @Description: 236. Lowest Common Ancestor of a Binary Tree寻找二叉树中两个节点最近的公共祖先
      * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
-     *
      * According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and
      * q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
      * 最近公共祖先定义为：节点T同时有P和Q作为子节点，且T到P，Q的距离之和最小，这个T节点可能是P和Q中的一个，因为自身也是自身的一个子节点
-     * @Param:
-     * @Return: 
      * @Author: kami
      * @Date: 2020/10/24 12:33
      */
@@ -266,6 +264,40 @@ public class LeetcodeFdd {
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
         return left == null ? right : right == null ? left : root;
+    }
+
+    /**
+     * @Description: 92. Reverse Linked List II翻转连表
+     * Reverse a linked list from position m to n. Do it in one-pass.
+     * Note: 1 ≤ m ≤ n ≤ length of list.
+     * @Author: kami
+     * @Date: 2020/10/26 13:35
+     */
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null) return null;
+        ListNode dummy = new ListNode(0); // create a dummy node to mark the head of this list
+        dummy.next = head;
+        ListNode pre = dummy; // make a pointer pre as a marker for the node before reversing
+        for(int i = 0; i<m-1; i++) pre = pre.next;
+
+        ListNode start = pre.next; // a pointer to the beginning of a sub-list that will be reversed
+        ListNode then = start.next; // a pointer to a node that will be reversed
+
+        // 1 - 2 -3 - 4 - 5 ; m=2; n =4 ---> pre = 1, start = 2, then = 3
+        // dummy-> 1 -> 2 -> 3 -> 4 -> 5
+
+        for(int i=0; i<n-m; i++)
+        {
+            start.next = then.next;
+            then.next = pre.next;
+            pre.next = then;
+            then = start.next;
+        }
+
+        // first reversing : dummy->1 - 3 - 2 - 4 - 5; pre = 1, start = 2, then = 4
+        // second reversing: dummy->1 - 4 - 3 - 2 - 5; pre = 1, start = 2, then = 5 (finish)
+
+        return dummy.next;
     }
 
     public static void main(String[] args) {
