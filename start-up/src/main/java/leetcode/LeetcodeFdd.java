@@ -2,10 +2,8 @@ package leetcode;
 
 import leetcode.interest.LeetCodeCompetition.TreeNode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * @Description: 入职房多多两个月后的算法训练
@@ -300,9 +298,40 @@ public class LeetcodeFdd {
         return dummy.next;
     }
 
-    public static void main(String[] args) {
-        String[] words = {"happy","hp","hello","nothing"};
+    /**
+     * @Description: 95. Unique Binary Search Trees II
+     * Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1 ... n.
+     * @Param: 数字N
+     * @Return: 存储数字1-N的所有二叉树
+     * @Author: kami
+     * @Date: 2020/10/26 16:35
+     */
+    public List<TreeNode> generateTrees(int n) {
+        return genTreeList(1,n);
+    }
 
-        findWords(new char[2][2],words);
+    private List<TreeNode> genTreeList (int start, int end) {
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        if (start > end) {
+            list.add(null);
+        }
+        for(int idx = start; idx <= end; idx++) {
+            List<TreeNode> leftList = genTreeList(start, idx - 1);
+            List<TreeNode> rightList = genTreeList(idx + 1, end);
+            for (TreeNode left : leftList) {
+                for(TreeNode right: rightList) {
+                    TreeNode root = new TreeNode(idx);
+                    root.left = left;
+                    root.right = right;
+                    list.add(root);
+                }
+            }
+        }
+        return list;
+    }
+    public static void main(String[] args) {
+        LeetcodeFdd fdd = new LeetcodeFdd();
+        List<TreeNode> treeNodes = fdd.generateTrees(5);
+        System.out.println();
     }
 }
