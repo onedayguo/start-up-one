@@ -367,28 +367,70 @@ public class LeetcodeFdd {
      * @Date: 2020/10/26 18:22
      */
     public boolean isInterleave(String s1, String s2, String s3) {
-        int s1Len = s1.length(),s2Len=s2.length(),s3Len=s3.length();
-        if (s1Len+s2Len!=s3Len){
+        int s1Len = s1.length(), s2Len = s2.length(), s3Len = s3.length();
+        if (s1Len + s2Len != s3Len) {
             return false;
         }
-        return recursiveString(s1,0,s1Len,s2,0,s2Len,s3,0,s3Len);
+        return recursiveString(s1, 0, s1Len, s2, 0, s2Len, s3, 0, s3Len);
     }
 
-    private boolean recursiveString(String s1, int s1Index,int s1Len, String s2, int s2Index,int s2Len,
-                                    String s3, int s3Index,int s3Len) {
+    private boolean recursiveString(String s1, int s1Index, int s1Len, String s2, int s2Index, int s2Len,
+                                    String s3, int s3Index, int s3Len) {
         if (s3Index >= s3Len) {
             return true;
         }
-        if (s1Index < s1Len && s1.charAt(s1Index)==s3.charAt(s3Index)){
-            boolean s1Search = recursiveString(s1,s1Index+1,s1Len,s2,s2Index,s2Len,s3,s3Index+1,s3Len);
-            if (s1Search){
+        if (s1Index < s1Len && s1.charAt(s1Index) == s3.charAt(s3Index)) {
+            boolean s1Search = recursiveString(s1, s1Index + 1, s1Len, s2, s2Index, s2Len, s3, s3Index + 1, s3Len);
+            if (s1Search) {
                 return true;
             }
         }
-        if (s2Index < s2Len && s2.charAt(s2Index)==s3.charAt(s3Index)){
-            boolean s2Search = recursiveString(s1,s1Index,s1Len,s2,s2Index+1,s2Len,s3,s3Index+1,s3Len);
-            if (s2Search){
+        if (s2Index < s2Len && s2.charAt(s2Index) == s3.charAt(s3Index)) {
+            boolean s2Search = recursiveString(s1, s1Index, s1Len, s2, s2Index + 1, s2Len, s3, s3Index + 1, s3Len);
+            if (s2Search) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @description: 240. Search a 2D Matrix II 在有序的矩阵中寻找特定数
+     * Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following
+     * properties:
+     * Integers in each row are sorted in ascending from left to right.
+     * Integers in each column are sorted in ascending from top to bottom.
+     * Example:
+     * <p>
+     * Consider the following matrix:
+     * <p>
+     * [
+     * [1,   4,  7, 11, 15],
+     * [2,   5,  8, 12, 19],
+     * [3,   6,  9, 16, 22],
+     * [10, 13, 14, 17, 24],
+     * [18, 21, 23, 26, 30]
+     * ]
+     * Given target = 5, return true.
+     * <p>
+     * Given target = 20, return false.
+     * @return:
+     * @author: kami
+     * @date: 2020/11/21 21:09
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix == null || matrix.length < 1 || matrix[0].length <1) {
+            return false;
+        }
+        int col = matrix[0].length-1;
+        int row = 0;
+        while(col >= 0 && row <= matrix.length-1) {
+            if(target == matrix[row][col]) {
+                return true;
+            } else if(target < matrix[row][col]) {
+                col--;
+            } else if(target > matrix[row][col]) {
+                row++;
             }
         }
         return false;
