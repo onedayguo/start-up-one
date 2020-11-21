@@ -73,7 +73,6 @@ public class LeetCode {
 
     /**
      * @description: 2.1  O(max(m,n))，虚拟头结点，进位
-     * @return:
      * @auther: kami
      * @date: 2020/3/29 22:22
      */
@@ -132,16 +131,13 @@ public class LeetCode {
             d.next = new ListNode(1);
         return sentinel.next;
     }
-
-
-
     //endregion
 
     /**
      * @description: 3.Longest Substring Without Repeating Characters 给定字符串找出其中最长的无重复的子字符串的长度
      * 暴力破解， O(n^3)
      * 思路：1.第一重for循环遍历字符串
-     *      2.第二重for循环遍历从当前字符往后计算是否有充福字符串，如果没有重复则更新 最大长度
+     *      2.第二重for循环遍历从当前字符往后计算是否有重复字符串，如果没有重复则更新 最大长度
      * 优化：1.第二重循环中，可以改为如果发现有重复的字符再更新 最大长度，避免每次没有重复字符都要更新
      *      2.时间复杂度过高，通不过LeetCode
      * @return:
