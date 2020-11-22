@@ -511,7 +511,42 @@ public class LeetcodeFdd {
             even = !even;
         }
     }
-
+    /**
+     * @description: 300. Longest Increasing Subsequence
+     * Given an integer array nums, return the length of the longest strictly increasing subsequence.
+     * A subsequence is a sequence that can be derived from an array by deleting some or no elements without
+     * changing the order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array
+     * [0,3,1,6,2,2,7].
+     * Example 1:
+     * Input: nums = [10,9,2,5,3,7,101,18]
+     * Output: 4
+     * Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+     * @return: 升序的长度
+     * @author: kami
+     * @date: 2020/11/22 12:05
+     */
+    public int lengthOfLIS(int[] nums) {
+        /**
+         * @description: dp[i] 表示以 nums[i] 为结尾的最长递增子串的长度，对于每一个 nums[i]，从第一个数再搜索到i，如果发现某个数小于
+         * nums[i]，更新 dp[i]，更新方法为 dp[i] = max(dp[i], dp[j] + 1)，即比较当前 dp[i] 的值和那个小于 num[i] 的数的 dp
+         * 值加1的大小，就这样不断的更新 dp 数组，到最后 dp 数组中最大的值就是我们要返回的 LIS 的长度
+         * @return: int
+         * @author: kami
+         * @date: 2020/11/22 20:16
+         */
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp,1);
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i]>nums[j]){
+                    dp[i]=Math.max(dp[i],dp[j]+1);
+                }
+            }
+            res=Math.max(res,dp[i]);
+        }
+        return res;
+    }
     public static void main(String[] args) {
         int n = numSquares(10);
         System.out.println(n);
