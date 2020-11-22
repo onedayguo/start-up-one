@@ -436,8 +436,41 @@ public class LeetcodeFdd {
         return false;
     }
 
+    /**
+     * @description: 279. Perfect Squares
+     * Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...)
+     * which sum to n.
+     *
+     * Example 1:
+     *
+     * Input: n = 12
+     * Output: 3
+     * Explanation: 12 = 4 + 4 + 4.
+     * Example 2:
+     *
+     * Input: n = 13
+     * Output: 2
+     * Explanation: 13 = 4 + 9.
+     * @return:
+     * @author: kami
+     * @date: 2020/11/22 0:13
+     */
+    public static int numSquares(int n) {
+        // e.g.if n = 10, for 1, the number of of squares of 1 + 2 * 2, 1 + 3 * 3 , 1 + 4 * 4.... are all temporarily
+        // dp[1] + 1. We keep looping and updating the dp value and finally get the smallest one.
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for(int i = 0; i <= n; i++){
+            for(int j = 1; i + j * j <= n; j++){
+                dp[i  + j * j] = Math.min(dp[i + j * j], dp[i] + 1);
+            }
+        }
+        return dp[n];
+    }
+
     public static void main(String[] args) {
-        int m = 0;
-        System.out.println(m);
+        int n = numSquares(10);
+        System.out.println(n);
     }
 }
