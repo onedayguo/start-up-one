@@ -547,6 +547,42 @@ public class LeetcodeFdd {
         }
         return res;
     }
+    public int lengthOfLIS1(int[] nums){
+        /**
+         * @description: 二分查找法
+         * 先建立一个数组 ends，把首元素放进去，然后比较之后的元素，如果遍历到的新元素比 ends 数组中的首元素小的话，替换首元素为此新元素，
+         * 如果遍历到的新元素比 ends 数组中的末尾元素还大的话，将此新元素添加到 ends 数组末尾(注意不覆盖原末尾元素)。如果遍历到的新元素比
+         * ends 数组首元素大，比尾元素小时，此时用二分查找法找到第一个不小于此新元素的位置，覆盖掉位置的原来的数字，以此类推直至遍历完整个
+         * nums 数组，此时 ends 数组的长度就是要求的LIS的长度，特别注意的是 ends 数组的值可能不是一个真实的 LIS，比如若输入数组 nums
+         * 为 {4, 2， 4， 5， 3， 7}，那么算完后的 ends 数组为 {2， 3， 5， 7}，可以发现它不是一个原数组的 LIS，只是长度相等而已，
+         * 千万要注意这点。
+         * https://www.cnblogs.com/grandyang/p/4938187.html
+         * @return: int
+         * @author: kami
+         * @date: 2020/11/22 20:25
+         */
+        LinkedList<Integer> ends = new LinkedList<>();
+        ends.add(nums[0]);
+        int head = nums[0];
+        int tail = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i]<head){
+                ends.addFirst(nums[i]);
+                head = nums[i];
+            }else if (nums[i]>tail){
+                ends.addLast(nums[i]);
+                tail = nums[i];
+            }else {
+                int size=ends.size();
+                for (int j = 0; j < size; j++) {
+                    if (ends.get(j)>=nums[i]){
+                        ends.set(j,nums[i]);
+                    }
+                }
+            }
+        }
+        return ends.size();
+    }
     public static void main(String[] args) {
         int n = numSquares(10);
         System.out.println(n);
