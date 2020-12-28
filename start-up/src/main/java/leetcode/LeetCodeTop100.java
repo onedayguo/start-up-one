@@ -1,11 +1,7 @@
 package leetcode;
 
-import org.w3c.dom.Node;
-
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @Description: LeetCode最受欢迎100题
@@ -31,22 +27,24 @@ public class LeetCodeTop100 {
     public static boolean wordBreak(String s, List<String> wordDict) {
         //此方法时间超过限制
         int size = wordDict.size();
-        return helperWordBreak(s,wordDict,size);
+        return helperWordBreak(s, wordDict, size);
     }
-    private static boolean helperWordBreak(String newStr,List<String> wordDict,int size){
+
+    private static boolean helperWordBreak(String newStr, List<String> wordDict, int size) {
         if (newStr == null || newStr.length() == 0) return true;
         for (int i = 0; i < size; i++) {
             boolean flag = newStr.startsWith(wordDict.get(i));
-            if (flag){
+            if (flag) {
                 int iSize = wordDict.get(i).length();
                 String nextStr = newStr.substring(iSize);
-                if (helperWordBreak(nextStr,wordDict,size)){
+                if (helperWordBreak(nextStr, wordDict, size)) {
                     return true;
                 }
             }
         }
         return false;
     }
+
     /**
      * @description: 动态规划
      * @return:
@@ -76,17 +74,24 @@ public class LeetCodeTop100 {
     }
 
     static class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {
-              this.val = val;
-              this.left = left;
-              this.right = right;
-      }
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
+
     /**
      * @description: 98. Validate Binary Search Tree中等难度
      * Given a binary tree, determine if it is a valid binary search tree (BST).
@@ -142,17 +147,17 @@ public class LeetCodeTop100 {
      * G(n) = G(0) * G(n-1) + G(1) * G(n-2) + … + G(n-1) * G(0)
      * In terms of calculation, we need to start with the lower number, since the value of G(n) depends on the values of G(0) … G(n-1).
      * With the above explanation and formulas, here is the implementation in Java.
-     * @return: 
+     * @return:
      * @auther: kami
      * @date: 2020/4/14 14:29
      */
     public int numTrees(int n) {
-        int[] sum = new int[n+1];
+        int[] sum = new int[n + 1];
         sum[0] = 1;
         sum[1] = 1;
         for (int i = 2; i <= n; i++) {
-            for (int j = 1; j <= i ; j++) {
-                sum[i] += (sum[j-1]*sum[i-j]);
+            for (int j = 1; j <= i; j++) {
+                sum[i] += (sum[j - 1] * sum[i - j]);
             }
         }
         return sum[n];
@@ -168,7 +173,7 @@ public class LeetCodeTop100 {
     public List<Integer> topKFrequent(int[] nums, int k) {
         // build hash map : character and how often it appears
         HashMap<Integer, Integer> count = new HashMap<>();
-        for (int n: nums) {
+        for (int n : nums) {
             count.put(n, count.getOrDefault(n, 0) + 1);
         }
 
@@ -177,7 +182,7 @@ public class LeetCodeTop100 {
                 new PriorityQueue<Integer>((n1, n2) -> count.get(n1) - count.get(n2));
 
         // keep k top frequent elements in the heap
-        for (int n: count.keySet()) {
+        for (int n : count.keySet()) {
             heap.add(n);
             if (heap.size() > k)
                 heap.poll();
@@ -201,6 +206,7 @@ public class LeetCodeTop100 {
      * @date: 2020/4/18 23:06
      */
     int count = 0;
+
     public int findTargetSumWays(int[] nums, int S) {
 //        calculateBruteForce(nums,0,0,S);
         int sum = 0;
@@ -209,39 +215,41 @@ public class LeetCodeTop100 {
         return sum < S || (S + sum) % 2 > 0 ? 0 : subsetSum(nums, (S + sum) >>> 1);
 
     }
+
     //https://blog.csdn.net/hit0803107/article/details/54894227
     public int findTargetSumWays1(int[] nums, int S) {
-        if (nums == null || nums.length == 0){
+        if (nums == null || nums.length == 0) {
             return 0;
         }
         int sum = 0;
-        for (int num : nums){
+        for (int num : nums) {
             sum += num;
         }
-        if (sum < S || (sum + S) % 2 != 0){
+        if (sum < S || (sum + S) % 2 != 0) {
             return 0;
         }
         sum = (sum + S) / 2;
         int[] dp = new int[sum + 1];
         dp[0] = 1;
-        for (int num : nums){
-            for (int i = sum; i >= num; i--){
+        for (int num : nums) {
+            for (int i = sum; i >= num; i--) {
                 dp[i] += dp[i - num];
             }
         }
         return dp[sum];
     }
+
     /**
      * @description: 494. Target Sum,暴力求解法
      * @return:
      * @auther: kami
      * @date: 2020/4/19 8:11
      */
-    private void calculateBruteForce(int[] nums,int index,int sum,int S){
-        if (index == nums.length && sum == S)count++;
+    private void calculateBruteForce(int[] nums, int index, int sum, int S) {
+        if (index == nums.length && sum == S) count++;
         else {
-            calculateBruteForce(nums,index+1,sum+nums[index],S);
-            calculateBruteForce(nums,index+1,sum-nums[index],S);
+            calculateBruteForce(nums, index + 1, sum + nums[index], S);
+            calculateBruteForce(nums, index + 1, sum - nums[index], S);
         }
     }
 
@@ -255,9 +263,9 @@ public class LeetCodeTop100 {
      * Given nums = [1, 2, 3, 4, 5] and target = 3 then one possible solution is +1-2+3-4+5 = 3
      * Here positive subset is P = [1, 3, 5] and negative subset is N = [2, 4]
      * Then let's see how this can be converted to a subset sum problem:
-     *                   sum(P) - sum(N) = target
+     * sum(P) - sum(N) = target
      * sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
-     *                        2 * sum(P) = target + sum(nums)
+     * 2 * sum(P) = target + sum(nums)
      * So the original problem has been converted to a subset sum problem as follows:
      * Find a subset P of nums such that sum(P) = (target + sum(nums)) / 2
      * Note that the above formula has proved that target + sum(nums) must be even
@@ -284,7 +292,7 @@ public class LeetCodeTop100 {
      * Note:
      * Each of the array element will not exceed 100.
      * The array size will not exceed 200.
-     *
+     * <p>
      * This problem is essentially let us to find whether there are several numbers in a set which are able to sum to a
      * specific value (in this problem, the value is sum/2).
      * Actually, this is a 0/1 knapsack problem, for each number, we can pick it or not. Let us assume dp[i][j] means
@@ -312,22 +320,23 @@ public class LeetCodeTop100 {
         sum /= 2;
 
         int n = nums.length;
-        boolean[][] dp = new boolean[n+1][sum+1];
+        boolean[][] dp = new boolean[n + 1][sum + 1];
 
-        for (int i = 0; i < n+1; i++) {
+        for (int i = 0; i < n + 1; i++) {
             dp[i][0] = true;
         }
 
-        for (int i = 1; i < n+1; i++) {
-            for (int j = 1; j < sum+1; j++) {
-                dp[i][j] = dp[i-1][j];
-                if (j >= nums[i-1]) {
-                    dp[i][j] = (dp[i][j] || dp[i-1][j-nums[i-1]]);
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < sum + 1; j++) {
+                dp[i][j] = dp[i - 1][j];
+                if (j >= nums[i - 1]) {
+                    dp[i][j] = (dp[i][j] || dp[i - 1][j - nums[i - 1]]);
                 }
             }
         }
         return dp[n][sum];
     }
+
     /**
      * @description: But can we optimize it? It seems that we cannot optimize it in time. But we can optimize in space.
      * We currently use two dimensional array to solve it, but we can only use one dimensional array.
@@ -347,13 +356,13 @@ public class LeetCodeTop100 {
         }
         sum /= 2;
 
-        boolean[] dp = new boolean[sum+1];
+        boolean[] dp = new boolean[sum + 1];
         dp[0] = true;
 
         for (int num : nums) {
             for (int i = sum; i > 0; i--) {
                 if (i >= num) {
-                    dp[i] = dp[i] || dp[i-num];
+                    dp[i] = dp[i] || dp[i - num];
                 }
             }
         }
@@ -365,17 +374,17 @@ public class LeetCodeTop100 {
      * @description: 101. Symmetric Tree
      * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
      * For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
-     *     1
-     *    / \
-     *   2   2
-     *  / \ / \
+     * 1
+     * / \
+     * 2   2
+     * / \ / \
      * 3  4 4  3
      * But the following [1,2,2,null,3,null,3] is not:
-     *     1
-     *    / \
-     *   2   2
-     *    \   \
-     *    3    3
+     * 1
+     * / \
+     * 2   2
+     * \   \
+     * 3    3
      * @return:
      * @auther: kami
      * @date: 2020/4/19 16:16
@@ -384,17 +393,17 @@ public class LeetCodeTop100 {
 //        return isMirrorRecursive(root,root);
         return isMirrorIteration(root);
     }
-    
+
     /**
      * @discription 镜像判断，递归性判断 Recursive
      * @date 2020/4/19 18:57
      **/
-    private static boolean isMirrorRecursive(TreeNode left,TreeNode right){
+    private static boolean isMirrorRecursive(TreeNode left, TreeNode right) {
         if (left == null && right == null) return true;
         if (left == null || right == null) return false;
         return left.val == right.val
-                && isMirrorRecursive(left.left,right.right)
-                && isMirrorRecursive(left.right,right.left);
+                && isMirrorRecursive(left.left, right.right)
+                && isMirrorRecursive(left.right, right.left);
     }
 
     /**
@@ -407,7 +416,7 @@ public class LeetCodeTop100 {
      * two consecutive nodes from the queue that are unequal).
      * @date 2020/4/19 18:59
      **/
-    private static boolean isMirrorIteration(TreeNode root){
+    private static boolean isMirrorIteration(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
         q.add(root);
@@ -440,9 +449,9 @@ public class LeetCodeTop100 {
             if (tempSum == k) {
                 count++;
             }
-            for (int j = i+1; j < nums.length; j++) {
+            for (int j = i + 1; j < nums.length; j++) {
                 tempSum += nums[j];
-                if (tempSum == k){
+                if (tempSum == k) {
                     count++;
                 }
             }
@@ -474,6 +483,7 @@ public class LeetCodeTop100 {
         pre.next = null;
         return merge(sortList(head), sortList(slow));
     }
+
     public ListNode merge(ListNode l1, ListNode l2) {
         if (l1 == null) return l2;
         if (l2 == null) return l1;
@@ -491,18 +501,18 @@ public class LeetCodeTop100 {
      * Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the
      * very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
      * Return the max sliding window.
-        Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
-        Output: [3,3,5,5,6,7]
-        Explanation:
-
-        Window position                Max
-        ---------------               -----
-        [1  3  -1] -3  5  3  6  7       3
-        1 [3  -1  -3] 5  3  6  7       3
-        1  3 [-1  -3  5] 3  6  7       5
-        1  3  -1 [-3  5  3] 6  7       5
-        1  3  -1  -3 [5  3  6] 7       6
-        1  3  -1  -3  5 [3  6  7]      7
+     * Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
+     * Output: [3,3,5,5,6,7]
+     * Explanation:
+     * <p>
+     * Window position                Max
+     * ---------------               -----
+     * [1  3  -1] -3  5  3  6  7       3
+     * 1 [3  -1  -3] 5  3  6  7       3
+     * 1  3 [-1  -3  5] 3  6  7       5
+     * 1  3  -1 [-3  5  3] 6  7       5
+     * 1  3  -1  -3 [5  3  6] 7       6
+     * 1  3  -1  -3  5 [3  6  7]      7
      * Follow up:
      * Could you solve it in linear time?
      * @return: 滑动窗口最大值组成的列表
@@ -510,26 +520,28 @@ public class LeetCodeTop100 {
      * @date: 2020/4/22 6:50
      */
     public int[] maxSlidingWindow(int[] nums, int k) {
-        return maxSlidingWindowBruteForce(nums,k);
+        return maxSlidingWindowBruteForce(nums, k);
     }
+
     /**
      * @description: 239. Sliding Window Maximum 暴力破解
      * @return:
      * @auther: kami
      * @date: 2020/4/22 20:06
      */
-    private int[] maxSlidingWindowBruteForce(int[] nums,int k){
-        int resLen = nums.length-k+1;
+    private int[] maxSlidingWindowBruteForce(int[] nums, int k) {
+        int resLen = nums.length - k + 1;
         int[] resArr = new int[resLen];
         for (int i = 0; i < resLen; i++) {
             int max = Integer.MIN_VALUE;
             for (int j = 0; j < k; j++) {
-                max = Math.max(max,nums[i+j]);
+                max = Math.max(max, nums[i + j]);
             }
             resArr[i] = max;
         }
         return resArr;
     }
+
     /**
      * @description: 队列
      * @return:
@@ -541,7 +553,7 @@ public class LeetCodeTop100 {
             return new int[0];
         }
         int n = a.length;
-        int[] resArr = new int[n-k+1];
+        int[] resArr = new int[n - k + 1];
         int resIndex = 0;
         // store index
         Deque<Integer> q = new ArrayDeque<>();
@@ -577,7 +589,7 @@ public class LeetCodeTop100 {
         int lowIndex = -1;
         int highIndex = -1;
 
-        int[] copy = Arrays.copyOf(nums,length);
+        int[] copy = Arrays.copyOf(nums, length);
         Arrays.sort(copy);
 
         for (int i = 0; i < length; i++) {
@@ -586,14 +598,14 @@ public class LeetCodeTop100 {
                 break;
             }
         }
-        for (int i = length-1; i > 0; i--) {
+        for (int i = length - 1; i > 0; i--) {
             if (nums[i] != copy[i]) {
                 highIndex = i;
                 break;
             }
         }
-        int diff = highIndex-lowIndex;
-        return diff == 0?0:diff+1;
+        int diff = highIndex - lowIndex;
+        return diff == 0 ? 0 : diff + 1;
     }
 
     /**
@@ -625,9 +637,10 @@ public class LeetCodeTop100 {
             } else {
                 sb.append(node.val).append(spliter);
                 buildString(node.left, sb);
-                buildString(node.right,sb);
+                buildString(node.right, sb);
             }
         }
+
         // Decodes your encoded data to tree.
         public TreeNode deserialize(String data) {
             Deque<String> nodes = new LinkedList<>(Arrays.asList(data.split(spliter)));
@@ -657,18 +670,19 @@ public class LeetCodeTop100 {
      * @date: 2020/5/15 22:26
      */
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
-        return helperMergeTrees(new TreeNode(),t1,t2);
+        return helperMergeTrees(new TreeNode(), t1, t2);
     }
-    private TreeNode helperMergeTrees(TreeNode curr,TreeNode node1,TreeNode node2){
-        if (node1 != null && node2 != null){
-            curr.val = node1.val+node2.val;
-            TreeNode left = helperMergeTrees(new TreeNode(),node1.left,node2.left);
+
+    private TreeNode helperMergeTrees(TreeNode curr, TreeNode node1, TreeNode node2) {
+        if (node1 != null && node2 != null) {
+            curr.val = node1.val + node2.val;
+            TreeNode left = helperMergeTrees(new TreeNode(), node1.left, node2.left);
             curr.left = left;
-            TreeNode right = helperMergeTrees(new TreeNode(),node1.right,node2.right);
+            TreeNode right = helperMergeTrees(new TreeNode(), node1.right, node2.right);
             curr.right = right;
-        }else if (node1 != null){
+        } else if (node1 != null) {
             curr = node1;
-        }else {
+        } else {
             curr = node2;
         }
         return curr;
@@ -686,33 +700,32 @@ public class LeetCodeTop100 {
      */
     public int maxDepth(TreeNode root) {
         // 递归
-        if(root==null){
+        if (root == null) {
             return 0;
         }
-        return 1+Math.max(maxDepth(root.left),maxDepth(root.right));
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
     }
-    public int maxDepthIterative(TreeNode root){
+
+    public int maxDepthIterative(TreeNode root) {
         TreeNode node = root;
         Stack<TreeNode> nodeStack = new Stack<>();
         Stack<Integer> depthStack = new Stack<>();
 
         int max = 0;
         int depth = 1;
-        while (node != null || nodeStack.size() > 0)
-        {
-            if (node != null)
-            {
+        while (node != null || nodeStack.size() > 0) {
+            if (node != null) {
                 nodeStack.push(node);
                 depthStack.push(depth);
                 node = node.left;
                 depth++;
-            }
-            else
-            {
+            } else {
                 node = nodeStack.pop();
                 depth = depthStack.pop();
 
-                if (depth > max) max = depth;
+                if (depth > max) {
+                    max = depth;
+                }
 
                 node = node.right;
                 depth++;
@@ -731,56 +744,67 @@ public class LeetCodeTop100 {
      */
     public TreeNode invertTree(TreeNode root) {
         if (root == null) return root;
-        mirrorFlip(root,root.left,root.right);
+        mirrorFlip(root, root.left, root.right);
         return root;
     }
-    private void mirrorFlip(TreeNode parentNode,TreeNode leftNode,TreeNode rightNode){
-        if (parentNode == null || (leftNode == null && rightNode == null)){
+
+    private void mirrorFlip(TreeNode parentNode, TreeNode leftNode, TreeNode rightNode) {
+        if (parentNode == null || (leftNode == null && rightNode == null)) {
             return;
-        }else if (leftNode != null && rightNode != null){
+        } else if (leftNode != null && rightNode != null) {
             TreeNode leftTemp = leftNode;
             parentNode.left = parentNode.right;
             parentNode.right = leftTemp;
-            mirrorFlip(parentNode.right,parentNode.right.left,parentNode.right.right);
-            mirrorFlip(parentNode.left,parentNode.left.left,parentNode.left.right);
-        }else if (leftNode != null){
+            mirrorFlip(parentNode.right, parentNode.right.left, parentNode.right.right);
+            mirrorFlip(parentNode.left, parentNode.left.left, parentNode.left.right);
+        } else if (leftNode != null) {
             parentNode.right = leftNode;
             parentNode.left = null;
-            mirrorFlip(parentNode.right,parentNode.right.left,parentNode.right.right);
-        }else {
+            mirrorFlip(parentNode.right, parentNode.right.left, parentNode.right.right);
+        } else {
             parentNode.left = rightNode;
             parentNode.right = null;
-            mirrorFlip(parentNode.left,parentNode.left.left,parentNode.left.right);
+            mirrorFlip(parentNode.left, parentNode.left.left, parentNode.left.right);
         }
     }
-    
+
     // Definition for singly-linked list.
     class ListNode {
-          int val;
-          ListNode next;
-          ListNode() {}
-          ListNode(int val) { this.val = val; }
-          ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-      }
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
     /**
      * @description: 206. Reverse Linked List
      * Reverse a singly linked list.
      * @return: 反转链表
      * @auther: kami
      * @date: 2020/5/23 21:11
-     */ 
+     */
     public ListNode reverseList(ListNode head) {
         List<Integer> list = new ArrayList<>();
         ListNode copyHead = head;
         ListNode resHead = head;
-        while (head != null){
+        while (head != null) {
             list.add(head.val);
             head = head.next;
         }
         int size = list.size();
         int i = 1;
-        while (copyHead != null){
-            copyHead.val = list.get(size-i);
+        while (copyHead != null) {
+            copyHead.val = list.get(size - i);
             copyHead = copyHead.next;
             i++;
         }
@@ -799,16 +823,16 @@ public class LeetCodeTop100 {
     public int majorityElement(int[] nums) {
         int size = nums.length;
         int half = size >> 1;
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < size; i++) {
             if (map.containsKey(nums[i])) {
                 int count = map.get(nums[i]) + 1;
-                if (count > half){
+                if (count > half) {
                     return nums[i];
                 }
-                map.put(nums[i],count);
-            }else {
-                map.put(nums[i],1);
+                map.put(nums[i], count);
+            } else {
+                map.put(nums[i], 1);
             }
         }
         return nums[0];
@@ -828,16 +852,16 @@ public class LeetCodeTop100 {
     public List<Integer> findDisappearedNumbers(int[] nums) {
         List<Integer> ret = new ArrayList<>();
 
-        for(int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             int val = Math.abs(nums[i]) - 1;
-            if(nums[val] > 0) {
+            if (nums[val] > 0) {
                 nums[val] = -nums[val];
             }
         }
 
-        for(int i = 0; i < nums.length; i++) {
-            if(nums[i] > 0) {
-                ret.add(i+1);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                ret.add(i + 1);
             }
         }
         return ret;
@@ -856,9 +880,10 @@ public class LeetCodeTop100 {
      */
     public int pathSum(TreeNode root, int sum) {
         HashMap<Integer, Integer> preSum = new HashMap<>();
-        preSum.put(0,1);
+        preSum.put(0, 1);
         return helper(root, 0, sum, preSum);
     }
+
     private int helper(TreeNode root, int currSum, int target, HashMap<Integer, Integer> preSum) {
         /**
          * @description: So the idea is similar as Two sum, using HashMap to store ( key : the prefix sum, value : how
@@ -898,14 +923,14 @@ public class LeetCodeTop100 {
         if (head == null) return false;
         ListNode slow = head;
         ListNode quick = head.next;
-        while (quick != null){
-            if (quick.equals(slow)){
+        while (quick != null) {
+            if (quick.equals(slow)) {
                 return true;
             }
             slow = slow.next;
-            if (quick.next != null){
+            if (quick.next != null) {
                 quick = quick.next.next;
-            }else {
+            } else {
                 return false;
             }
         }
@@ -937,16 +962,16 @@ public class LeetCodeTop100 {
          * @date: 2020/6/6 16:58
          */
         //boundary check
-        if(headA == null || headB == null) return null;
+        if (headA == null || headB == null) return null;
 
         ListNode a = headA;
         ListNode b = headB;
 
         //if a & b have different len, then we will stop the loop after second iteration
-        while( a != b){
+        while (a != b) {
             //for the end of first iteration, we just reset the pointer to the head of another linkedlist
-            a = a == null? headB : a.next;
-            b = b == null? headA : b.next;
+            a = a == null ? headB : a.next;
+            b = b == null ? headA : b.next;
         }
         return a;
     }
@@ -979,6 +1004,7 @@ public class LeetCodeTop100 {
         }
         return true;
     }
+
     private ListNode reverse(ListNode head) {
         ListNode prev = null;
         while (head != null) {
@@ -989,26 +1015,27 @@ public class LeetCodeTop100 {
         }
         return prev;
     }
+
     /**
      * @description: 234. Palindrome Linked List 使用数组实现
      * @return: 是否是回文链表
      * @author: kami
      * @date: 2020/6/6 17:25
      */
-    private boolean usingArray(ListNode head){
+    private boolean usingArray(ListNode head) {
         if (head == null) {
             return true;
         }
         ListNode newHead = head;
         List<Integer> nodeList = new ArrayList<>();
-        while (head!=null){
+        while (head != null) {
             nodeList.add(head.val);
             head = head.next;
         }
         int size = nodeList.size();
         int halfSize = size >> 1;
-        for (int i = 0; i <halfSize ; i++) {
-            if (!nodeList.get(i).equals(nodeList.get(size-i-1))){
+        for (int i = 0; i < halfSize; i++) {
+            if (!nodeList.get(i).equals(nodeList.get(size - i - 1))) {
                 return false;
             }
         }
@@ -1059,10 +1086,10 @@ public class LeetCodeTop100 {
         // pick up the tallest guy first
         // when insert the next tall guy, just need to insert him into kth position
         // repeat until all people are inserted into list
-        Arrays.sort(people, (o1, o2) -> o1[0] != o2[0] ?  o2[0] - o1[0] : o1[1] - o2[1]);
+        Arrays.sort(people, (o1, o2) -> o1[0] != o2[0] ? o2[0] - o1[0] : o1[1] - o2[1]);
         List<int[]> res = new LinkedList<>();
-        for(int[] cur : people){
-            res.add(cur[1],cur);
+        for (int[] cur : people) {
+            res.add(cur[1], cur);
         }
         return res.toArray(new int[people.length][]);
     }
@@ -1090,7 +1117,7 @@ public class LeetCodeTop100 {
         int[] ans = new int[m];
         Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < m; i++) {
-            while (!stack.empty() &&  T[i] > T[stack.peek()]) {
+            while (!stack.empty() && T[i] > T[stack.peek()]) {
                 int idx = stack.pop();
                 ans[idx] = i - idx;
             }
@@ -1111,7 +1138,7 @@ public class LeetCodeTop100 {
             return new LinkedList<>();
         }
         List<Integer> res = new LinkedList<>();
-        recursiveInOrder(root,res);
+        recursiveInOrder(root, res);
         return res;
     }
 
@@ -1121,12 +1148,12 @@ public class LeetCodeTop100 {
      * @author: kami
      * @date: 2020/6/12 22:22
      */
-    private void recursiveInOrder(TreeNode root,List<Integer> res){
+    private void recursiveInOrder(TreeNode root, List<Integer> res) {
         if (root == null) {
-        }else {
-            recursiveInOrder(root.left,res);
+        } else {
+            recursiveInOrder(root.left, res);
             res.add(root.val);
-            recursiveInOrder(root.right,res);
+            recursiveInOrder(root.right, res);
         }
     }
 
@@ -1136,18 +1163,18 @@ public class LeetCodeTop100 {
      * @author: kami
      * @date: 2020/6/12 22:30
      */
-    private List<Integer> iterativeInOrder(TreeNode root){
+    private List<Integer> iterativeInOrder(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
 
-        if(root != null){
+        if (root != null) {
             Stack<TreeNode> stack = new Stack<>();
             TreeNode p = root;
-            while(!stack.isEmpty() || p != null){
+            while (!stack.isEmpty() || p != null) {
 
-                if(p != null){      // push left most nodes to stack
+                if (p != null) {      // push left most nodes to stack
                     stack.push(p);
                     p = p.left;
-                }else{              // when reach the left end, pop, do something and go right
+                } else {              // when reach the left end, pop, do something and go right
                     p = stack.pop();
                     result.add(p.val);
                     p = p.right;
@@ -1162,16 +1189,16 @@ public class LeetCodeTop100 {
      * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
      * For example:
      * Given binary tree [3,9,20,null,null,15,7],
-     *     3
-     *    / \
-     *   9  20
-     *     /  \
-     *    15   7
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
      * return its level order traversal as:
      * [
-     *   [3],
-     *   [9,20],
-     *   [15,7]
+     * [3],
+     * [9,20],
+     * [15,7]
      * ]
      * @return: 层序遍历得到的列表
      * @author: kami
@@ -1181,17 +1208,17 @@ public class LeetCodeTop100 {
         Queue<TreeNode> queue = new LinkedList<>();
         List<List<Integer>> wrapList = new LinkedList<>();
 
-        if(root == null) {
+        if (root == null) {
             return wrapList;
         }
 
         queue.offer(root);
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int levelNum = queue.size();
             List<Integer> subList = new LinkedList<>();
-            for(int i=0; i<levelNum; i++) {
-                if(queue.peek().left != null) queue.offer(queue.peek().left);
-                if(queue.peek().right != null) queue.offer(queue.peek().right);
+            for (int i = 0; i < levelNum; i++) {
+                if (queue.peek().left != null) queue.offer(queue.peek().left);
+                if (queue.peek().right != null) queue.offer(queue.peek().right);
                 subList.add(queue.poll().val);
             }
             wrapList.add(subList);
@@ -1208,11 +1235,11 @@ public class LeetCodeTop100 {
      * preorder = [3,9,20,15,7]
      * inorder = [9,3,15,20,7]
      * Return the following binary tree:
-     *     3
-     *    / \
-     *   9  20
-     *     /  \
-     *    15   7
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
      * @return:
      * @author: kami
      * @date: 2020/6/21 10:35
@@ -1247,14 +1274,14 @@ public class LeetCodeTop100 {
      * @date: 2020/6/25 16:39
      */
     public int countSubstrings(String s) {
-        if(s == null || s.length()==0) {
+        if (s == null || s.length() == 0) {
             return 0;
         }
         int count = s.length();
         int len = s.length();
         for (int i = 0; i < len; i++) {
-            for (int j = len-1; j > i ; j--) {
-                if (isPalindromicSub(i,j,s)){
+            for (int j = len - 1; j > i; j--) {
+                if (isPalindromicSub(i, j, s)) {
                     count++;
                 }
             }
@@ -1262,9 +1289,9 @@ public class LeetCodeTop100 {
         return count;
     }
 
-    private boolean isPalindromicSub(int startIndex,int endIndex,String str){
-        while (startIndex < endIndex){
-            if (str.charAt(startIndex++) != str.charAt(endIndex--)){
+    private boolean isPalindromicSub(int startIndex, int endIndex, String str) {
+        while (startIndex < endIndex) {
+            if (str.charAt(startIndex++) != str.charAt(endIndex--)) {
                 return false;
             }
         }
@@ -1275,30 +1302,31 @@ public class LeetCodeTop100 {
      * @description: 230. Kth Smallest Element in a BST
      * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
      * Input: root = [5,3,6,2,4,null,null,1], k = 3
-     *        5
-     *       / \
-     *      3   6
-     *     / \
-     *    2   4
-     *   /
-     *  1
+     * 5
+     * / \
+     * 3   6
+     * / \
+     * 2   4
+     * /
+     * 1
      * Output: 3
      * @author: kami
      * @date: 2020/6/25 17:19
      */
     public int kthSmallest(TreeNode root, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        deepSearch(root,minHeap);
-        for (int i = 0; i < k-1; i++) {
+        deepSearch(root, minHeap);
+        for (int i = 0; i < k - 1; i++) {
             minHeap.poll();
         }
         return minHeap.peek();
     }
-    private void deepSearch(TreeNode root,PriorityQueue<Integer> heap){
-        if (root != null){
+
+    private void deepSearch(TreeNode root, PriorityQueue<Integer> heap) {
+        if (root != null) {
             heap.add(root.val);
-            deepSearch(root.left,heap);
-            deepSearch(root.right,heap);
+            deepSearch(root.left, heap);
+            deepSearch(root.right, heap);
         }
     }
 
@@ -1323,22 +1351,22 @@ public class LeetCodeTop100 {
          * @author: kami
          * @date: 2020/6/26 11:12
          */
-        if(nums.length ==0 ) {
+        if (nums.length == 0) {
             return 0;
         }
-        int slow=0, fast=0;
+        int slow = 0, fast = 0;
         slow = nums[slow];
         fast = nums[nums[fast]];
-        while(slow != fast){
-            if(slow == nums[slow]) {
+        while (slow != fast) {
+            if (slow == nums[slow]) {
                 return slow;
             }
             slow = nums[slow];
             fast = nums[nums[fast]];
         }
         fast = 0;
-        while(slow != fast){
-            if(slow == nums[slow]) {
+        while (slow != fast) {
+            if (slow == nums[slow]) {
                 return slow;
             }
             slow = nums[slow];
@@ -1349,23 +1377,23 @@ public class LeetCodeTop100 {
 
     /**
      * @description: 287. Find the Duplicate Number
-     * @return: 
+     * @return:
      * @author: kami
      * @date: 2020/6/26 11:10
      */
-    public int findDuplicate2(int[] nums){
-        int left = 1,right = nums.length;
-        while (left < right){
-            int mid = left + (right-left) >> 1;
+    public int findDuplicate2(int[] nums) {
+        int left = 1, right = nums.length;
+        while (left < right) {
+            int mid = left + (right - left) >> 1;
             int cnt = 0;
-            for (int num:nums) {
-                if (num <= mid){
+            for (int num : nums) {
+                if (num <= mid) {
                     ++cnt;
                 }
             }
-            if (cnt <= mid){
-                left = mid+1;
-            }else {
+            if (cnt <= mid) {
+                left = mid + 1;
+            } else {
                 right = mid;
             }
         }
@@ -1387,6 +1415,7 @@ public class LeetCodeTop100 {
         int[] num = dfs(root);
         return Math.max(num[0], num[1]);
     }
+
     private int[] dfs(TreeNode x) {
         if (x == null) {
             return new int[2];
@@ -1403,28 +1432,29 @@ public class LeetCodeTop100 {
      * @description: 114. Flatten Binary Tree to Linked List 变换二叉树为链表
      * Given a binary tree, flatten it to a linked list in-place.
      * For example, given the following tree:
-     *     1
-     *    / \
-     *   2   5
-     *  / \   \
+     * 1
+     * / \
+     * 2   5
+     * / \   \
      * 3   4   6
      * The flattened tree should look like:
      * 1
-     *  \
-     *   2
-     *    \
-     *     3
-     *      \
-     *       4
-     *        \
-     *         5
-     *          \
-     *           6
+     * \
+     * 2
+     * \
+     * 3
+     * \
+     * 4
+     * \
+     * 5
+     * \
+     * 6
      * @return: 单向链表
      * @author: kami
      * @date: 2020/7/25 17:49
      */
     private TreeNode prev = null;
+
     public void flatten(TreeNode root) {
         if (root == null) {
             return;
@@ -1447,11 +1477,13 @@ public class LeetCodeTop100 {
      * @date: 2020/7/25 18:09
      */
     int maxValue;
+
     public int maxPathSum(TreeNode root) {
         maxValue = Integer.MIN_VALUE;
         maxPathDown(root);
         return maxValue;
     }
+
     private int maxPathDown(TreeNode node) {
         if (node == null) return 0;
         int left = Math.max(0, maxPathDown(node.left));
@@ -1530,6 +1562,7 @@ public class LeetCodeTop100 {
             this.random = null;
         }
     }
+
     public Node copyRandomList(Node head) {
         Node iter = head, next;
 
@@ -1577,14 +1610,14 @@ public class LeetCodeTop100 {
     }
 
     public static void main(String[] args) throws InterruptedException, NoSuchAlgorithmException {
-        
+
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(1);
         root.right = new TreeNode(4);
         root.left.right = new TreeNode(2);
 //        kthSmallest(root,2);
         // 11 1
-        System.out.println(4^5);
+        System.out.println(4 ^ 5);
     }
 
 }

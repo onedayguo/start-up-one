@@ -583,8 +583,34 @@ public class LeetcodeFdd {
         }
         return ends.size();
     }
+
+    /**
+     * @Description: 309. Best Time to Buy and Sell Stock with Cooldown 最优买卖股票
+     * 思考：可以从动态规划的角度出发
+     * 从第一天开始，计算到当前这一天的最大利润； 又因为隔天才能卖出，所以还需要在保存前一天的最大赢利
+     * Say you have an array for which the ith element is the price of a given stock on day i.
+     * Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one
+     * and sell one share of the stock multiple times) with the following restrictions:
+     * You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+     * After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)
+     * Example:
+     * @Author: kami
+     * @Date: 2020/12/26 17:18
+     */
+    public static int maxProfit(int[] prices) {
+        // 2^31 - 1
+        int buy = Integer.MAX_VALUE;
+        int pfree = 0, last = 0, now = 0;
+        for (int x : prices) {
+            now = Math.max( last , x -  buy);
+            buy = Math.min( buy , x - pfree);
+            pfree = last;
+            last  = now;
+        }
+        return now;
+    }
     public static void main(String[] args) {
-        int n = numSquares(10);
-        System.out.println(n);
+        int[] prices = {3,4,5,6,2,0,3};
+        System.out.println(maxProfit(prices));
     }
 }
