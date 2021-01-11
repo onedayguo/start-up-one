@@ -52,12 +52,27 @@ public class LeetCodeArrayEasy {
 
     /**
      * @Description: 106. Construct Binary Tree from Inorder and Postorder Traversal 从中序遍历和后序遍历重构二叉树
-     * @Param:
-     * @Return: 
      * @Author: kami
      * @Date: 2020/12/26 18:39
      */
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         return new TreeNode().left;
+    }
+
+    /**
+     * @description: 1480. Running Sum of 1d Array
+     * Given an array nums. We define a running sum of an array as runningSum[i] = sum(nums[0]…nums[i]).
+     * Return the running sum of nums.
+     * @return:
+     * @author: kami
+     * @date: 2021/1/11 23:22
+     */
+    public int[] runningSum(int[] nums) {
+        int[] sum = new int[nums.length];
+        sum[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            sum[i] = sum[i-1]+ nums[i];
+        }
+        return sum;
     }
 }

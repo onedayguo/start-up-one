@@ -7,25 +7,30 @@ public class LeetCode1 {
     public static int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
         int numLen = nums.length;
-        int result = nums[0] + nums[1] + nums[numLen-1];
+        int result = nums[0] + nums[1] + nums[numLen - 1];
         for (int i = 0; i < numLen; i++) {
-            int left = i+1,right = numLen-1;
-            while (left < right){
+            int left = i + 1, right = numLen - 1;
+            while (left < right) {
                 int sum = nums[i] + nums[left] + nums[right];
-                if (Math.abs(sum-target) < Math.abs(result-target)){
+                if (Math.abs(sum - target) < Math.abs(result - target)) {
                     result = sum;
-                    if (sum-target < 0) left++;
-                    else right--;
+                    if (sum - target < 0) {
+                        left++;
+                    } else {
+                        right--;
+                    }
+                } else if (sum - target < 0) {
+                    left++;
+                } else {
+                    right--;
                 }
-                else if (sum - target < 0) left++;
-                else right--;
             }
         }
         return result;
     }
 
     //leetcode 17. Letter Combinations of a Phone Number
-    Map<String, String> phone = new HashMap() {{
+    Map<String, String> phone = new HashMap<>() {{
         put("2", "abc");
         put("3", "def");
         put("4", "ghi");
@@ -36,6 +41,7 @@ public class LeetCode1 {
         put("9", "wxyz");
     }};
     List<String> output = new ArrayList<>();
+
     public void backtrack(String combination, String next_digits) {
         // if there is no more digits to check
         if (next_digits.length() == 0) {
@@ -55,6 +61,7 @@ public class LeetCode1 {
             }
         }
     }
+
     public List<String> letterCombinations1(String digits) {
 
         if (digits.length() != 0)
@@ -65,19 +72,19 @@ public class LeetCode1 {
     public static List<String> letterCombinations2(String digits) {
         List<String> answer = new ArrayList<>();
 
-        if(digits.length() < 1){
+        if (digits.length() < 1) {
             return answer;
         }
-        String [] mapLeters = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        String[] mapLeters = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         answer.add("");
-        for(int x=0;x<digits.length();x++){  //遍历数字串
-            int curDigit = Integer.parseInt(digits.substring(x, x+1)); //得到当前位置数字，转化为int
+        for (int x = 0; x < digits.length(); x++) {  //遍历数字串
+            int curDigit = Integer.parseInt(digits.substring(x, x + 1)); //得到当前位置数字，转化为int
             String curLeters = mapLeters[curDigit];//获取该数字代表的对应字符串
 
             int ansSize = answer.size();  //
-            for(int y=0;y<ansSize;y++){
+            for (int y = 0; y < ansSize; y++) {
                 String current = answer.remove(0);
-                for(int z=0;z<curLeters.length();z++){
+                for (int z = 0; z < curLeters.length(); z++) {
                     answer.add(current + curLeters.charAt(z));
                 }
             }
@@ -91,14 +98,14 @@ public class LeetCode1 {
         Arrays.sort(nums);
         int numsLen = nums.length;
         for (int i = 0; i < numsLen; i++) {
-            for (int j = i+1; j < numsLen-2; j++) {
-                int left = j+1,right = numsLen -1;
-                while (left<right){
-                    int sum= nums[i]+nums[j]+nums[left]+nums[right];
+            for (int j = i + 1; j < numsLen - 2; j++) {
+                int left = j + 1, right = numsLen - 1;
+                while (left < right) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
                     if (sum < target) left++;
                     else if (sum > target) right--;
                     else {
-                        List<Integer> list = Arrays.asList(nums[i],nums[j],nums[left++],nums[right--]);
+                        List<Integer> list = Arrays.asList(nums[i], nums[j], nums[left++], nums[right--]);
                         if (!ans.contains(list)) ans.add(list);
                     }
                 }
@@ -124,10 +131,10 @@ public class LeetCode1 {
             headA = headA.next;
         }
 
-        int pos = count - n,i = 0;
+        int pos = count - n, i = 0;
         if (pos == 0) return head.next;
-        while (headB != null){
-            if (i == pos-1){
+        while (headB != null) {
+            if (i == pos - 1) {
                 headB.next = headB.next.next;
                 break;
             }
@@ -137,15 +144,14 @@ public class LeetCode1 {
         return head;
     }
 
-    public ListNode removeNthFromEnd1(ListNode head, int n){
+    public ListNode removeNthFromEnd1(ListNode head, int n) {
         if (head.next == null) return null;
         int count = 1;
-        ListNode headA = head,headB = head;
-        while (headA != null){
+        ListNode headA = head, headB = head;
+        while (headA != null) {
             if (count == n) {
                 headB = headB.next;
-            }
-            else {
+            } else {
                 count++;
                 headA = headA.next;
             }
@@ -159,13 +165,19 @@ public class LeetCode1 {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         stack.push('0');
-        for (Character c:s.toCharArray()) {
-            switch (c){
-                case '(':stack.push(c);break;
-                case '{':stack.push(c);break;
-                case '[':stack.push(c);break;
+        for (Character c : s.toCharArray()) {
+            switch (c) {
+                case '(':
+                    stack.push(c);
+                    break;
+                case '{':
+                    stack.push(c);
+                    break;
+                case '[':
+                    stack.push(c);
+                    break;
                 case ')':
-                    if (stack.pop() == '(') break ;
+                    if (stack.pop() == '(') break;
                     else return false;
                 case '}':
                     if (stack.pop() == '{') break;
@@ -180,28 +192,27 @@ public class LeetCode1 {
 
     //leetcode 21 Merge Two Sorted Lists   Input: 1->2->4, 1->3->4   Output: 1->1->2->3->4->4
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null) return  l2;
-        if (l2 == null) return  l1;
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
-        while (l1 != null && l2!= null){
-            if (l1.val <= l2.val){
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
                 cur.next = l1;
                 l1 = l1.next;
                 cur = cur.next;
-            }
-            else {
+            } else {
                 cur.next = l2;
                 l2 = l2.next;
                 cur = cur.next;
             }
         }
-        while (l1 != null){
+        while (l1 != null) {
             cur.next = l1;
-            l1=l1.next;
+            l1 = l1.next;
             cur = cur.next;
         }
-        while (l2 != null){
+        while (l2 != null) {
             cur.next = l2;
             l2 = l2.next;
             cur = cur.next;
@@ -230,7 +241,7 @@ public class LeetCode1 {
     }
 
     // leetcode 23. Merge k Sorted Lists
-    public  static ListNode mergeKLists1(ListNode[] lists){
+    public static ListNode mergeKLists1(ListNode[] lists) {
         // checking size since PriorityQueue cannot have initial size of 0.
         if (lists == null || lists.length == 0) {
             return null;
@@ -264,8 +275,12 @@ public class LeetCode1 {
 
     //leetcode 24 Swap Nodes in Pairs
     public ListNode swapPairs(ListNode head) {
-        if (head == null) { return null; }
-        if (head.next == null) { return head; }
+        if (head == null) {
+            return null;
+        }
+        if (head.next == null) {
+            return head;
+        }
 
         ListNode next = head.next;
         ListNode following = next.next;
@@ -299,15 +314,15 @@ public class LeetCode1 {
         return head;
     }
 
-    public static ListNode reverseKGroup1(ListNode head, int k){
+    public static ListNode reverseKGroup1(ListNode head, int k) {
         ListNode cur = head;
         ListNode ans = new ListNode(-1);
         ListNode fisrt = ans;
         ListNode temp = null;
         Stack<ListNode> stack = new Stack<>();
-        while (cur != null){
-            if (stack.size() == k){
-                while (stack.size() > 0){
+        while (cur != null) {
+            if (stack.size() == k) {
+                while (stack.size() > 0) {
                     ans.next = stack.pop();
                     ans = ans.next;
                 }
@@ -321,7 +336,7 @@ public class LeetCode1 {
         }
 
         Collections.reverse(stack);
-        while (stack.size() > 0){
+        while (stack.size() > 0) {
             ans.next = stack.pop();
             ans = ans.next;
         }
@@ -330,7 +345,7 @@ public class LeetCode1 {
 
     //leetcode 26 Remove Duplicates from Sorted Array
     public int removeDuplicates(int[] nums) {
-        if (nums == null ) return  0;
+        if (nums == null) return 0;
         if (nums.length == 1) return 1;
         int count = 0;
         for (int i = 1; i < nums.length; i++) {
@@ -338,7 +353,7 @@ public class LeetCode1 {
                 nums[++count] = nums[i];
             }
         }
-        return count +1;
+        return count + 1;
 
     }
 
@@ -347,7 +362,7 @@ public class LeetCode1 {
         if (nums == null) return 0;
         if (nums.length == 1 && nums[0] == val) return 0;
         int count = 0;
-        for (int i = 0; i < nums.length ; i++) {
+        for (int i = 0; i < nums.length; i++) {
             if (nums[i] != val) nums[count++] = nums[i];
         }
         return count;
@@ -355,17 +370,17 @@ public class LeetCode1 {
 
     //leetcode 28 Implement strStr() haystack = "hello", needle = "ll" Output: 2
     public static int strStr(String haystack, String needle) {
-        int needleLen = needle.length(),haystackLen = haystack.length();
-        if (haystack.isEmpty() && needle.isEmpty() ) return 0;
-        if (!haystack.isEmpty() && needle.isEmpty() ) return 0;
-        if (haystack.isEmpty() && !needle.isEmpty() ) return -1;
+        int needleLen = needle.length(), haystackLen = haystack.length();
+        if (haystack.isEmpty() && needle.isEmpty()) return 0;
+        if (!haystack.isEmpty() && needle.isEmpty()) return 0;
+        if (haystack.isEmpty() && !needle.isEmpty()) return -1;
         if (haystackLen < needleLen) return -1;
-        for (int i = 0; i < haystackLen ; i++) {
-            int startN = 0,startH = i;
-            while (haystack.charAt(startH) == needle.charAt(startN)){
-                if (startH == haystackLen -1 && needleLen ==1 ) return i;
+        for (int i = 0; i < haystackLen; i++) {
+            int startN = 0, startH = i;
+            while (haystack.charAt(startH) == needle.charAt(startN)) {
+                if (startH == haystackLen - 1 && needleLen == 1) return i;
                 if (startN == needleLen - 1) return i;
-                if (startH == haystackLen -1 && startN < needleLen-1) return -1;
+                if (startH == haystackLen - 1 && startN < needleLen - 1) return -1;
                 startH++;
                 startN++;
             }
@@ -374,18 +389,18 @@ public class LeetCode1 {
 
     }
 
-    public static int strStr1(String haystack, String needle){
-        int needleLen = needle.length(),haystackLen = haystack.length();
-        if (haystack.isEmpty() && needle.isEmpty() ) return 0;
-        if (!haystack.isEmpty() && needle.isEmpty() ) return 0;
-        if (haystack.isEmpty() && !needle.isEmpty() ) return -1;
+    public static int strStr1(String haystack, String needle) {
+        int needleLen = needle.length(), haystackLen = haystack.length();
+        if (haystack.isEmpty() && needle.isEmpty()) return 0;
+        if (!haystack.isEmpty() && needle.isEmpty()) return 0;
+        if (haystack.isEmpty() && !needle.isEmpty()) return -1;
         if (haystackLen < needleLen) return -1;
         return haystack.indexOf(needle);
     }
 
     //LeetCode 29 Divide Two Integers
     public static int divide(int dividend, int divisor) {
-        if (dividend == -Integer.MAX_VALUE) dividend = 1+dividend;
+        if (dividend == -Integer.MAX_VALUE) dividend = 1 + dividend;
         if (Math.abs(dividend) < Math.abs(divisor)) return 0;
         if (dividend == divisor) return 1;
         if (dividend < 0 && divisor < 0) {
@@ -393,36 +408,37 @@ public class LeetCode1 {
             divisor = ~divisor;
         }
         boolean negPosi = false;
-        if ((dividend<0 && divisor>0 )|| (dividend>0 && divisor<0)) {
+        if ((dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0)) {
             dividend = Math.abs(dividend);
             divisor = Math.abs(divisor);
             negPosi = true;
         }
         long count = 0;
-        long temp =0;
+        long temp = 0;
         do {
             temp += divisor;
             count++;
-            if (count > Integer.MAX_VALUE ) return Integer.MAX_VALUE;
-        }while (dividend - temp > divisor);
+            if (count > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        } while (dividend - temp > divisor);
         //int a = (int) (count =  negPosi ? -count:count);
-        return (int) (count =  negPosi ? -count:count);
+        return (int) (count = negPosi ? -count : count);
     }
+
     //submit
     public int divide1(int dividend, int divisor) {
-            boolean isNegative = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0) ? true : false;
-            long absDividend = Math.abs((long) dividend);
-            long absDivisor = Math.abs((long) divisor);
-            long result = 0;
-            while(absDividend >= absDivisor){
-                long tmp = absDivisor, count = 1;
-                while(tmp <= absDividend){
-                    tmp <<= 1;
-                    count <<= 1;
-                }
-                result += count >> 1;
-                absDividend -= tmp >> 1;
+        boolean isNegative = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0) ? true : false;
+        long absDividend = Math.abs((long) dividend);
+        long absDivisor = Math.abs((long) divisor);
+        long result = 0;
+        while (absDividend >= absDivisor) {
+            long tmp = absDivisor, count = 1;
+            while (tmp <= absDividend) {
+                tmp <<= 1;
+                count <<= 1;
             }
-            return  isNegative ? (int) ~result + 1 : result > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) result;
+            result += count >> 1;
+            absDividend -= tmp >> 1;
         }
+        return isNegative ? (int) ~result + 1 : result > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) result;
+    }
 }

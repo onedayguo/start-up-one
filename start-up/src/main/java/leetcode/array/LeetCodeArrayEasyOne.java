@@ -1,4 +1,4 @@
-package leetcode.array.easy;
+package leetcode.array;
 
 import leetcode.array.LeetCodeArrayEasy;
 
