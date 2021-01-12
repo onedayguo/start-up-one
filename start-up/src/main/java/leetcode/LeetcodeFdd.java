@@ -419,17 +419,17 @@ public class LeetcodeFdd {
      * @date: 2020/11/21 21:09
      */
     public boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix == null || matrix.length < 1 || matrix[0].length <1) {
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
             return false;
         }
-        int col = matrix[0].length-1;
+        int col = matrix[0].length - 1;
         int row = 0;
-        while(col >= 0 && row <= matrix.length-1) {
-            if(target == matrix[row][col]) {
+        while (col >= 0 && row <= matrix.length - 1) {
+            if (target == matrix[row][col]) {
                 return true;
-            } else if(target < matrix[row][col]) {
+            } else if (target < matrix[row][col]) {
                 col--;
-            } else if(target > matrix[row][col]) {
+            } else if (target > matrix[row][col]) {
                 row++;
             }
         }
@@ -440,14 +440,14 @@ public class LeetcodeFdd {
      * @description: 279. Perfect Squares
      * Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...)
      * which sum to n.
-     *
+     * <p>
      * Example 1:
-     *
+     * <p>
      * Input: n = 12
      * Output: 3
      * Explanation: 12 = 4 + 4 + 4.
      * Example 2:
-     *
+     * <p>
      * Input: n = 13
      * Output: 2
      * Explanation: 13 = 4 + 9.
@@ -461,9 +461,9 @@ public class LeetcodeFdd {
         int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
-        for(int i = 0; i <= n; i++){
-            for(int j = 1; i + j * j <= n; j++){
-                dp[i  + j * j] = Math.min(dp[i + j * j], dp[i] + 1);
+        for (int i = 0; i <= n; i++) {
+            for (int j = 1; i + j * j <= n; j++) {
+                dp[i + j * j] = Math.min(dp[i + j * j], dp[i] + 1);
             }
         }
         return dp[n];
@@ -473,14 +473,14 @@ public class LeetcodeFdd {
      * @description: 295. Find Median from Data Stream
      * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle
      * value. So the median is the mean of the two middle value.
-     *
+     * <p>
      * For example,
      * [2,3,4], the median is 3
-     *
+     * <p>
      * [2,3], the median is (2 + 3) / 2 = 2.5
-     *
+     * <p>
      * Design a data structure that supports the following two operations:
-     *
+     * <p>
      * void addNum(int num) - Add a integer number from the data stream to the data structure.
      * double findMedian() - Return the median of all elements so far.
      * @return:
@@ -511,6 +511,7 @@ public class LeetcodeFdd {
             even = !even;
         }
     }
+
     /**
      * @description: 300. Longest Increasing Subsequence
      * Given an integer array nums, return the length of the longest strictly increasing subsequence.
@@ -535,19 +536,20 @@ public class LeetcodeFdd {
          * @date: 2020/11/22 20:16
          */
         int[] dp = new int[nums.length];
-        Arrays.fill(dp,1);
+        Arrays.fill(dp, 1);
         int res = 0;
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[i]>nums[j]){
-                    dp[i]=Math.max(dp[i],dp[j]+1);
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-            res=Math.max(res,dp[i]);
+            res = Math.max(res, dp[i]);
         }
         return res;
     }
-    public int lengthOfLIS1(int[] nums){
+
+    public int lengthOfLIS1(int[] nums) {
         /**
          * @description: 二分查找法
          * 先建立一个数组 ends，把首元素放进去，然后比较之后的元素，如果遍历到的新元素比 ends 数组中的首元素小的话，替换首元素为此新元素，
@@ -566,17 +568,17 @@ public class LeetcodeFdd {
         int head = nums[0];
         int tail = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i]<head){
+            if (nums[i] < head) {
                 ends.addFirst(nums[i]);
                 head = nums[i];
-            }else if (nums[i]>tail){
+            } else if (nums[i] > tail) {
                 ends.addLast(nums[i]);
                 tail = nums[i];
-            }else {
-                int size=ends.size();
+            } else {
+                int size = ends.size();
                 for (int j = 0; j < size; j++) {
-                    if (ends.get(j)>=nums[i]){
-                        ends.set(j,nums[i]);
+                    if (ends.get(j) >= nums[i]) {
+                        ends.set(j, nums[i]);
                     }
                 }
             }
@@ -602,15 +604,80 @@ public class LeetcodeFdd {
         int buy = Integer.MAX_VALUE;
         int pfree = 0, last = 0, now = 0;
         for (int x : prices) {
-            now = Math.max( last , x -  buy);
-            buy = Math.min( buy , x - pfree);
+            now = Math.max(last, x - buy);
+            buy = Math.min(buy, x - pfree);
             pfree = last;
-            last  = now;
+            last = now;
         }
         return now;
     }
+
+    /**
+     * @Description: 322. Coin Change
+     * You are given coins of different denominations and a total amount of money amount. Write a function to compute the
+     * fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any
+     * combination of the coins, return -1.
+     * You may assume that you have an infinite number of each kind of coin.
+     * @Param:
+     * @Return:
+     * @Author: kami
+     * @Date: 2021/1/7 11:19
+     */
+    public int coinChange(int[] coins, int amount) {
+        if (coins == null || coins.length == 0) {
+            return -1;
+        }
+
+        if (amount <= 0) {
+            return 0;
+        }
+
+        int[] dp = new int[amount + 1];
+        for (int i = 1; i < dp.length; i++) {
+            dp[i] = Integer.MAX_VALUE;
+        }
+
+        for (int am = 1; am < dp.length; am++) {
+            for (int i = 0; i < coins.length; i++) {
+                if (coins[i] <= am) {
+                    int sub = dp[am - coins[i]];
+                    if (sub != Integer.MAX_VALUE) {
+                        dp[am] = Math.min(sub + 1, dp[am]);
+                    }
+                }
+            }
+        }
+        return dp[dp.length - 1] == Integer.MAX_VALUE ? -1 : dp[dp.length - 1];
+    }
+    /**
+     * @Description: 60. Permutation Sequence
+     * @Author: kami
+     * @Date: 2021/1/12 17:35
+     */
+    public String getPermutation(int n, int k) {
+        int[] factorial = new int[n+1];
+        factorial[0]=1;
+        int sum = 1;
+        List<Integer> number = new ArrayList<>();
+        for (int i = 1; i <=n ; i++) {
+            sum *= i;
+            factorial[i] = sum;
+            number.add(i);
+        }
+        k--;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= n; i++) {
+            int index = k/factorial[n-i];
+            sb.append(number.get(index));
+            number.remove(index);
+            k-=index*factorial[n-i];
+        }
+        return sb.toString();
+    }
+
+
     public static void main(String[] args) {
-        int[] prices = {3,4,5,6,2,0,3};
+        int[] prices = {3, 4, 5, 6, 2, 0, 3};
         System.out.println(maxProfit(prices));
     }
 }
