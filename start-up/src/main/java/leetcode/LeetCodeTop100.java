@@ -1608,7 +1608,36 @@ public class LeetCodeTop100 {
 
         return pseudoHead.next;
     }
-
+    /**
+     * @description: 763. Partition Labels
+     * A string S of lowercase English letters is given. We want to partition this string into as many parts
+     * as possible so that each letter appears in at most one part, and return a list of integers representing
+     * the size of these parts.
+     * @return: 每段分割的字母的个数列表
+     * @author: kami
+     * @date: 2021/1/26 20:59
+     */
+    public List<Integer> partitionLabels(String S) {
+        List<Integer> list = new ArrayList<>();
+        dfs(S,list);
+        return list;
+    }
+    private void dfs(String s, List<Integer> list) {
+        if (s.length() == 0) {
+            return;
+        }
+        char first = s.charAt(0);
+        int last = s.lastIndexOf(first);
+        for (int i = 0; i < last; i++) {
+            if (s.lastIndexOf(s.charAt(i)) <= last) {
+                continue;
+            }
+            last = s.lastIndexOf(s.charAt(i));
+        }
+        s = s.substring(last + 1);
+        list.add(last + 1);
+        dfs(s, list);
+    }
     public static void main(String[] args) throws InterruptedException, NoSuchAlgorithmException {
 
         TreeNode root = new TreeNode(3);
