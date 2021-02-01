@@ -1240,7 +1240,8 @@ public class LeetCodeTop100 {
      * 9  20
      * /  \
      * 15   7
-     * @return:
+     * @return: 前序遍历和中序遍历构建二叉树
+     * @note: 递归构建子树
      * @author: kami
      * @date: 2020/6/21 10:35
      */
@@ -1262,6 +1263,22 @@ public class LeetCodeTop100 {
         root.left = helper(preStart + 1, inStart, inIndex - 1, preorder, inorder);
         root.right = helper(preStart + inIndex - inStart + 1, inIndex + 1, inEnd, preorder, inorder);
         return root;
+    }
+    /**
+     * @description: 106. Construct Binary Tree from Inorder and Postorder Traversal
+     * Given inorder and postorder traversal of a tree, construct the binary tree.
+     * Note:
+     * You may assume that duplicates do not exist in the tree.
+     * @return: 中序遍历和后序遍历构建二叉树
+     * @author: kami
+     * @date: 2021/2/1 22:01
+     */
+    public TreeNode buildTreeFromInAndPost(int[] inorder, int[] postorder) {
+        return null;
+    }
+
+    private TreeNode helperInAndPost( ){
+        return null;
     }
 
     /**

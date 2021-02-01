@@ -49,6 +49,28 @@ public class LeetCodeArrayEasy {
         }
         return allrows;
     }
+    /**
+     * @description: 119. Pascal's Triangle II
+     * Given an integer rowIndex, return the rowIndexth row of the Pascal's triangle.
+     *
+     * Notice that the row index starts from 0.
+     * Could you optimize your algorithm to use only O(k) extra space?
+     * @return: 第rowIndex的數字列表
+     * @author: kami
+     * @date: 2021/2/1 20:35
+     */
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> res = new ArrayList<>(rowIndex+1);
+        res.add(1);
+        for (int i = 1; i <= rowIndex; i++) {
+            for (int j = i-1; j >=1 ; j--) {
+                int temp = res.get(j-1)+res.get(j);
+                res.set(j,temp);
+            }
+            res.add(1);
+        }
+        return res;
+    }
 
     /**
      * @Description: 106. Construct Binary Tree from Inorder and Postorder Traversal 从中序遍历和后序遍历重构二叉树
@@ -74,5 +96,9 @@ public class LeetCodeArrayEasy {
             sum[i] = sum[i-1]+ nums[i];
         }
         return sum;
+    }
+
+    public String defangIPaddr(String address) {
+        return address.replace(".","[.]");
     }
 }
