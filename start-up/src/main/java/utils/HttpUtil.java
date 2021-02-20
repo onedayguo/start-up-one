@@ -15,7 +15,7 @@ public class HttpUtil {
     public static void main(String[] args) {
         httpURLConectionGET();
     }
-    public static final String GET_URL = "http://sif-iec.ecnu.edu.cn/4698/list.htm";
+    public static final String GET_URL = "http://sif-iec.ecnu.edu.cn/4698/list.html";
     public static final int COUNT = 1000000000;
     //get 请求
     public  static void httpURLConectionGET() {

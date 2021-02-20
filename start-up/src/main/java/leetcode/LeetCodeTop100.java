@@ -1264,21 +1264,50 @@ public class LeetCodeTop100 {
         root.right = helper(preStart + inIndex - inStart + 1, inIndex + 1, inEnd, preorder, inorder);
         return root;
     }
+
     /**
      * @description: 106. Construct Binary Tree from Inorder and Postorder Traversal
      * Given inorder and postorder traversal of a tree, construct the binary tree.
      * Note:
      * You may assume that duplicates do not exist in the tree.
+     * This is my iterative solution, think about "Constructing Binary Tree from inorder and preorder array",
      * @return: 中序遍历和后序遍历构建二叉树
      * @author: kami
      * @date: 2021/2/1 22:01
      */
-    public TreeNode buildTreeFromInAndPost(int[] inorder, int[] postorder) {
-        return null;
+    public static TreeNode buildTreeFromInAndPost(int[] inorder, int[] postorder) {
+        return helperDfs(inorder, 0, inorder.length - 1,
+                postorder, 0, postorder.length - 1);
     }
 
-    private TreeNode helperInAndPost( ){
-        return null;
+    public static TreeNode helperDfs(int[] inorder, int inStart, int inEnd,
+                                     int[] postorder, int postStart, int postEnd) {
+        // 还原根节点
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        if (inStart > inEnd) {
+            return null;
+        }
+        int pos = 0;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inorder[i] == root.val) {
+                pos = i;
+                break;
+            }
+        }
+        // because pe-ps=pos-is (the number of the rest elements should be equal)
+        root.left = helperDfs(inorder, inStart, pos - 1,
+                postorder, postStart, postStart + pos - inStart);
+        // //pe-1-ps=ie-(pos+1) => ps=pe-ie+pos
+        root.right = helperDfs(inorder, pos + 1, inEnd,
+                postorder, postEnd - inEnd + pos, postEnd - 1);
+        return root;
+    }
+
+    public static void main(String[] args) {
+        int[] inorder = {9, 3, 15, 20, 7};
+        int[] postorder = {9, 15, 7, 20, 3};
+        TreeNode treeNode = buildTreeFromInAndPost(inorder, postorder);
+        System.out.println(treeNode);
     }
 
     /**
@@ -1625,6 +1654,7 @@ public class LeetCodeTop100 {
 
         return pseudoHead.next;
     }
+
     /**
      * @description: 763. Partition Labels
      * A string S of lowercase English letters is given. We want to partition this string into as many parts
@@ -1636,9 +1666,10 @@ public class LeetCodeTop100 {
      */
     public List<Integer> partitionLabels(String S) {
         List<Integer> list = new ArrayList<>();
-        dfs(S,list);
+        dfs(S, list);
         return list;
     }
+
     private void dfs(String s, List<Integer> list) {
         if (s.length() == 0) {
             return;
@@ -1654,16 +1685,6 @@ public class LeetCodeTop100 {
         s = s.substring(last + 1);
         list.add(last + 1);
         dfs(s, list);
-    }
-    public static void main(String[] args) throws InterruptedException, NoSuchAlgorithmException {
-
-        TreeNode root = new TreeNode(3);
-        root.left = new TreeNode(1);
-        root.right = new TreeNode(4);
-        root.left.right = new TreeNode(2);
-//        kthSmallest(root,2);
-        // 11 1
-        System.out.println(4 ^ 5);
     }
 
 }
