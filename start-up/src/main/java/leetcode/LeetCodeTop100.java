@@ -1303,13 +1303,6 @@ public class LeetCodeTop100 {
         return root;
     }
 
-    public static void main(String[] args) {
-        int[] inorder = {9, 3, 15, 20, 7};
-        int[] postorder = {9, 15, 7, 20, 3};
-        TreeNode treeNode = buildTreeFromInAndPost(inorder, postorder);
-        System.out.println(treeNode);
-    }
-
     /**
      * @description: 647. Palindromic Substrings 判断回文字符串子串的个数
      * Given a string, your task is to count how many palindromic substrings in this string.

@@ -294,8 +294,51 @@ public class DynamicProgrammingEasy {
                 dp[i] = Math.max(p[i] - dp[i + 1], p[i + d] - dp[i]);
         return dp[0] > 0;
     }
+    /**
+     * @description: 115. Distinct Subsequences
+     * Given two strings s and t, return the number of distinct subsequences of s which equals t.
+     * A string's subsequence is a new string formed from the original string by deleting some (can be none)
+     * of the characters without disturbing the remaining characters' relative positions. (i.e., "ACE" is a
+     * subsequence of "ABCDE" while "AEC" is not).
+     * It is guaranteed the answer fits on a 32-bit signed integer.
+     * @return: 字符串S包含字符串T的数量
+     * @author: kami
+     * @备注： 动态规划
+     * 求S有多少个不同的子串与T相同
+     * 这里我们维护res[i][j]，对应的值是S的前i个字符和T的前j个字符有多少个可行的序列。
+     * 假设S的第i个字符和T的第j个字符不相同，那么就意味着res[i][j]的值跟res[i-1][j]是一样的，
+     * 前面该是多少还是多少，而第i个字符的加入也不会多出来任何可行结果。如果S的第i个字符和T的第j个字符相同，
+     * 那么所有res[i-1][j-1]中满足的结果都会成为新的满足的序列------------这就是我们说的常规思维的想到的
+     * 当然res[i-1][j]的也仍是可行结果--------------------------------这就是我们没有想到的，我多了一个你，但是我不要你
+     * 所以res[i][j]=res[i-1][j-1]+res[i-1][j]。所以综合上面两种情况，递推式应该是res[i][j]=(S[i]==T[j]?res[i-1][j-1]:0)+res[i-1][j]。
+     * 算法进行两层循环，时间复杂度是O(m*n)，而空间上只需要维护当前i对应的数据就可以，也就是O(m)
+     * @date: 2021/2/22 15:17
+     */
+    public int numDistinct(String S, String T) {
+        int[][] table = new int[S.length() + 1][T.length() + 1];
+
+        for (int i = 0; i < S.length(); i++) {
+            table[i][0] = 1;
+        }
+
+        for (int i = 1; i <= S.length(); i++) {
+            for (int j = 1; j <= T.length(); j++) {
+                if (S.charAt(i - 1) == T.charAt(j - 1)) {
+                    table[i][j] = table[i - 1][j] + table[i - 1][j - 1];
+                    //这里的table[i - 1][j]和下面的一样的意思，就是不论你是不是相等的，我都删掉你，
+                    //不过万一我要了，这里就多了一个table[i - 1][j - 1] option
+                } else {
+                    table[i][j] = table[i - 1][j];
+                }
+            }
+        }
+
+        return table[S.length()][T.length()];
+    }
     public static void main(String[] args) {
         int[] arr = {6,2,4,5,6,3,2,8,5,4,1,9,6,5,4,2,8,5    };
         System.out.println(stoneGame1(arr));
     }
+    
+    
 }
