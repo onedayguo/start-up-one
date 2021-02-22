@@ -1282,11 +1282,11 @@ public class LeetCodeTop100 {
 
     public static TreeNode helperDfs(int[] inorder, int inStart, int inEnd,
                                      int[] postorder, int postStart, int postEnd) {
-        // 还原根节点
-        TreeNode root = new TreeNode(postorder[postEnd]);
-        if (inStart > inEnd) {
+        if (inStart > inEnd || postStart > postEnd) {
             return null;
         }
+        // 还原根节点
+        TreeNode root = new TreeNode(postorder[postEnd]);
         int pos = 0;
         for (int i = inStart; i <= inEnd; i++) {
             if (inorder[i] == root.val) {
@@ -1296,7 +1296,7 @@ public class LeetCodeTop100 {
         }
         // because pe-ps=pos-is (the number of the rest elements should be equal)
         root.left = helperDfs(inorder, inStart, pos - 1,
-                postorder, postStart, postStart + pos - inStart);
+                postorder, postStart, postStart + pos - inStart-1);
         // //pe-1-ps=ie-(pos+1) => ps=pe-ie+pos
         root.right = helperDfs(inorder, pos + 1, inEnd,
                 postorder, postEnd - inEnd + pos, postEnd - 1);
