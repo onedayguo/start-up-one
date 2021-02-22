@@ -1,6 +1,7 @@
 package leetcode.dynamic;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -335,6 +336,24 @@ public class DynamicProgrammingEasy {
 
         return table[S.length()][T.length()];
     }
+    /**
+     * @description: 120. Triangle
+     * Given a triangle array, return the minimum path sum from top to bottom.
+     * For each step, you may move to an adjacent number of the row below. More formally, if you are on index i
+     * on the current row, you may move to either index i or index i + 1 on the next row.
+     * @return: 从顶到底的最小路径
+     * @author: kami
+     * @备注：TODO
+     * @date: 2021/2/22 19:37
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int row = triangle.size();
+        int col = triangle.get(row-1).size();
+        int[][] dp = new int[row+1][col+1];
+
+        return 0;
+    }
+
     public static void main(String[] args) {
         int[] arr = {6,2,4,5,6,3,2,8,5,4,1,9,6,5,4,2,8,5    };
         System.out.println(stoneGame1(arr));
