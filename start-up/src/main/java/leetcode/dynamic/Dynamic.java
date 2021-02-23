@@ -1,11 +1,8 @@
 package leetcode.dynamic;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 /**
  * @Description: 动态规划
@@ -13,7 +10,7 @@ import java.util.stream.Collectors;
  * @Date: 2020/3/21 10:33
  * @Version: 1.0.0
  */
-public class DynamicProgrammingEasy {
+public class Dynamic {
     /**
      * @description: 1025. Divisor Game
      * Alice and Bob take turns playing a game, with Alice starting first.
@@ -43,7 +40,7 @@ public class DynamicProgrammingEasy {
     public static int maxProfit(int[] prices) {
         int maxCur = 0, maxSoFar = 0;
         for(int i = 1; i < prices.length; i++) {
-            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
+            maxCur = Math.max(0, maxCur + (prices[i] - prices[i - 1]));
             maxSoFar = Math.max(maxCur, maxSoFar);
         }
         return maxSoFar;
@@ -350,7 +347,7 @@ public class DynamicProgrammingEasy {
      * on the current row, you may move to either index i or index i + 1 on the next row.
      * @return: 从顶到底的最小路径
      * @author: kami
-     * @备注：TODO
+     * @备注：从下往上遍历
      * @date: 2021/2/22 19:37
      */
     public int minimumTotal(List<List<Integer>> triangle) {
@@ -410,6 +407,10 @@ public class DynamicProgrammingEasy {
     public static void main(String[] args) {
         int[] arr = {6,2,4,5,6,3,2,8,5,4,1,9,6,5,4,2,8,5    };
         System.out.println(stoneGame1(arr));
+        ConcurrentHashMap<Integer,String> hashMap1 = new ConcurrentHashMap<>(3);
+        hashMap1.put(3,"ddd");
+        hashMap1.put(4,"dddf");
+
     }
     
     

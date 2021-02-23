@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class utils {
     //region 快捷键：ctrl+alt+t
@@ -85,5 +86,11 @@ public class utils {
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        ConcurrentHashMap<Integer,String> hashMap1 = new ConcurrentHashMap<>(3);
+        hashMap1.put(3,"ddd");
+        hashMap1.put(4,"dddf");
     }
 }
