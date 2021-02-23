@@ -1,8 +1,11 @@
 package leetcode.dynamic;
 
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 /**
  * @Description: 动态规划
@@ -276,10 +279,14 @@ public class DynamicProgrammingEasy {
     public boolean stoneGame(int[] p) {
         int n = p.length;
         int[][] dp  = new int[n][n];
-        for (int i = 0; i < n; i++) dp[i][i] = p[i];
-        for (int d = 1; d < n; d++)
-            for (int i = 0; i < n - d; i++)
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = p[i];
+        }
+        for (int d = 1; d < n; d++) {
+            for (int i = 0; i < n - d; i++) {
                 dp[i][i + d] = Math.max(p[i] - dp[i + 1][i + d], p[i + d] - dp[i][i + d - 1]);
+            }
+        }
         return dp[0][n - 1] > 0;
     }
     /**
@@ -353,7 +360,53 @@ public class DynamicProgrammingEasy {
 
         return 0;
     }
+    /**
+     * @description: 131. Palindrome Partitioning
+     * Given a string s, partition s such that every substring of the partition is a palindrome.
+     * Return all possible palindrome partitioning of s.
+     * A palindrome string is a string that reads the same backward as forward.
+     * @return: 所有子回文字符串
+     * @author: kami
+     * @备注： 查找字符串的子回文字符串
+     * @date: 2021/2/23 21:45
+     */
+    List<List<String>> partitionResult;
+    ArrayList<String> currList;
+    public List<List<String>> partition(String s) {
+        partitionResult = new ArrayList<>();
+        currList = new ArrayList<>();
+        backTrackStr(s,0);
+        return partitionResult;
 
+    }
+
+    private void backTrackStr(String s, int left){
+        if (currList.size() >0 && left >= s.length()){
+            partitionResult.add(new ArrayList<>(currList));
+            return;
+        }
+        for (int i = left,length = s.length(); i < length; i++) {
+            if (isPalindrome(s,left,i)){
+                currList.add(s.substring(left,i+1));
+                backTrackStr(s,i+1);
+                currList.remove(currList.size()-1);
+            }
+        }
+
+    }
+    private boolean isPalindrome(String s,int left, int right){
+        if (left == right){
+            return true;
+        }
+        while (left < right){
+            if (s.charAt(left) != s.charAt(right)){
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
     public static void main(String[] args) {
         int[] arr = {6,2,4,5,6,3,2,8,5,4,1,9,6,5,4,2,8,5    };
         System.out.println(stoneGame1(arr));
