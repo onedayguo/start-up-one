@@ -1,8 +1,11 @@
 package leetcode.dynamic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Description: 动态规划
@@ -404,13 +407,71 @@ public class Dynamic {
         }
         return true;
     }
-    public static void main(String[] args) {
-        int[] arr = {6,2,4,5,6,3,2,8,5,4,1,9,6,5,4,2,8,5    };
-        System.out.println(stoneGame1(arr));
-        ConcurrentHashMap<Integer,String> hashMap1 = new ConcurrentHashMap<>(3);
-        hashMap1.put(3,"ddd");
-        hashMap1.put(4,"dddf");
+    /**
+     * @Description: 123. Best Time to Buy and Sell Stock III
+     * Say you have an array for which the ith element is the price of a given stock on day i.
+     *
+     * Design an algorithm to find the maximum profit. You may complete at most two transactions.
+     *
+     * Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+     * @Param: 价格数组
+     * @Return: 最大利润
+     * @Author: kami
+     * @Date: 2021/2/23 10:14
+     */
+    public int maxProfit3(int[] prices) {
+        int maxCur = 0, maxSoFar = 0;
+        for(int i = 1; i < prices.length; i++) {
+            maxCur = Math.max(0, maxCur + (prices[i] - prices[i - 1]));
+            maxSoFar = Math.max(maxCur, maxSoFar);
+        }
+        return maxSoFar;
+//        return 0;
+    }
 
+    public static void main(String[] args) {
+
+        SynchronizedExample e1 = new SynchronizedExample();
+        SynchronizedExample e2 = new SynchronizedExample();
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.execute(() -> e1.func1());
+        executorService.execute(() -> e2.func1());
+
+    }
+
+    public static class SynchronizedExample {
+
+        public void func1() {
+            synchronized (this) {
+                for (int i = 0; i < 10; i++) {
+                    System.out.print(i + " ");
+                }
+            }
+        }
+    }
+
+    private static class MyThread1 extends Thread {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(2000);
+                System.out.println("Thread run");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static class MyThread2 extends Thread {
+        @Override
+        public void run() {
+            while (!interrupted()) {
+//            while (true){
+
+                // ..
+                System.out.println("Thread ing");
+            }
+        }
     }
     
     
