@@ -456,6 +456,20 @@ public class Dynamic {
         }
         return dp[n-1];
     }
+    /**
+     * @description: 1641. Count Sorted Vowel Strings
+     * Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u)
+     * and are lexicographically sorted.
+     * A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1]
+     * in the alphabet.
+     * @return: 按字符顺序组成的字符串的个数
+     * @author: kami
+     * @备注： 元音字母 a e i o u
+     * @date: 2021/2/26 22:16
+     */
+    public int countVowelStrings(int n) {
+
+    }
     public static void main(String[] args) {
 
         SynchronizedExample e1 = new SynchronizedExample();
