@@ -426,9 +426,36 @@ public class Dynamic {
             maxSoFar = Math.max(maxCur, maxSoFar);
         }
         return maxSoFar;
-//        return 0;
     }
-
+    /**
+     * @description: 132. Palindrome Partitioning II
+     * Given a string s, partition s such that every substring of the partition is a palindrome.
+     *
+     * Return the minimum cuts needed for a palindrome partitioning of s.
+     * @return: 将字符串切分成回文字符串的最小次数
+     * @author: kami
+     * @备注：动态规划
+     * @date: 2021/2/25 22:10
+     */
+    public int minCut(String s) {
+        int n = s.length();
+        if (n == 0) {
+            return 0;
+        }
+        int[] dp = new int[n];
+        boolean[][] palind = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            dp[i] = i;
+            for (int j = 0; j <= i; j++) {
+                boolean same = s.charAt(i) == s.charAt(j) && (i-j < 2 || palind[j+1][i-1]);
+                if (same){
+                    palind[j][i] = true;
+                    dp[i] = j == 0 ? 0:Math.min(dp[i],dp[j-1]+1);
+                }
+            }
+        }
+        return dp[n-1];
+    }
     public static void main(String[] args) {
 
         SynchronizedExample e1 = new SynchronizedExample();
