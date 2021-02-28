@@ -468,7 +468,7 @@ public class Dynamic {
      * @date: 2021/2/26 22:16
      */
     public int countVowelStrings(int n) {
-
+        return 0;
     }
     public static void main(String[] args) {
 
