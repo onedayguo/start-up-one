@@ -481,6 +481,30 @@ public class Dynamic {
         }
         return a + e + i + o + u;
     }
+    /**
+     * @description: 1043. Partition Array for Maximum Sum
+     * Given an integer array arr, you should partition the array into (contiguous) subarrays of length at most k.
+     * After partitioning, each subarray has their values changed to become the maximum value of that subarray.
+     *
+     * Return the largest sum of the given array after partitioning.
+     * @return: 最大和
+     * @author: kami
+     * @备注： 动态规划
+     * @date: 2021/3/1 20:55
+     */
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+        int N = arr.length, dp[] = new int[N + 1];
+        for (int i = 1; i <= N; ++i) {
+            int curMax = 0, best = 0;
+            for (int j = 1; j <= k && i - j >= 0; ++j) {
+                curMax = Math.max(curMax, arr[i - j]);
+                best = Math.max(best, dp[i - j] + curMax * j);
+            }
+            dp[i] = best;
+        }
+        return dp[N];
+    }
+
     public static void main(String[] args) {
 
         SynchronizedExample e1 = new SynchronizedExample();
