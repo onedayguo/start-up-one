@@ -290,6 +290,46 @@ public class Dynamic {
         return dp[0][n - 1] > 0;
     }
     /**
+     * @description: 1140. Stone Game II
+     * Alice and Bob continue their games with piles of stones.  There are a number of piles arranged in a row,
+     * and each pile has a positive integer number of stones piles[i].  The objective of the game is to end with
+     * the most stones.
+     * Alice and Bob take turns, with Alice starting first.  Initially, M = 1.
+     * On each player's turn, that player can take all the stones in the first X remaining piles,
+     * where 1 <= X <= 2M.  Then, we set M = max(M, X).
+     * The game continues until all the stones have been taken.
+     * Assuming Alice and Bob play optimally, return the maximum number of stones Alice can get.
+     * @return: Alice能够获取到的最大数值
+     * @author: kami
+     * @备注： 与887是同一类问题
+     * @date: 2021/3/5 22:50
+     */
+    public int stoneGameII(int[] piles) {
+        for (int i = piles.length - 2; i >= 0; i--) {
+            piles[i] += piles[i + 1];
+        }
+        return dfs(piles, 1, 0, new int[piles.length][piles.length]);
+    }
+    private int dfs(int[] presum, int m, int p, int[][] memo) {
+        if (p + 2 * m >= presum.length) { // last player takes all
+            return presum[p];
+        }
+
+        if (memo[p][m] > 0) {
+            return memo[p][m];
+        }
+        int res = 0;
+        for (int i = 1,end = m<<1; i <= end; i++) {
+            // take max of current + what lefts from other player max take
+            int curMaxSum = presum[p] - dfs(presum, Math.max(i, m), p + i, memo);
+            res = Math.max(res, curMaxSum);
+        }
+        memo[p][m] = res;
+        return res;
+    }
+
+    
+    /**
      * @description: 1D DP
      * @return:
      * @auther: kami
@@ -505,13 +545,16 @@ public class Dynamic {
         return dp[N];
     }
 
+    private static String str = "test";
     public static void main(String[] args) {
 
-        SynchronizedExample e1 = new SynchronizedExample();
-        SynchronizedExample e2 = new SynchronizedExample();
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        executorService.execute(() -> e1.func1());
-        executorService.execute(() -> e2.func1());
+        List<String> list = new ArrayList<>();
+        while (true){
+            String str2 = str + str;
+            str = str2;
+            System.out.println(str.intern().length());
+            list.add(str.intern());
+        }
 
     }
 
@@ -549,6 +592,6 @@ public class Dynamic {
             }
         }
     }
-    
+
     
 }
