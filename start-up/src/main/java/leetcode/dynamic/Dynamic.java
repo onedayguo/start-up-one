@@ -544,6 +544,51 @@ public class Dynamic {
         }
         return dp[N];
     }
+    
+    /**
+     * @description: 931. Minimum Falling Path Sum
+     * Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix.
+     *
+     * A falling path starts at any element in the first row and chooses the element in the next row that is either
+     * directly below or diagonally left/right. Specifically, the next element from position (row, col) will be
+     * (row + 1, col - 1), (row + 1, col), or (row + 1, col + 1).
+     * @return: 下落的最小路径
+     * @author: kami
+     * @备注： 千年的动态对话，考虑自顶向上
+     * @date: 2021/3/7 22:48
+     */
+    public int minFallingPathSum(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        if (row == 1){
+            int min = matrix[0][0];
+            for (int i = 1; i < col; i++) {
+                min = Math.min(min,matrix[0][i]);
+            }
+            return min;
+        }
+        if (col == 1){
+            int sum = 0;
+            for (int i = 0; i < row; i++) {
+                sum += matrix[i][0];
+            }
+            return sum;
+        }
+        for (int i = row-2; i >= 0; i--) {
+            matrix[i][0] += Math.min(matrix[i+1][0],matrix[i+1][1]);
+            matrix[i][col-1] += Math.min(matrix[i+1][col-2],matrix[i+1][col-1]);
+            for (int j = 1; j < col-1; j++) {
+                int sum = matrix[i][j];
+                sum += Math.min(matrix[i+1][j-1],Math.min(matrix[i+1][j],matrix[i+1][j+1]));
+                matrix[i][j] = sum;
+            }
+        }
+        int res = matrix[0][0];
+        for (int i = 0; i < col; i++) {
+            res = Math.min(res,matrix[0][i]);
+        }
+        return res;
+    }
 
     private static String str = "test";
     public static void main(String[] args) {
