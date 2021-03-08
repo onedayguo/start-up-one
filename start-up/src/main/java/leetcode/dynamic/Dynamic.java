@@ -27,7 +27,7 @@ public class Dynamic {
      * @date: 2020/3/21 10:35
      */
     public boolean divisorGame(int N) {
-        return  N % 2 == 0;
+        return N % 2 == 0;
     }
 
     /**
@@ -42,12 +42,13 @@ public class Dynamic {
      */
     public static int maxProfit(int[] prices) {
         int maxCur = 0, maxSoFar = 0;
-        for(int i = 1; i < prices.length; i++) {
+        for (int i = 1; i < prices.length; i++) {
             maxCur = Math.max(0, maxCur + (prices[i] - prices[i - 1]));
             maxSoFar = Math.max(maxCur, maxSoFar);
         }
         return maxSoFar;
     }
+
     //纪录两个状态, 一个是最大利润, 另一个是遍历过的子序列的最小值。知道之前的最小值我们就可以算出当前天可能的最大利润是多少
     public int maxProfit1(int[] prices) {
         // 7,1,5,3,6,4
@@ -78,12 +79,12 @@ public class Dynamic {
      * @date: 2020/3/22 10:13
      */
     public static int rob(int[] nums) {
-        if (nums.length == 0)return 0;
+        if (nums.length == 0) return 0;
         int pre1 = 0;
         int pre2 = 0;
-        for (int num:nums) {
+        for (int num : nums) {
             int temp = pre1;
-            pre1 = Math.max(pre1,num+pre2);
+            pre1 = Math.max(pre1, num + pre2);
             pre2 = temp;
         }
         return pre1;
@@ -108,8 +109,8 @@ public class Dynamic {
         int pre1 = 0;
         int pre2 = 0;
         int currMin = 0;
-        for (int i = 2; i < cost.length+1; i++) {
-            currMin = Math.min(pre1+cost[i-1],pre2+cost[i-2]);
+        for (int i = 2; i < cost.length + 1; i++) {
+            currMin = Math.min(pre1 + cost[i - 1], pre2 + cost[i - 2]);
             pre2 = pre1;
             pre1 = currMin;
         }
@@ -130,10 +131,10 @@ public class Dynamic {
      */
     public boolean isSubsequence(String s, String t) {
         int tIndex = 0;
-        for (char currChar:s.toCharArray()) {
+        for (char currChar : s.toCharArray()) {
             int offSet = t.substring(tIndex).indexOf(currChar);
             tIndex = tIndex + offSet + 1;
-            if (offSet < 0){
+            if (offSet < 0) {
                 return false;
             }
         }
@@ -149,17 +150,17 @@ public class Dynamic {
      * @date: 2020/3/22 17:20
      */
     public int[][] matrixBlockSum(int[][] mat, int K) {
-        int row = mat.length,col = mat[0].length;
+        int row = mat.length, col = mat[0].length;
         int[][] matrixBlockSum = new int[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 int sum = 0;
-                int rowFrom = Math.max(0,i-K);
-                int rowTo = Math.min(row-1,i+K);
-                int colFrom = Math.max(0,j-K);
-                int colTo = Math.min(col-1,j+K);
-                for (int k = rowFrom; k <= rowTo ; k++) {
-                    for (int l = colFrom; l <= colTo ; l++) {
+                int rowFrom = Math.max(0, i - K);
+                int rowTo = Math.min(row - 1, i + K);
+                int colFrom = Math.max(0, j - K);
+                int colTo = Math.min(col - 1, j + K);
+                for (int k = rowFrom; k <= rowTo; k++) {
+                    for (int l = colFrom; l <= colTo; l++) {
                         sum += mat[k][l];
                     }
                 }
@@ -173,8 +174,8 @@ public class Dynamic {
      * @description: 1277. Count Square Submatrices with All Ones
      * Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
      * 思路：这是一道动态规划题
-     *      1.计算以当前点为右下角的方块的数量
-     *      2.累加每个点左，上，左上点方块数量
+     * 1.计算以当前点为右下角的方块的数量
+     * 2.累加每个点左，上，左上点方块数量
      * @return: 数字是1的方块数量
      * @auther: kami
      * @date: 2020/3/22 17:46
@@ -183,9 +184,9 @@ public class Dynamic {
         int count = 0;
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                if (matrix[i][j] > 0 && i > 0 && j > 0){
+                if (matrix[i][j] > 0 && i > 0 && j > 0) {
                     // 当前点数量 = 左，上，左上最中最小值 +1，最后+1是因为当前点值为1
-                    matrix[i][j] = Math.min(matrix[i-1][j],Math.min(matrix[i][j-1],matrix[i-1][j-1])) + 1;
+                    matrix[i][j] = Math.min(matrix[i - 1][j], Math.min(matrix[i][j - 1], matrix[i - 1][j - 1])) + 1;
                 }
                 count += matrix[i][j];
             }
@@ -202,21 +203,22 @@ public class Dynamic {
      * @date: 2020/3/23 22:03
      */
     public int[] countBits(int num) {
-        int[] count = new int[num+1];
-        for (int i = 0; i <= num ; i++) {
+        int[] count = new int[num + 1];
+        for (int i = 0; i <= num; i++) {
             int sum = 0;
             String binary = Integer.toBinaryString(i);
-            for (char j:binary.toCharArray()) {
-                sum += (j-'0');
+            for (char j : binary.toCharArray()) {
+                sum += (j - '0');
             }
             count[i] = sum;
         }
         return count;
     }
-    public int[] countBitsPlus(int num){
-        int[] res = new int[num+1];
-        for (int i = 1; i <= num ; i++) {
-            res[i] = res[i>>1] + (i & 1);
+
+    public int[] countBitsPlus(int num) {
+        int[] res = new int[num + 1];
+        for (int i = 1; i <= num; i++) {
+            res[i] = res[i >> 1] + (i & 1);
         }
         return res;
     }
@@ -230,7 +232,7 @@ public class Dynamic {
      * The value of each non-leaf node is equal to the product of the largest leaf value in its left and right subtree respectively.
      * Among all possible binary trees considered, return the smallest possible sum of the values of each non-leaf node.
      * It is guaranteed this sum fits into a 32-bit integer.
-     * @return: 
+     * @return:
      * @auther: kami
      * @date: 2020/3/23 22:52
      */
@@ -261,7 +263,7 @@ public class Dynamic {
      * with the most stones wins.
      * Assuming Alex and Lee play optimally, return True if and only if Alex wins the game.
      * 两个人轮流从一个数组的两头取值，谁最后取值大，谁赢
-     *  Alex is first to pick pile.
+     * Alex is first to pick pile.
      * piles.length is even, and this lead to an interesting fact:
      * Alex can always pick odd piles or always pick even piles!
      * For example,
@@ -278,7 +280,7 @@ public class Dynamic {
      */
     public boolean stoneGame(int[] p) {
         int n = p.length;
-        int[][] dp  = new int[n][n];
+        int[][] dp = new int[n][n];
         for (int i = 0; i < n; i++) {
             dp[i][i] = p[i];
         }
@@ -289,6 +291,7 @@ public class Dynamic {
         }
         return dp[0][n - 1] > 0;
     }
+
     /**
      * @description: 1140. Stone Game II
      * Alice and Bob continue their games with piles of stones.  There are a number of piles arranged in a row,
@@ -310,6 +313,7 @@ public class Dynamic {
         }
         return dfs(piles, 1, 0, new int[piles.length][piles.length]);
     }
+
     private int dfs(int[] presum, int m, int p, int[][] memo) {
         if (p + 2 * m >= presum.length) { // last player takes all
             return presum[p];
@@ -319,7 +323,7 @@ public class Dynamic {
             return memo[p][m];
         }
         int res = 0;
-        for (int i = 1,end = m<<1; i <= end; i++) {
+        for (int i = 1, end = m << 1; i <= end; i++) {
             // take max of current + what lefts from other player max take
             int curMaxSum = presum[p] - dfs(presum, Math.max(i, m), p + i, memo);
             res = Math.max(res, curMaxSum);
@@ -328,7 +332,7 @@ public class Dynamic {
         return res;
     }
 
-    
+
     /**
      * @description: 1D DP
      * @return:
@@ -336,12 +340,14 @@ public class Dynamic {
      * @date: 2020/3/27 22:18
      */
     public static boolean stoneGame1(int[] p) {
-        int[] dp = Arrays.copyOf(p, p.length);;
+        int[] dp = Arrays.copyOf(p, p.length);
+        ;
         for (int d = 1; d < p.length; d++)
             for (int i = 0; i < p.length - d; i++)
                 dp[i] = Math.max(p[i] - dp[i + 1], p[i + d] - dp[i]);
         return dp[0] > 0;
     }
+
     /**
      * @description: 115. Distinct Subsequences
      * Given two strings s and t, return the number of distinct subsequences of s which equals t.
@@ -383,6 +389,7 @@ public class Dynamic {
 
         return table[S.length()][T.length()];
     }
+
     /**
      * @description: 120. Triangle
      * Given a triangle array, return the minimum path sum from top to bottom.
@@ -395,11 +402,12 @@ public class Dynamic {
      */
     public int minimumTotal(List<List<Integer>> triangle) {
         int row = triangle.size();
-        int col = triangle.get(row-1).size();
-        int[][] dp = new int[row+1][col+1];
+        int col = triangle.get(row - 1).size();
+        int[][] dp = new int[row + 1][col + 1];
 
         return 0;
     }
+
     /**
      * @description: 131. Palindrome Partitioning
      * Given a string s, partition s such that every substring of the partition is a palindrome.
@@ -412,34 +420,36 @@ public class Dynamic {
      */
     List<List<String>> partitionResult;
     ArrayList<String> currList;
+
     public List<List<String>> partition(String s) {
         partitionResult = new ArrayList<>();
         currList = new ArrayList<>();
-        backTrackStr(s,0);
+        backTrackStr(s, 0);
         return partitionResult;
 
     }
 
-    private void backTrackStr(String s, int left){
-        if (currList.size() >0 && left >= s.length()){
+    private void backTrackStr(String s, int left) {
+        if (currList.size() > 0 && left >= s.length()) {
             partitionResult.add(new ArrayList<>(currList));
             return;
         }
-        for (int i = left,length = s.length(); i < length; i++) {
-            if (isPalindrome(s,left,i)){
-                currList.add(s.substring(left,i+1));
-                backTrackStr(s,i+1);
-                currList.remove(currList.size()-1);
+        for (int i = left, length = s.length(); i < length; i++) {
+            if (isPalindrome(s, left, i)) {
+                currList.add(s.substring(left, i + 1));
+                backTrackStr(s, i + 1);
+                currList.remove(currList.size() - 1);
             }
         }
 
     }
-    private boolean isPalindrome(String s,int left, int right){
-        if (left == right){
+
+    private boolean isPalindrome(String s, int left, int right) {
+        if (left == right) {
             return true;
         }
-        while (left < right){
-            if (s.charAt(left) != s.charAt(right)){
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
                 return false;
             }
             left++;
@@ -447,12 +457,13 @@ public class Dynamic {
         }
         return true;
     }
+
     /**
      * @Description: 123. Best Time to Buy and Sell Stock III
      * Say you have an array for which the ith element is the price of a given stock on day i.
-     *
+     * <p>
      * Design an algorithm to find the maximum profit. You may complete at most two transactions.
-     *
+     * <p>
      * Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
      * @Param: 价格数组
      * @Return: 最大利润
@@ -461,16 +472,17 @@ public class Dynamic {
      */
     public int maxProfit3(int[] prices) {
         int maxCur = 0, maxSoFar = 0;
-        for(int i = 1; i < prices.length; i++) {
+        for (int i = 1; i < prices.length; i++) {
             maxCur = Math.max(0, maxCur + (prices[i] - prices[i - 1]));
             maxSoFar = Math.max(maxCur, maxSoFar);
         }
         return maxSoFar;
     }
+
     /**
      * @description: 132. Palindrome Partitioning II
      * Given a string s, partition s such that every substring of the partition is a palindrome.
-     *
+     * <p>
      * Return the minimum cuts needed for a palindrome partitioning of s.
      * @return: 将字符串切分成回文字符串的最小次数
      * @author: kami
@@ -487,15 +499,16 @@ public class Dynamic {
         for (int i = 0; i < n; i++) {
             dp[i] = i;
             for (int j = 0; j <= i; j++) {
-                boolean same = s.charAt(i) == s.charAt(j) && (i-j < 2 || palind[j+1][i-1]);
-                if (same){
+                boolean same = s.charAt(i) == s.charAt(j) && (i - j < 2 || palind[j + 1][i - 1]);
+                if (same) {
                     palind[j][i] = true;
-                    dp[i] = j == 0 ? 0:Math.min(dp[i],dp[j-1]+1);
+                    dp[i] = j == 0 ? 0 : Math.min(dp[i], dp[j - 1] + 1);
                 }
             }
         }
-        return dp[n-1];
+        return dp[n - 1];
     }
+
     /**
      * @description: 1641. Count Sorted Vowel Strings
      * Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u)
@@ -513,7 +526,7 @@ public class Dynamic {
         int i = 1;
         int o = 1;
         int u = 1;
-        while(--n > 0){
+        while (--n > 0) {
             o = o + u;
             i = i + o;
             e = e + i;
@@ -521,11 +534,12 @@ public class Dynamic {
         }
         return a + e + i + o + u;
     }
+
     /**
      * @description: 1043. Partition Array for Maximum Sum
      * Given an integer array arr, you should partition the array into (contiguous) subarrays of length at most k.
      * After partitioning, each subarray has their values changed to become the maximum value of that subarray.
-     *
+     * <p>
      * Return the largest sum of the given array after partitioning.
      * @return: 最大和
      * @author: kami
@@ -544,11 +558,11 @@ public class Dynamic {
         }
         return dp[N];
     }
-    
+
     /**
      * @description: 931. Minimum Falling Path Sum
      * Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix.
-     *
+     * <p>
      * A falling path starts at any element in the first row and chooses the element in the next row that is either
      * directly below or diagonally left/right. Specifically, the next element from position (row, col) will be
      * (row + 1, col - 1), (row + 1, col), or (row + 1, col + 1).
@@ -560,64 +574,81 @@ public class Dynamic {
     public int minFallingPathSum(int[][] matrix) {
         int row = matrix.length;
         int col = matrix[0].length;
-        if (row == 1){
+        if (row == 1) {
             int min = matrix[0][0];
             for (int i = 1; i < col; i++) {
-                min = Math.min(min,matrix[0][i]);
+                min = Math.min(min, matrix[0][i]);
             }
             return min;
         }
-        if (col == 1){
+        if (col == 1) {
             int sum = 0;
             for (int i = 0; i < row; i++) {
                 sum += matrix[i][0];
             }
             return sum;
         }
-        for (int i = row-2; i >= 0; i--) {
-            matrix[i][0] += Math.min(matrix[i+1][0],matrix[i+1][1]);
-            matrix[i][col-1] += Math.min(matrix[i+1][col-2],matrix[i+1][col-1]);
-            for (int j = 1; j < col-1; j++) {
+        for (int i = row - 2; i >= 0; i--) {
+            matrix[i][0] += Math.min(matrix[i + 1][0], matrix[i + 1][1]);
+            matrix[i][col - 1] += Math.min(matrix[i + 1][col - 2], matrix[i + 1][col - 1]);
+            for (int j = 1; j < col - 1; j++) {
                 int sum = matrix[i][j];
-                sum += Math.min(matrix[i+1][j-1],Math.min(matrix[i+1][j],matrix[i+1][j+1]));
+                sum += Math.min(matrix[i + 1][j - 1], Math.min(matrix[i + 1][j], matrix[i + 1][j + 1]));
                 matrix[i][j] = sum;
             }
         }
         int res = matrix[0][0];
         for (int i = 0; i < col; i++) {
-            res = Math.min(res,matrix[0][i]);
+            res = Math.min(res, matrix[0][i]);
         }
         return res;
     }
-    
+
     /**
      * @description: 983. Minimum Cost For Tickets
      * In a country popular for train travel, you have planned some train travelling one year in advance.
      * The days of the year that you will travel is given as an array days.  Each day is an integer from 1 to 365.
-     *
+     * <p>
      * Train tickets are sold in 3 different ways:
-     *
+     * <p>
      * a 1-day pass is sold for costs[0] dollars;
      * a 7-day pass is sold for costs[1] dollars;
      * a 30-day pass is sold for costs[2] dollars.
      * The passes allow that many days of consecutive travel.  For example, if we get a 7-day pass on day 2,
      * then we can travel for 7 days: day 2, 3, 4, 5, 6, 7, and 8.
-     *
+     * <p>
      * Return the minimum number of dollars you need to travel every day in the given list of days.
-     * @return: TODO
+     * @return: 旅行最少的花费
      * @author: kami
-     * @备注：TODO
+     * @备注： 递归
      * @date: 2021/3/7 23:23
      */
     public int mincostTickets(int[] days, int[] costs) {
-        return 0;
+        int one = costs[0], seven = costs[1], thirty = costs[2];
+        int tempMin = Math.min(dfsCostTicket(days, costs,0, one, days[0]), dfsCostTicket(days,costs,0,seven,days[0]+6));
+        return Math.min(dfsCostTicket(days, costs,0, thirty, days[0]+29),tempMin );
+    }
+
+    private int dfsCostTicket(int[] days, int[] costs,int curIndex, int cost, int endDay) {
+        if (curIndex >= days.length || endDay > 365){
+            return cost;
+        }
+        int nextIndex = curIndex + 1;
+        for (int i = nextIndex,end = days.length; i < end; i++) {
+            if (days[i] > endDay){
+                int tempMin = Math.min(dfsCostTicket(days, costs,i, costs[0], days[i]), dfsCostTicket(days,costs,i,costs[1],days[i]+6));
+                return cost+Math.min(dfsCostTicket(days, costs,i, costs[2], days[i]+29),tempMin );
+            }
+        }
+        return cost;
     }
 
     private static String str = "test";
+
     public static void main(String[] args) {
 
         List<String> list = new ArrayList<>();
-        while (true){
+        while (true) {
             String str2 = str + str;
             str = str2;
             System.out.println(str.intern().length());
@@ -661,5 +692,5 @@ public class Dynamic {
         }
     }
 
-    
+
 }
