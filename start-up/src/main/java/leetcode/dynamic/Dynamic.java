@@ -2,8 +2,12 @@ package leetcode.dynamic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -620,24 +624,109 @@ public class Dynamic {
      * Return the minimum number of dollars you need to travel every day in the given list of days.
      * @return: 旅行最少的花费
      * @author: kami
-     * @备注： 递归
+     * @备注： 动态规划，记录当前天用的最少花费
      * @date: 2021/3/7 23:23
      */
-    public int mincostTickets(int[] days, int[] costs) {
-        int one = costs[0], seven = costs[1], thirty = costs[2];
-        int tempMin = Math.min(dfsCostTicket(days, costs,0, one, days[0]), dfsCostTicket(days,costs,0,seven,days[0]+6));
-        return Math.min(dfsCostTicket(days, costs,0, thirty, days[0]+29),tempMin );
+    public static int mincostTickets(int[] days, int[] costs) {
+        int[] dp = new int[366];
+        int curIndex = 0;
+        for (int i = 1; i < 366; i++) {
+            if (days[curIndex] == i) {
+                int sevenDayAgo = Math.max(0, i - 7);
+                int sevenMinCost = Math.min(dp[i - 1] + costs[0], dp[sevenDayAgo] + costs[1]);
+                int thirtyDayAgo = Math.max(0, i - 30);
+                dp[i] = Math.min(sevenMinCost, dp[thirtyDayAgo] + costs[2]);
+                if (++curIndex >= days.length){
+                    return dp[i];
+                }
+            } else {
+                dp[i] = dp[i - 1];
+            }
+        }
+
+        return dp[365];
+    }
+    /**
+     * @discription 空间复杂度优化了一下
+     * @date 2021/3/10 23:16
+     **/
+    public static int mincostTicketsOptimized(int[] days, int[] costs) {
+        int[] dp = new int[30];
+        int curIndex = 0;
+        for (int i = 1; i < 366; i++) {
+            int curI = i % 30;
+            int preI = curI - 1 < 0 ? 29:curI-1;
+            if (days[curIndex] == i) {
+                int sevenDayAgo = Math.max(0, i - 7) % 30;
+                int sevenMinCost = Math.min(dp[preI] + costs[0], dp[sevenDayAgo] + costs[1]);
+                int thirtyDayAgo = Math.max(0, i - 30) % 30;
+                dp[curI] = Math.min(sevenMinCost, dp[thirtyDayAgo] + costs[2]);
+                if (++curIndex >= days.length){
+                    return dp[curI];
+                }
+            } else {
+                dp[curI] = dp[preI];
+            }
+        }
+        return dp[29];
+    }
+    /**
+     * @discription 利用队列直接录前7个旅行日和前30个旅行日
+     * @date 2021/3/10 23:52
+     **/
+    public static int mincostTicketsTrackTravelDays(int[] days, int[] costs) {
+        int cost = 0;
+        Queue<DayCost> last7 = new LinkedList<>();
+        Queue<DayCost> last30 = new LinkedList<>();
+        for (int i = 0; i < days.length; i++) {
+            while (!last7.isEmpty() && last7.peek().day+7 <= days[i]){
+                last7.poll();
+            }
+            while (!last30.isEmpty() && last30.peek().day+30 <= days[i]){
+                last30.poll();
+            }
+            last7.add(new DayCost(days[i],cost+costs[1]));
+            last30.add(new DayCost(days[i],cost+costs[2]));
+            int minTemp = Math.min(last7.peek().cost,last30.peek().cost);
+            cost = Math.min(cost+costs[0],minTemp);
+        }
+        return cost;
+    }
+    static class DayCost{
+        int day;
+        int cost;
+
+        public DayCost(int day, int cost) {
+            this.day = day;
+            this.cost = cost;
+        }
     }
 
-    private int dfsCostTicket(int[] days, int[] costs,int curIndex, int cost, int endDay) {
-        if (curIndex >= days.length || endDay > 365){
+    public static void main(String[] args) {
+        int[] days = {1, 4, 6, 7, 8, 20};
+        int[] costs = {2, 7, 15};
+        System.out.println(mincostTickets(days, costs));
+    }
+
+    /**
+     * @discription 递归实现，LeetCode超时
+     * @date 2021/3/10 22:14
+     **/
+    public int mincostTickets1(int[] days, int[] costs) {
+        int one = costs[0], seven = costs[1], thirty = costs[2];
+        int tempMin = Math.min(dfsCostTicket(days, costs, 0, one, days[0]), dfsCostTicket(days, costs, 0, seven, days[0] + 6));
+        return Math.min(dfsCostTicket(days, costs, 0, thirty, days[0] + 29), tempMin);
+    }
+
+    private int dfsCostTicket(int[] days, int[] costs, int curIndex, int cost, int endDay) {
+        if (curIndex >= days.length || endDay > 365) {
             return cost;
         }
         int nextIndex = curIndex + 1;
-        for (int i = nextIndex,end = days.length; i < end; i++) {
-            if (days[i] > endDay){
-                int tempMin = Math.min(dfsCostTicket(days, costs,i, costs[0], days[i]), dfsCostTicket(days,costs,i,costs[1],days[i]+6));
-                return cost+Math.min(dfsCostTicket(days, costs,i, costs[2], days[i]+29),tempMin );
+        for (int i = nextIndex, end = days.length; i < end; i++) {
+            if (days[i] > endDay) {
+                int tempMin = Math.min(dfsCostTicket(days, costs, i, costs[0], days[i]), dfsCostTicket(days, costs, i, costs[1], days[i] + 6));
+                return cost + Math.min(dfsCostTicket(days, costs, i, costs[2], days[i] + 29), tempMin);
             }
         }
         return cost;
@@ -645,17 +734,17 @@ public class Dynamic {
 
     private static String str = "test";
 
-    public static void main(String[] args) {
-
-        List<String> list = new ArrayList<>();
-        while (true) {
-            String str2 = str + str;
-            str = str2;
-            System.out.println(str.intern().length());
-            list.add(str.intern());
-        }
-
-    }
+//    public static void main(String[] args) {
+//
+//        List<String> list = new ArrayList<>();
+//        while (true) {
+//            String str2 = str + str;
+//            str = str2;
+//            System.out.println(str.intern().length());
+//            list.add(str.intern());
+//        }
+//
+//    }
 
     public static class SynchronizedExample {
 
