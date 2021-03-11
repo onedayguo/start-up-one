@@ -701,6 +701,25 @@ public class Dynamic {
             this.cost = cost;
         }
     }
+    /**
+     * @description: 1227. Airplane Seat Assignment Probability
+     * n passengers board an airplane with exactly n seats. The first passenger has lost the ticket and picks
+     * a seat randomly. But after that, the rest of passengers will:
+     *
+     * Take their own seat if it is still available,
+     * Pick other seats randomly when they find their seat occupied
+     * What is the probability that the n-th person can get his own seat?
+     * @return: 第N个人做到能够做到自己位置的概率
+     * @author: kami
+     * @备注：
+     * @date: 2021/3/11 19:51
+     */
+    public double nthPersonGetsNthSeat(int n) {
+        if (n == 1) {
+            return 1.0d;
+        }
+        return 1d / n + (n - 2d) / n * nthPersonGetsNthSeat(n - 1);
+    }
 
     public static void main(String[] args) {
         int[] days = {1, 4, 6, 7, 8, 20};
