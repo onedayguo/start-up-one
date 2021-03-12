@@ -1,15 +1,6 @@
 package leetcode.dynamic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.*;
 
 /**
  * @Description: 动态规划
@@ -720,11 +711,44 @@ public class Dynamic {
         }
         return 1d / n + (n - 2d) / n * nthPersonGetsNthSeat(n - 1);
     }
+    /**
+     * @Description: 1664. Ways to Make a Fair Array
+     * You are given an integer array nums. You can choose exactly one index (0-indexed) and remove the element. Notice
+     * that the index of the elements may change after the removal.
+     * For example, if nums = [6,1,7,4,1]:
+     * Choosing to remove index 1 results in nums = [6,7,4,1].
+     * Choosing to remove index 2 results in nums = [6,1,4,1].
+     * Choosing to remove index 4 results in nums = [6,1,7,4].
+     * An array is fair if the sum of the odd-indexed values equals the sum of the even-indexed values.
+     *
+     * Return the number of indices that you could choose such that after the removal, nums is fair.
+     * @Param:
+     * @Return: 
+     * @Author: kami
+     * @Date: 2021/3/12 14:52
+     */
+    public int waysToMakeFair(int[] nums) {
+        int res = 0, n = nums.length;
+        int[] left = new int[2], right = new int[2];
+        for (int i = 0; i < n; i++) {
+            right[i%2] += nums[i];
+        }
+        for (int i = 0; i < n; i++) {
+            right[i%2] -= nums[i];
+            if (left[0]+right[1] == left[1]+right[0]) {
+                res++;
+            }
+            left[i%2] += nums[i];
+        }
+        return res;
+
+    }
 
     public static void main(String[] args) {
-        int[] days = {1, 4, 6, 7, 8, 20};
-        int[] costs = {2, 7, 15};
-        System.out.println(mincostTickets(days, costs));
+//        String cost = "10.00";
+//        int end = cost.indexOf('1');
+//        System.out.println(cost.substring(0,end==-1?cost.length():end));
+        System.out.println(Integer.valueOf(""));;
     }
 
     /**
