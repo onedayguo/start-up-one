@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * @Description: 排序
@@ -178,17 +179,26 @@ public class Sort {
      * @date: 2021/3/13 11:55
      */
     public static boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        if (nums.length < 2){
+        int len = nums.length;
+        if(len == 0 || k < 1 || t < 0) {
             return false;
         }
-        for (int i = 0; i < nums.length-1; i++) {
-            int end = Math.min(i+k,nums.length-1);
-            for (int j = i+1; j <= end; j++) {
-                long diff = (long) nums[i] - (long)nums[j];
-                if (Math.abs(diff) <= t){
-                    return true;
-                }
+        TreeSet<Long> S = new TreeSet<>();
+        for(int start = 0, end = 0; end < len; end++) {
+            Long curr = (long) nums[end];
+            if(S.size() >= k + 1) {
+                S.remove((long) nums[start++]);
             }
+            if(S.contains(curr)) {
+                return true;
+            }
+            if(S.ceiling(curr) != null && Math.abs(S.ceiling(curr) - curr) <= t) {
+                return true;
+            }
+            if(S.floor(curr) != null && Math.abs(S.floor(curr) - curr) <= t) {
+                return true;
+            }
+            S.add(curr);
         }
         return false;
     }
