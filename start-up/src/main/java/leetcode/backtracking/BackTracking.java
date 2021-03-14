@@ -246,6 +246,113 @@ public class BackTracking {
         }
         return true;
     }
+    /**
+     * @description: 1688. Count of Matches in Tournament
+     * You are given an integer n, the number of teams in a tournament that has strange rules:
+     * If the current number of teams is even, each team gets paired with another team. A total of n / 2 matches
+     * are played, and n / 2 teams advance to the next round.
+     * If the current number of teams is odd, one team randomly advances in the tournament, and the rest gets paired.
+     * A total of (n - 1) / 2 matches are played, and (n - 1) / 2 + 1 teams advance to the next round.
+     * Return the number of matches played in the tournament until a winner is decided.
+     * @return: 匹配队伍的数量
+     * @author: kami
+     * @备注：TODO
+     * @date: 2021/3/14 12:04
+     */
+    public static int numberOfMatches(int n) {
+        if (n == 1){
+            return 0;
+        }
+        int match = n / 2;
+        if (n % 2 != 0){
+            return match+numberOfMatches(match+1);
+        }else {
+            return match+numberOfMatches(match);
+        }
+    }
+    /**
+     * @description: 797. All Paths From Source to Target
+     * Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0
+     * to node n - 1, and return them in any order.
+     *
+     * The graph is given as follows: graph[i] is a list of all nodes you can visit from node i
+     * (i.e., there is a directed edge from node i to node graph[i][j]).
+     * @return: 从起点到终点的所有路径
+     * @author: kami
+     * @备注： 回朔法
+     * @date: 2021/3/14 12:23
+     */
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> cur = new ArrayList<>();
+        cur.add(0);
+        backTrackPath(graph,0,res,cur);
+        return res;
+    }
+    private void backTrackPath(int[][] graph, int curValue, List<List<Integer>> res, List<Integer> cur){
+        if (curValue == graph.length-1){
+            res.add(new ArrayList<>(cur));
+            return;
+        }else {
+            for (int value:graph[curValue]) {
+                cur.add(value);
+                backTrackPath(graph,value,res,cur);
+                cur.remove(cur.size()-1);
+            }
+        }
+    }
+    /**
+     * @description: 1286. Iterator for Combination
+     * Design the CombinationIterator class:
+     * CombinationIterator(string characters, int combinationLength) Initializes the object with a string
+     * characters of sorted distinct lowercase English letters and a number combinationLength as arguments.
+     * next() Returns the next combination of length combinationLength in lexicographical order.
+     * hasNext() Returns true if and only if there exists a next combination.
+     * @return: 联合迭代器
+     * @author: kami
+     * @备注： 好难
+     * @date: 2021/3/14 13:05
+     */
+    static class CombinationIterator {
+
+        List<String> list;
+        int index = 0;
+        public CombinationIterator(String characters, int combinationLength) {
+            list = new ArrayList<>();
+            generateSeq(characters,"", 0, 0, combinationLength);
+            Collections.sort(list);
+        }
+        void generateSeq(String characters, String current, int iterIndex, int count, int cLen) {
+            if(count == cLen) {
+                list.add(current);
+                return;
+            }
+            if(iterIndex == characters.length()) {
+                return;
+            }
+            // 包含当前字符
+            generateSeq(characters, current + characters.charAt(iterIndex), iterIndex + 1, count + 1, cLen);
+            // 跳过当前字符
+            generateSeq(characters, current, iterIndex + 1, count, cLen);
+        }
+
+        public String next() {
+            String res = list.get(index);
+            index++;
+            return res;
+        }
+
+        public boolean hasNext() {
+            if(index == list.size()) {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(numberOfMatches(7));
+    }
 
 }
 
