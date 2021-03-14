@@ -349,6 +349,50 @@ public class BackTracking {
             return true;
         }
     }
+    /**
+     * @description: 1415. The k-th Lexicographical String of All Happy Strings of Length n
+     * A happy string is a string that:
+     *
+     * consists only of letters of the set ['a', 'b', 'c'].
+     * s[i] != s[i + 1] for all values of i from 1 to s.length - 1 (string is 1-indexed).
+     * For example, strings "abc", "ac", "b" and "abcbabcbcb" are all happy strings and strings "aa",
+     * "baa" and "ababbc" are not happy strings.
+     *
+     * Given two integers n and k, consider a list of all happy strings of length n sorted in lexicographical
+     * order.
+     *
+     * Return the kth string of this list or return an empty string if there are less than k happy strings of length n.
+     * @return: 返回第K个长度为N的自然排序的字符串，或者空串
+     * @author: kami
+     * @备注：TODO
+     * @date: 2021/3/14 20:56
+     */
+    private static final char[] CHARS = new char[] { 'a', 'b', 'c' };
+    public String getHappyString(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        build(n, '-', k, sb); // 放置一个虚拟头字符，按照普通字符处理abc
+        return sb.toString();
+    }
+
+    private static void build(int n, char last, int k, StringBuilder sb) {
+        if (n == 0) {
+            return; // 到达叶子
+        }
+        int step = 1 << (n - 1); // 分支的节点数量，完全二叉树
+        int to = step;
+        for (char c : CHARS) {
+            if (c == last) {
+                continue; // 相邻节点不相等
+            }
+            if (k <= to) {
+                build(n - 1, c, k - (to - step), sb.append(c)); // get the child tree and deduct the number of
+                // elements in left branch from k, if `to` is the right boundary of current branch, then (to-step) is
+                // the right boundary of the left branch, which is the number of all elements in it
+                return;
+            }
+            to += step;
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println(numberOfMatches(7));
