@@ -23,7 +23,9 @@ import java.util.Stack;
                 stack.push(root);//当前节点入栈
                 root=root.getLeft();//移动到左子树
             }
-            if(stack.isEmpty()) break;//如果栈为空，则结束大循环
+            if(stack.isEmpty()) {
+                break;//如果栈为空，则结束大循环
+            }
             root=stack.pop();//当前节点没有左子树的情况下，让当前节点出栈
             root=root.getRight();//移动到右子树
         }
@@ -46,7 +48,9 @@ import java.util.Stack;
                 stack.push(root);
                 root = root.getLeft();
             }
-            if(stack.isEmpty())break;
+            if(stack.isEmpty()) {
+                break;
+            }
             root = stack.pop();
             System.out.print(root.getData()+"\t");
             root=root.getRight();
