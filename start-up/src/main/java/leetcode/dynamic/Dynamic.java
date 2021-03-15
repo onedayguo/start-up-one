@@ -757,18 +757,26 @@ public class Dynamic {
      */
     public int numSubmat(int[][] mat) {
         int m = mat.length, n = mat[0].length;
-        int[] height = new int[n];
-        int res = 0;
+        int cnt = 0;
+        int[][] dp = new int[m+1][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                height[j] = mat[i][j] == 0 ? 0 : height[j] + 1;   // horizontal height of histogram;
-                for (int k = j, min = height[j]; k >= 0 && min > 0; k--) {
-                    min = Math.min(min, height[k]);
-                    res += min;
+                if (mat[i][j] == 1){
+                    int min = 1+dp[i][j];
+                    cnt+=min;
+                    for (int k = j-1; k >=0 ; k--) {
+                        if (mat[i][k] == 1){
+                            min = Math.min(min,dp[i][k]+1);
+                            cnt+=min;
+                        }else {
+                            break;
+                        }
+                    }
+                    dp[i+1][j] = 1+dp[i][j];
                 }
             }
         }
-        return res;
+        return cnt;
     }
 
     public static void main(String[] args) {
