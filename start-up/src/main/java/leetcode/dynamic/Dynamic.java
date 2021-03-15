@@ -731,17 +731,44 @@ public class Dynamic {
         int res = 0, n = nums.length;
         int[] left = new int[2], right = new int[2];
         for (int i = 0; i < n; i++) {
+            // right[0]=偶数之和，right[1]=奇数之和
             right[i%2] += nums[i];
         }
         for (int i = 0; i < n; i++) {
+            // 奇数和或者偶数和 减去当前的数
             right[i%2] -= nums[i];
+            //左偶+右偶（原右奇） == 左奇+右奇（原右偶）
             if (left[0]+right[1] == left[1]+right[0]) {
                 res++;
             }
+            // left[0]=左边偶数之和 left[1]=左边奇数之和
             left[i%2] += nums[i];
         }
         return res;
 
+    }
+    /**
+     * @Description: 1504. Count Submatrices With All Ones
+     * Given a rows * columns matrix mat of ones and zeros, return how many submatrices have all ones.
+     * @Param:
+     * @Return: 
+     * @Author: kami
+     * @Date: 2021/3/15 13:28
+     */
+    public int numSubmat(int[][] mat) {
+        int m = mat.length, n = mat[0].length;
+        int[] height = new int[n];
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                height[j] = mat[i][j] == 0 ? 0 : height[j] + 1;   // horizontal height of histogram;
+                for (int k = j, min = height[j]; k >= 0 && min > 0; k--) {
+                    min = Math.min(min, height[k]);
+                    res += min;
+                }
+            }
+        }
+        return res;
     }
 
     public static void main(String[] args) {
