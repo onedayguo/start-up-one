@@ -379,7 +379,7 @@ public class BackTracking {
             char last = 'a';
             int th = 2;
             for (int i = 0; i < n-1; i++) {
-                if (1<<(n-th)>=k)
+                if (1<<(n-th)>=k);
             }
         }else if (2*pow>=k){
             sb.append("b");
