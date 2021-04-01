@@ -112,4 +112,47 @@ public class NewCoder {
     public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
         return reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
     }
+
+    public static void printIt(int n){
+        int sum = 0;
+        int lineStars = 1;
+        int half = n >> 1;
+        int lineIndex = 0;
+        while (sum < half){
+            sum += lineStars;
+            lineStars += 2;
+            lineIndex++;
+        }
+        lineIndex--;
+        lineStars-=2;
+        for (int i = 0; i < lineIndex; i++) {
+            int curStars = 2*i+1;
+            int preBlanks = (lineStars-curStars)/2;
+            for (int j = 0; j < preBlanks; j++) {
+                System.out.print(" ");
+            }
+            for (int j = 0; j < curStars; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+        for (int i = lineIndex; i >= 0; i--) {
+            int curStars = 2*i+1;
+            int preBlanks = (lineStars-curStars)/2;
+            for (int j = 0; j < preBlanks; j++) {
+                System.out.print(" ");
+            }
+            for (int j = 0; j < curStars; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+
+        System.out.println("剩余星星数"+(n-sum*2+lineStars));
+    }
+
+    public static void main(String[] args) {
+        printIt(5);
+    }
+
 }
