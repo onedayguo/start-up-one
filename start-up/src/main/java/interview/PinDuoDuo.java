@@ -23,11 +23,11 @@ public class PinDuoDuo {
             String data = in.nextLine();
             String[] arrayStr = data.split(",");
             int len = arrayStr.length;
-            int n = Integer.valueOf(arrayStr[len-1].split(";")[1]);
+            int n = Integer.parseInt(arrayStr[len-1].split(";")[1]);
             arrayStr[len-1] = arrayStr[len-1].split(";")[0];
             int[] arrayInt = new int[len];
             for (int i = 0; i < len; i++) {
-                arrayInt[i] = Integer.valueOf(arrayStr[i]);
+                arrayInt[i] = Integer.parseInt(arrayStr[i]);
             }
             sortNumber(arrayInt,n);
         }

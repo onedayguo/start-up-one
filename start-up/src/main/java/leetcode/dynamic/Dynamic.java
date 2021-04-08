@@ -1,6 +1,7 @@
 package leetcode.dynamic;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Description: 动态规划
@@ -16,7 +17,8 @@ public class Dynamic {
      * Choosing any x with 0 < x < N and N % x == 0.
      * Replacing the number N on the chalkboard with N - x.
      * Also, if a player cannot make a move, they lose the game.
-     * Return True if and only if Alice wins the game, assuming both players play optimally.
+     * Return True if and only if Alice wins the game, assuming both players play optima
+     * lly.
      * @return: alice是否赢得游戏
      * @auther: kami
      * @date: 2020/3/21 10:35

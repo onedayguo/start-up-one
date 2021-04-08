@@ -886,10 +886,84 @@ public class LeetCodeCompetition {
         if (reach < nums.length-1)return false;
         return true;
     }
+    /**
+     * @description: Letter Combinations of a Phone Number
+     * Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number
+     * could represent. Return the answer in any order.
+     *
+     * A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does
+     * not map to any letters.
+     * @return: TODO
+     * @author: kami
+     * @备注：TODO
+     * @date: 2021/4/8 19:26
+     */
+    public List<String> letterCombinations(String digits) {
+        char[] chars = digits.toCharArray();
+        if (chars.length == 0){
+            return new ArrayList<>();
+        }
+        List<String> res = new ArrayList<>((int)Math.pow(3,chars.length));
+        findAllLetters(chars,0, new String(),res);
+        return res;
+    }
+    private void findAllLetters(char[] chars,int index,String sb,List<String> res){
+        if (sb.length() == chars.length){
+            res.add(sb);
+            return;
+        }
+        char aChar = chars[index++];
+        switch (aChar){
+            case '2':
+                findAllLetters(chars,index,sb+'a',res);
+                findAllLetters(chars,index,sb+'b',res);
+                findAllLetters(chars,index,sb+'c',res);
+                break;
+            case '3':
+                findAllLetters(chars,index,sb+'d',res);
+                findAllLetters(chars,index,sb+'e',res);
+                findAllLetters(chars,index,sb+'f',res);
+                break;
+            case '4':
+                findAllLetters(chars,index,sb+'g',res);
+                findAllLetters(chars,index,sb+'h',res);
+                findAllLetters(chars,index,sb+'i',res);
+                break;
+            case '5':
+                findAllLetters(chars,index,sb+'j',res);
+                findAllLetters(chars,index,sb+'k',res);
+                findAllLetters(chars,index,sb+'l',res);
+                break;
+            case '6':
+                findAllLetters(chars,index,sb+'m',res);
+                findAllLetters(chars,index,sb+'n',res);
+                findAllLetters(chars,index,sb+'o',res);
+                break;
+            case '7':
+                findAllLetters(chars,index,sb+'p',res);
+                findAllLetters(chars,index,sb+'q',res);
+                findAllLetters(chars,index,sb+'r',res);
+                findAllLetters(chars,index,sb+'s',res);
+                break;
+            case '8':
+                findAllLetters(chars,index,sb+'t',res);
+                findAllLetters(chars,index,sb+'u',res);
+                findAllLetters(chars,index,sb+'v',res);
+                break;
+            default:
+                findAllLetters(chars,index,sb+'w',res);
+                findAllLetters(chars,index,sb+'x',res);
+                findAllLetters(chars,index,sb+'y',res);
+                findAllLetters(chars,index,sb+'z',res);
+                break;
+        }
 
+
+    }
 
     public static void main(String[] args) {
-        int[] nums = {2,3,1,1,4};
-        System.out.println(canJump(nums));
+        LeetCodeCompetition bosy = new LeetCodeCompetition();
+        List<String> strings = bosy.letterCombinations("25");
+        strings.forEach(System.out::println);
     }
 }

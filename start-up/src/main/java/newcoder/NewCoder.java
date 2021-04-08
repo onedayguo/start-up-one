@@ -20,15 +20,17 @@ public class NewCoder {
      * @auther: kami
      * @date: 2020/4/11 22:43
      */
-    public boolean Find(int target, int [][] array) {
-        int rowLen = array.length,colLen = array[0].length;
-        int row = 0,col = colLen-1;
-        while (row<rowLen && col>=0){
+    public boolean Find(int target, int[][] array) {
+        int rowLen = array.length, colLen = array[0].length;
+        int row = 0, col = colLen - 1;
+        while (row < rowLen && col >= 0) {
             int num = array[row][col];
-            if (num == target)return true;
-            if (num > target){
+            if (num == target) {
+                return true;
+            }
+            if (num > target) {
                 col--;
-            }else {
+            } else {
                 row++;
             }
         }
@@ -48,19 +50,20 @@ public class NewCoder {
         int lent = str.length();
         for (int i = 0; i < lent; i++) {
             char ichar = str.charAt(i);
-            Object o = ichar == ' ' ? "%20":ichar;
+            Object o = ichar == ' ' ? "%20" : ichar;
             stringBuilder.append(o);
         }
         return stringBuilder.toString();
     }
 
 
-   public static class ListNode {
-       int val;
-       ListNode next = null;
-       ListNode(int val) {
-           this.val = val;
-       }
+    public static class ListNode {
+        int val;
+        ListNode next = null;
+
+        ListNode(int val) {
+            this.val = val;
+        }
     }
 
     /**
@@ -72,7 +75,7 @@ public class NewCoder {
      */
     public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         ArrayList<Integer> list = new ArrayList<>();
-        while (listNode != null){
+        while (listNode != null) {
             list.add(listNode.val);
             listNode = listNode.next;
         }
@@ -80,21 +83,25 @@ public class NewCoder {
         return list;
     }
 
-     // Definition for binary tree
-     public static class TreeNode {
+    // Definition for binary tree
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
-        TreeNode(int x) { val = x; }
+
+        TreeNode(int x) {
+            val = x;
+        }
     }
-    private TreeNode reConstructBinaryTree(int [] pre,int startPre,int endPre,int [] in,int startIn,int endIn) {
-        if(startPre>endPre||startIn>endIn)
+
+    private TreeNode reConstructBinaryTree(int[] pre, int startPre, int endPre, int[] in, int startIn, int endIn) {
+        if (startPre > endPre || startIn > endIn)
             return null;
-        TreeNode root=new TreeNode(pre[startPre]);
-        for(int i=startIn;i<=endIn;i++)
-            if(in[i]==pre[startPre]){
-                root.left=reConstructBinaryTree(pre,startPre+1,startPre+i-startIn,in,startIn,i-1);
-                root.right=reConstructBinaryTree(pre,i-startIn+startPre+1,endPre,in,i+1,endIn);
+        TreeNode root = new TreeNode(pre[startPre]);
+        for (int i = startIn; i <= endIn; i++)
+            if (in[i] == pre[startPre]) {
+                root.left = reConstructBinaryTree(pre, startPre + 1, startPre + i - startIn, in, startIn, i - 1);
+                root.right = reConstructBinaryTree(pre, i - startIn + startPre + 1, endPre, in, i + 1, endIn);
                 break;
             }
 
@@ -109,25 +116,25 @@ public class NewCoder {
      * @auther: kami
      * @date: 2020/4/11 23:13
      */
-    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
-        return reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
+    public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
+        return reConstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
     }
 
-    public static void printIt(int n){
+    public static void printIt(int n) {
         int sum = 0;
         int lineStars = 1;
         int half = n >> 1;
         int lineIndex = 0;
-        while (sum < half){
+        while (sum < half) {
             sum += lineStars;
             lineStars += 2;
             lineIndex++;
         }
         lineIndex--;
-        lineStars-=2;
+        lineStars -= 2;
         for (int i = 0; i < lineIndex; i++) {
-            int curStars = 2*i+1;
-            int preBlanks = (lineStars-curStars)/2;
+            int curStars = 2 * i + 1;
+            int preBlanks = (lineStars - curStars) / 2;
             for (int j = 0; j < preBlanks; j++) {
                 System.out.print(" ");
             }
@@ -137,8 +144,8 @@ public class NewCoder {
             System.out.println();
         }
         for (int i = lineIndex; i >= 0; i--) {
-            int curStars = 2*i+1;
-            int preBlanks = (lineStars-curStars)/2;
+            int curStars = 2 * i + 1;
+            int preBlanks = (lineStars - curStars) / 2;
             for (int j = 0; j < preBlanks; j++) {
                 System.out.print(" ");
             }
@@ -148,7 +155,7 @@ public class NewCoder {
             System.out.println();
         }
 
-        System.out.println("剩余星星数"+(n-sum*2+lineStars));
+        System.out.println("剩余星星数" + (n - sum * 2 + lineStars));
     }
 
     public static void main(String[] args) {

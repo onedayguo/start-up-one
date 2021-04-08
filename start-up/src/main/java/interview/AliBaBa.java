@@ -40,7 +40,9 @@ public class AliBaBa {
                 hpArr[i] -= hit;
                 t--;
             }
-            if (hpArr[i] <= 0) count++;
+            if (hpArr[i] <= 0) {
+                count++;
+            }
         }
         System.out.println(count);
     }
