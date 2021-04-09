@@ -59,9 +59,7 @@ public class TongHuaShun {
     }
     /**
      * @description: 随机int数组，找到所有数，左边小，右边大
-     * @return: TODO
      * @author: kami
-     * @备注：TODO
      * @date: 2021/4/9 14:52
      */
     public static void printAllMidNum(int[] nums){

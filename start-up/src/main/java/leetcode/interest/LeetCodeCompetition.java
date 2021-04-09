@@ -960,10 +960,34 @@ public class LeetCodeCompetition {
 
 
     }
+    /**
+     * @description: 是否是外星文
+     * @return: boolean
+     * @author: kami
+     * @备注： 周比赛
+     * @date: 2021/4/9 15:35
+     */
+    static int[] mapping = new int[26];
+    public static boolean isAlienSorted(String[] words, String order) {
+        for (int i = 0; i < order.length(); i++)
+            mapping[order.charAt(i) - 'a'] = i;
+        for (int i = 1; i < words.length; i++)
+            if (bigger(words[i - 1], words[i]))
+                return false;
+        return true;
+    }
+
+    static boolean bigger(String s1, String s2) {
+        int n = s1.length(), m = s2.length();
+        for (int i = 0; i < n && i < m; ++i)
+            if (s1.charAt(i) != s2.charAt(i))
+                return mapping[s1.charAt(i) - 'a'] > mapping[s2.charAt(i) - 'a'];
+        return n > m;
+    }
 
     public static void main(String[] args) {
-        LeetCodeCompetition bosy = new LeetCodeCompetition();
-        List<String> strings = bosy.letterCombinations("25");
-        strings.forEach(System.out::println);
+        String[] words= {"hello","leetcode"};
+        String order = "hlabcdefgijkmnopqrstuvwxyz";
+        boolean alienSorted = isAlienSorted(words, order);
     }
 }
