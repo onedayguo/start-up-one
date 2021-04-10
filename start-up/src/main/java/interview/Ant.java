@@ -41,7 +41,7 @@ public class Ant {
                 }
             }
             return false;
-        }else if(!A.equals(B)){
+        }else{
             // A B不同，找到两个不同点，比较A中两个不同点交换后是否与B相同；如果不同点多于2个则必然为false
             List<Integer> diff = new ArrayList<>();
             for(int i=0;i<aLen;i++){
