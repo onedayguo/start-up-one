@@ -986,6 +986,54 @@ public class LeetCodeCompetition {
         }
         return n > m;
     }
+    /**
+     * @description:  Longest Increasing Path in a Matrix
+     * Given an m x n integers matrix, return the length of the longest increasing path in matrix.
+     *
+     * From each cell, you can either move in four directions: left, right, up, or down. You may not move diagonally
+     * or move outside the boundary (i.e., wrap-around is not allowed).
+     * @return: 最长递增路径
+     * @author: kami
+     * @备注： 递归
+     * @date: 2021/4/11 19:57
+     */
+    public int longestIncreasingPath(int[][] matrix) {
+        int count = 1;
+        int[][] dp = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                count = Math.max(count,getMaxPath(dp,matrix,i,j));
+            }
+        }
+        return count;
+
+    }
+
+    private int getMaxPath(int[][] dp,int[][] matrix,int row,int col){
+        if (dp[row][col] > 0){
+            return dp[row][col];
+        }
+        int max = 1;
+        // 上
+        if (row-1 >= 0 && matrix[row-1][col] > matrix[row][col]){
+            max = Math.max(max,1+getMaxPath(dp,matrix,row-1,col));
+        }
+        // 下
+        if (row+1 < matrix.length && matrix[row+1][col] > matrix[row][col]){
+            max = Math.max(max,1+getMaxPath(dp ,matrix,row+1,col));
+        }
+        // 左
+        if (col-1 >= 0 && matrix[row][col-1] > matrix[row][col]){
+            max = Math.max(max,1+getMaxPath(dp,matrix,row,col-1));
+        }
+        // 右
+        if (col+1 < matrix[0].length && matrix[row][col+1] > matrix[row][col]){
+            max = Math.max(max,1+getMaxPath(dp,matrix,row,col+1));
+        }
+        dp[row][col] = max;
+        return max;
+
+    }
 
     public static void main(String[] args) {
         String[] words= {"hello","leetcode"};
