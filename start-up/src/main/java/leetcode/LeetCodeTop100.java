@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -63,17 +64,15 @@ public class LeetCodeTop100 {
      * @date: 2020/4/12 16:42
      */
     public boolean wordBreak(String s, Set<String> dict) {
-        if (s == null || s.length() == 0) return false;
-
+        if (s == null || s.length() == 0) {
+            return false;
+        }
         int n = s.length();
-
         // dp[i] represents whether s[0...i] can be formed by dict
         boolean[] dp = new boolean[n];
-
         for (int i = 0; i < n; i++) {
             for (int j = 0; j <= i; j++) {
                 String sub = s.substring(j, i + 1);
-
                 if (dict.contains(sub) && (j == 0 || dp[j - 1])) {
                     dp[i] = true;
                     break;
@@ -190,13 +189,14 @@ public class LeetCodeTop100 {
 
         // init heap 'the less frequent element first'
         PriorityQueue<Integer> heap =
-                new PriorityQueue<Integer>((n1, n2) -> count.get(n1) - count.get(n2));
+                new PriorityQueue<>(Comparator.comparingInt(count::get));
 
         // keep k top frequent elements in the heap
         for (int n : count.keySet()) {
             heap.add(n);
             if (heap.size() > k)
                 heap.poll();
+
         }
 
         // build output list

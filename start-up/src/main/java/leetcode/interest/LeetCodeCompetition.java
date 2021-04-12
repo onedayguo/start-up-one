@@ -1,5 +1,7 @@
 package leetcode.interest;
 
+import javax.swing.plaf.IconUIResource;
+import java.io.PrintStream;
 import java.util.*;
 
 /**
@@ -1034,10 +1036,100 @@ public class LeetCodeCompetition {
         return max;
 
     }
+    /**
+     * @description: Deepest Leaves Sum
+     * Given the root of a binary tree, return the sum of values of its deepest leaves.
+     * @return: 路径最深的叶子节点之和
+     * @author: kami
+     * @备注： 可能会有多个相同深度的叶子节点
+     * @date: 2021/4/12 8:05
+     */
+    public int deepestLeavesSum(TreeNode root) {
+        int res = 0, i;
+        LinkedList<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            for (i = q.size() - 1, res = 0; i >= 0; --i) {
+                TreeNode node = q.poll();
+                res += node.val;
+                if (node.right != null) {
+                    q.add(node.right);
+                }
+                if (node.left  != null) {
+                    q.add(node.left);
+                }
+            }
+        }
+        return res;
+    }
+    /**
+     * @description: Palindrome Linked List
+     * Given the head of a singly linked list, return true if it is a palindrome.
+     * @return: 是否是回文链表
+     * @author: kami
+     * @备注：
+     * @date: 2021/4/12 16:07
+     */
+    public static boolean isPalindrome(ListNode head) {
+        int count = 0;
+        ListNode curNode = head;
+        while (curNode != null){
+            count++;
+            curNode = curNode.next;
+        }
+        // 长度为奇偶
+        int enen = count % 2;
+        int half = count / 2;
+        ListNode rightReverseHead = null;
+        if (enen == 0){
+            // 偶数
+            ListNode curNode1 = head;
+            for (int i = 0; i <= half; i++) {
+                if (i == half){
+                    rightReverseHead = reverseListNode(curNode1);
+                }
+                curNode1 = curNode1.next;
+            }
+        }else {
+            ListNode curNode2 = head;
+            for (int i = 0; i <= half; i++) {
+                if (i == half){
+                    rightReverseHead = reverseListNode(curNode2);
+                }
+                curNode2 = curNode2.next;
+            }
+        }
+        boolean isPalindrome = true;
+        while (rightReverseHead != null){
+            if (rightReverseHead.val != head.val){
+                return false;
+            }
+            rightReverseHead = rightReverseHead.next;
+            head = head.next;
+        }
+        return isPalindrome;
+    }
+
+    private static ListNode reverseListNode(ListNode head){
+        ListNode cur = head;
+        ListNode next = null;
+        ListNode pre = null;
+        while (cur.next != null){
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        cur.next = pre;
+        return cur;
+    }
 
     public static void main(String[] args) {
-        String[] words= {"hello","leetcode"};
-        String order = "hlabcdefgijkmnopqrstuvwxyz";
-        boolean alienSorted = isAlienSorted(words, order);
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(2);
+        head.next.next.next = new ListNode(1);
+//        head.next.next.next.next = new ListNode(3);
+        System.out.println(isPalindrome(head));
     }
 }
