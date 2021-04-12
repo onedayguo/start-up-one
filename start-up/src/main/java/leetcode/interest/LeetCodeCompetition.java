@@ -3,6 +3,7 @@ package leetcode.interest;
 import javax.swing.plaf.IconUIResource;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description: LeetCode30天挑战赛，每天一道题，UTC-8零点开始
@@ -1122,6 +1123,28 @@ public class LeetCodeCompetition {
         }
         cur.next = pre;
         return cur;
+    }
+    /**
+     * @description: Ones and Zeroes
+     * ou are given an array of binary strings strs and two integers m and n.
+     *
+     * Return the size of the largest subset of strs such that there are at most m 0's and n 1's in the subset.
+     *
+     * A set x is a subset of a set y if all elements of x are also elements of y.
+     * @return: 最大的子集 包含m个0，n个1
+     * @author: kami
+     * @备注：TODO
+     * @date: 2021/4/12 18:02
+     */
+    public int findMaxForm(String[] strs, int m, int n) {
+        int zeroCnt = 0;
+        int oneCnt = 0;
+        int size = 0;
+        List<String> strings = Arrays.stream(strs).sorted(Comparator.comparingInt(String::length)).collect(Collectors.toList());
+        for (String str:strings) {
+
+        }
+        return size;
     }
 
     public static void main(String[] args) {
