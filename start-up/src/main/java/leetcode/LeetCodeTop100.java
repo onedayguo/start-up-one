@@ -14,6 +14,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @Description: LeetCode最受欢迎100题
@@ -486,6 +487,7 @@ public class LeetCodeTop100 {
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode slow = head, fast = head, pre = head;
+        // slow循环结束后是中间节点
         while (fast != null && fast.next != null) {
             pre = slow;
             slow = slow.next;
@@ -505,6 +507,41 @@ public class LeetCodeTop100 {
             l2.next = merge(l1, l2.next);
             return l2;
         }
+    }
+    /**
+     * @description: 使用选择排序对单链表排序
+     * @return: 排序后的头结点
+     * @author: kami
+     * @备注： 选择排序，每次选择链表中的最小节点
+     * @date: 2021/4/14 22:38
+     */
+    private ListNode sortListNodeBySelectSort(ListNode head){
+        ListNode vHead = new ListNode(-1);
+        vHead.next = head;
+        // 增加虚拟头节点,方便操作,否则就需要用一堆if来判断了,代码会比较啰嗦
+        ListNode newHead = new ListNode(-1);
+        ListNode tail = newHead;  // tail指向新链表的末尾
+        // 每次从链表中摘出来最小的节点,拼接到新链表末尾
+        while (vHead.next != null) {
+            ListNode pre = vHead;
+            ListNode cur = head;
+            ListNode min = head;
+            ListNode minPre = vHead;
+            // 先遍历找最小的节点,记录下最小节点和它前面一个节点
+            while (cur != null) {
+                if (cur.val < min.val) {
+                    minPre = pre;
+                    min = cur;
+                }
+                pre = cur;
+                cur = cur.next;
+            }
+            // 把min节点从原链表中摘除,并拼接到新链表中
+            tail.next = min;
+            tail = tail.next;
+            minPre.next = min.next;
+        }
+        return newHead.next;
     }
 
     /**
