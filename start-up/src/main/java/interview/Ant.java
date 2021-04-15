@@ -22,7 +22,6 @@ public class Ant {
 //    例 A=ab, B=ab, return false
 //    例 A=ab, B=ba, return true
 //    例 A=aa, B=aa, return true
-
     public boolean similar(String A, String B){
 
         int aLen = A.length();
@@ -56,7 +55,5 @@ public class Ant {
             }
         }
         return false;
-
-
     }
 }

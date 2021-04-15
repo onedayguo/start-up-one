@@ -61,7 +61,6 @@ public class Interview {
                 left++;
             }
             arr[right] = arr[left];
-
         }
         arr[left] = curV;
         return left;
