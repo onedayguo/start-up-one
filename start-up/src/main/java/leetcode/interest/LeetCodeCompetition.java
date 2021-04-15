@@ -1147,6 +1147,33 @@ public class LeetCodeCompetition {
         }
         return size;
     }
+    /**
+     * @description: Beautiful Arrangement II
+     * Given two integers n and k, construct a list answer that contains n different positive integers ranging
+     * from 1 to n and obeys the following requirement:
+     * Suppose this list is answer = [a1, a2, a3, ... , an], then the list [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... ,
+     * |an-1 - an|] has exactly k distinct integers.
+     * Return the list answer. If there multiple valid answers, return any of them.
+     * 最多有n-1个不同的数字，左边数字增加，右边数字减少
+     *      i++ j-- i++ j--  i++ i++ i++ ...
+     * out: 1   9   2   8    3   4   5   6   7
+     * dif:   8   7   6   5    1   1   1   1
+     * @return: 满足条件的数组
+     * @author: kami
+     * @备注： 最多有n-1个不同的值
+     * @date: 2021/4/15 11:25
+     */
+    public int[] constructArray(int n, int k) {
+        int[] result = new int[n];
+        int left=1, right=n;
+        for(int i=0; i<n; i++){
+            result[i] = k%2 !=0 ? left++ : right--;
+            if(k>1) {
+                k--;
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
