@@ -1727,5 +1727,46 @@ public class LeetCodeTop100 {
         list.add(last + 1);
         dfs(s, list);
     }
+    /**
+     * @description: 199. Binary Tree Right Side View
+     * Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of
+     * the nodes you can see ordered from top to bottom.
+     * @return: TODO
+     * @author: kami
+     * @备注： 每层只要有值就要算进去
+     * @date: 2021/4/16 13:37
+     */
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<Integer>();
+        rightView(root, result, 0);
+        return result;
+    }
+
+    public void rightView(TreeNode curr, List<Integer> result, int currDepth){
+        if(curr == null){
+            return;
+        }
+        if(currDepth == result.size()){
+            result.add(curr.val);
+        }
+
+        rightView(curr.right, result, currDepth + 1);
+        rightView(curr.left, result, currDepth + 1);
+
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        TreeNode left = new TreeNode(2);
+        root.left = left;
+        TreeNode right = new TreeNode(3);
+        root.right = right;
+        TreeNode left2 = new TreeNode(4);
+        right.left = left2;
+
+        LeetCodeTop100 man = new LeetCodeTop100();
+        List<Integer> integers = man.rightSideView(root);
+        integers.forEach(System.out::println);
+    }
 
 }
