@@ -1205,12 +1205,67 @@ public class LeetCodeCompetition {
             }
         }
     }
+    /**
+     * @description: Fibonacci Number
+     * The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence,
+     * such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,
+     *
+     * F(0) = 0, F(1) = 1
+     * F(n) = F(n - 1) + F(n - 2), for n > 1.
+     * Given n, calculate F(n).
+     * @return: 斐波那契数列之和
+     * @author: kami
+     * @备注： 动态规划
+     * @date: 2021/4/16 10:29
+     */
+    public int fib(int n) {
+        if (n <= 1){
+            return n;
+        }
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+    /**
+     * @description: Partition List
+     *Given the head of a linked list and a value x, partition it such that all nodes less than x come
+     * before nodes greater than or equal to x.
+     *
+     * You should preserve the original relative order of the nodes in each of the two partitions.
+     * @return: 排序后的头结点
+     * @author: kami
+     * @备注： 快速排序思想
+     * @date: 2021/4/16 10:45
+     */
+    public static ListNode partition(ListNode head, int x) {
+        ListNode smallerHead = new ListNode(0), biggerHead = new ListNode(0);
+        ListNode smaller = smallerHead, bigger = biggerHead;
+        while (head != null) {
+            if (head.val < x) {
+                smaller = smaller.next = head;
+            } else {
+                bigger = bigger.next = head;
+            }
+            head = head.next;
+        }
+        // no need for extra check because of fake heads
+        smaller.next = biggerHead.next; // join bigger after smaller
+        bigger.next = null; // cut off anything after bigger
+        return smallerHead.next;
+    }
+    
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(2);
-        head.next.next.next = new ListNode(1);
+        head.next = new ListNode(4);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(2);
+        head.next.next.next.next = new ListNode(5);
+        head.next.next.next.next.next = new ListNode(2);
 //        head.next.next.next.next = new ListNode(3);
-        System.out.println(isPalindrome(head));
+        ListNode partition = partition(head, 3);
+        System.out.println(partition);
     }
 }

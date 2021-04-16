@@ -109,7 +109,6 @@ public class ByteDance {
         int[] logRecord = new int[86400];
         // 每一秒钟的在线人数
         int[] onlineUserRecord = new int[86400];
-        int size = records.size();
         for (UserLoginRecord record: records) {
             logRecord[(int)(record.getLoginTime()-startTimeDay)]+=1;
             logRecord[(int)(record.getLogoutTime()-startTimeDay)]-=1;
