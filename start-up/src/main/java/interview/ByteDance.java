@@ -1,6 +1,9 @@
 package interview;
 
+import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * @Description: 字节跳动
@@ -95,14 +98,76 @@ public class ByteDance {
     }
 
 */
+    private int getMaxOnlineUsers(List<UserLoginRecord> records){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Long startTimeDay = cal.getTimeInMillis()/1000;
+        // 登入登出记录
+        int[] logRecord = new int[86400];
+        // 每一秒钟的在线人数
+        int[] onlineUserRecord = new int[86400];
+        int size = records.size();
+        for (UserLoginRecord record: records) {
+            logRecord[(int)(record.getLoginTime()-startTimeDay)]+=1;
+            logRecord[(int)(record.getLogoutTime()-startTimeDay)]-=1;
+        }
+        onlineUserRecord[0] = logRecord[0];
+        int maxOnline = 0;
+        for (int i = 1; i < 86400; i++) {
+            onlineUserRecord[i] = onlineUserRecord[i-1]+logRecord[i];
+            maxOnline = Math.max(maxOnline,onlineUserRecord[i]);
+        }
+        return maxOnline;
+    }
+    static class UserLoginRecord{
+        Long userId;
+        Long loginTime;
+        Long logoutTime;
 
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public Long getLoginTime() {
+            return loginTime;
+        }
+
+        public void setLoginTime(Long loginTime) {
+            this.loginTime = loginTime;
+        }
+
+        public Long getLogoutTime() {
+            return logoutTime;
+        }
+
+        public void setLogoutTime(Long logoutTime) {
+            this.logoutTime = logoutTime;
+        }
+    }
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()){
-            int n = in.nextInt();
-
-        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Long startTime = cal.getTimeInMillis()/1000;
+        System.out.println(startTime);
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Long endTime = cal.getTimeInMillis()/1000;
+        System.out.println(endTime);
+        Long diffTime = endTime-startTime;
+        System.out.println("endTime-startTime="+diffTime);
     }
 
 }
