@@ -1749,11 +1749,10 @@ public class LeetCodeTop100 {
         if(currDepth == result.size()){
             result.add(curr.val);
         }
-
         rightView(curr.right, result, currDepth + 1);
         rightView(curr.left, result, currDepth + 1);
-
     }
+
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);

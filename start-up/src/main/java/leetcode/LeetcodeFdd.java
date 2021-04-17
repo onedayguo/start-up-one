@@ -618,36 +618,24 @@ public class LeetcodeFdd {
      * fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any
      * combination of the coins, return -1.
      * You may assume that you have an infinite number of each kind of coin.
-     * @Param:
-     * @Return:
      * @Author: kami
      * @Date: 2021/1/7 11:19
      */
     public int coinChange(int[] coins, int amount) {
-        if (coins == null || coins.length == 0) {
-            return -1;
-        }
-
-        if (amount <= 0) {
-            return 0;
-        }
-
+        // dp[i]表示组成金额i需要的最少硬币数
         int[] dp = new int[amount + 1];
-        for (int i = 1; i < dp.length; i++) {
-            dp[i] = Integer.MAX_VALUE;
-        }
-
-        for (int am = 1; am < dp.length; am++) {
-            for (int i = 0; i < coins.length; i++) {
-                if (coins[i] <= am) {
-                    int sub = dp[am - coins[i]];
-                    if (sub != Integer.MAX_VALUE) {
-                        dp[am] = Math.min(sub + 1, dp[am]);
-                    }
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for(int j = 0; j < coins.length; j++){
+            for(int i = 0; i <= amount; i++){
+                // 所求金额大于当前硬币面额才更新
+                if(i - coins[j] >= 0) {
+                    // 所求金额需要的最小硬币数是 1.上次计算出来的数值 2.目标金额减去当前硬币面额所用的最小硬币数 + 1
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
                 }
             }
         }
-        return dp[dp.length - 1] == Integer.MAX_VALUE ? -1 : dp[dp.length - 1];
+        return dp[amount] > amount ? -1 : dp[amount];
     }
     /**
      * @Description: 60. Permutation Sequence
