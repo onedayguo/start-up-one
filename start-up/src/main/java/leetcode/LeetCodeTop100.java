@@ -1752,6 +1752,41 @@ public class LeetCodeTop100 {
         rightView(curr.right, result, currDepth + 1);
         rightView(curr.left, result, currDepth + 1);
     }
+    /**
+     * @description: 1209Remove All Adjacent Duplicates in String II
+     * You are given a string s and an integer k, a k duplicate removal consists of choosing k adjacent and equal
+     * letters from s and removing them, causing the left and the right side of the deleted substring to concatenate
+     * together.
+     * We repeatedly make k duplicate removals on s until we no longer can.
+     * Return the final string after all such duplicate removals have been made. It is guaranteed that the
+     * answer is unique.
+     * @return: 去掉重复字符后的字符串
+     * @author: kami
+     * @备注： 双指针 或 栈结构
+     * @date: 2021/4/17 8:22
+     */
+    public String removeDuplicates(String s, int k) {
+        int i = 0, n = s.length(), count[] = new int[n];
+        char[] chars = s.toCharArray();
+        for (int j = 0; j < n; ++j, ++i) {
+            chars[i] = chars[j];
+            count[i] = i > 0 && chars[i - 1] == chars[j] ? count[i - 1] + 1 : 1;
+            if (count[i] == k) i -= k;
+        }
+        return new String(chars, 0, i);
+    }
+
+    public String removeDuplicates1(String s, int k) {
+        int[] count = new int[s.length()];
+        StringBuilder sb = new StringBuilder();
+        for(char c : s.toCharArray()) {
+            sb.append(c);
+            int last = sb.length()-1;
+            count[last] = 1 + (last > 0 && sb.charAt(last) == sb.charAt(last-1) ? count[last-1] : 0);
+            if(count[last] >= k) sb.delete(sb.length()-k, sb.length());
+        }
+        return sb.toString();
+    }
 
 
     public static void main(String[] args) {
