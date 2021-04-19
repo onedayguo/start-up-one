@@ -1787,6 +1787,43 @@ public class LeetCodeTop100 {
         }
         return sb.toString();
     }
+    
+    /**
+     * @description: Number of Submatrices That Sum to Target
+     * Given a matrix and a target, return the number of non-empty submatrices that sum to target.
+     *
+     * A submatrix x1, y1, x2, y2 is the set of all cells matrix[x][y] with x1 <= x <= x2 and y1 <= y <= y2.
+     *
+     * Two submatrices (x1, y1, x2, y2) and (x1', y1', x2', y2') are different if they have some coordinate that is
+     * different: for example, if x1 != x1'.
+     * @return: 遍历
+     * @author: kami
+     * @备注： 困难
+     * @date: 2021/4/17 22:43
+     */
+    public int numSubmatrixSumTarget(int[][] matrix, int target) {
+        int res = 0, m = matrix.length, n = matrix[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                // 当前列之和
+                matrix[i][j] += matrix[i][j - 1];
+            }
+        }
+        Map<Integer, Integer> counter = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                counter.clear();
+                counter.put(0, 1);
+                int cur = 0;
+                for (int k = 0; k < m; k++) {
+                    cur += matrix[k][j] - (i > 0 ? matrix[k][i - 1] : 0);
+                    res += counter.getOrDefault(cur - target, 0);
+                    counter.put(cur, counter.getOrDefault(cur, 0) + 1);
+                }
+            }
+        }
+        return res;
+    }
 
 
     public static void main(String[] args) {
