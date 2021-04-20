@@ -1867,8 +1867,34 @@ public class LeetCodeTop100 {
             }
         }
     }
-
-
+    /**
+     * @description: Combination Sum IV
+     * Given an array of distinct integers nums and a target integer target, return the number of
+     * possible combinations that add up to target.
+     * The answer is guaranteed to fit in a 32-bit integer
+     * @return: 加和为目标值的组合数量
+     * @author: kami
+     * @备注： 动态规划
+     * @date: 2021/4/20 18:01
+     */
+    public int combinationSum4(int[] nums, int target) {
+        // key:数值，value：组成该值得组合数
+        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer,Integer> curMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            curMap.clear();
+            for (Integer key : map.keySet()) {
+                Integer plus = key+nums[i];
+                Integer num = map.getOrDefault(plus,0)+1;
+                curMap.put(plus,num);
+            }
+            for (Map.Entry<Integer, Integer> entrie:curMap.entrySet()) {
+                map.put(entrie.getKey(),entrie.getValue());
+            }
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        }
+        return map.getOrDefault(target,0);
+    }
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
