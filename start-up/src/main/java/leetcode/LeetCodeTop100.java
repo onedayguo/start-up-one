@@ -1789,7 +1789,7 @@ public class LeetCodeTop100 {
     }
     
     /**
-     * @description: Number of Submatrices That Sum to Target
+     * @description: 1074 Number of Submatrices That Sum to Target
      * Given a matrix and a target, return the number of non-empty submatrices that sum to target.
      *
      * A submatrix x1, y1, x2, y2 is the set of all cells matrix[x][y] with x1 <= x <= x2 and y1 <= y <= y2.
@@ -1824,6 +1824,50 @@ public class LeetCodeTop100 {
         }
         return res;
     }
+    class NodeNew {
+        public int val;
+        public List<NodeNew> children;
+
+        public NodeNew() {}
+
+        public NodeNew(int _val) {
+            val = _val;
+        }
+
+        public NodeNew(int _val, List<NodeNew> _children) {
+            val = _val;
+            children = _children;
+        }
+    }
+    /**
+     * @description: N-ary Tree Preorder Traversal
+     * Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
+     *
+     * Nary-Tree input serialization is represented in their level order traversal. Each group of children is
+     * separated by the null value (See examples)
+     * @return: 前序遍历的节点值列表
+     * @author: kami
+     * @备注： 前序遍历 中左右
+     * @date: 2021/4/20 17:27
+     */
+    public List<Integer> preorder(NodeNew root) {
+        List<Integer> res = new LinkedList<>();
+
+        recurvePreOrder(root,res);
+        return res;
+    }
+    private void recurvePreOrder(NodeNew root,List<Integer> res){
+        if (root != null){
+            res.add(root.val);
+            List<NodeNew> children = root.children;
+            if (children != null){
+                for (NodeNew no:children) {
+                    recurvePreOrder(no,res);
+                }
+            }
+        }
+    }
+
 
 
     public static void main(String[] args) {
