@@ -1874,26 +1874,29 @@ public class LeetCodeTop100 {
      * The answer is guaranteed to fit in a 32-bit integer
      * @return: 加和为目标值的组合数量
      * @author: kami
-     * @备注： 动态规划
+     * @备注： 动态规划，缩小目标值，记录缩小后目标值的组成数量
      * @date: 2021/4/20 18:01
      */
+    private int[] dp;
     public int combinationSum4(int[] nums, int target) {
-        // key:数值，value：组成该值得组合数
-        Map<Integer,Integer> map = new HashMap<>();
-        Map<Integer,Integer> curMap = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            curMap.clear();
-            for (Integer key : map.keySet()) {
-                Integer plus = key+nums[i];
-                Integer num = map.getOrDefault(plus,0)+1;
-                curMap.put(plus,num);
-            }
-            for (Map.Entry<Integer, Integer> entrie:curMap.entrySet()) {
-                map.put(entrie.getKey(),entrie.getValue());
-            }
-            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        dp = new int[target + 1];
+        Arrays.fill(dp, -1);
+        dp[0] = 1;
+        return helper(nums, target);
+    }
+
+    private int helper(int[] nums, int target) {
+        if (dp[target] != -1) {
+            return dp[target];
         }
-        return map.getOrDefault(target,0);
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (target >= nums[i]) {
+                res += helper(nums, target - nums[i]);
+            }
+        }
+        dp[target] = res;
+        return res;
     }
 
     public static void main(String[] args) {
