@@ -508,6 +508,7 @@ public class LeetCodeTop100 {
             return l2;
         }
     }
+
     /**
      * @description: 使用选择排序对单链表排序
      * @return: 排序后的头结点
@@ -515,7 +516,7 @@ public class LeetCodeTop100 {
      * @备注： 选择排序，每次选择链表中的最小节点
      * @date: 2021/4/14 22:38
      */
-    private ListNode sortListNodeBySelectSort(ListNode head){
+    private ListNode sortListNodeBySelectSort(ListNode head) {
         ListNode vHead = new ListNode(-1);
         vHead.next = head;
         // 增加虚拟头节点,方便操作,否则就需要用一堆if来判断了,代码会比较啰嗦
@@ -1344,7 +1345,7 @@ public class LeetCodeTop100 {
         }
         // because pe-ps=pos-is (the number of the rest elements should be equal)
         root.left = helperDfs(inorder, inStart, pos - 1,
-                postorder, postStart, postStart + pos - inStart-1);
+                postorder, postStart, postStart + pos - inStart - 1);
         // //pe-1-ps=ie-(pos+1) => ps=pe-ie+pos
         root.right = helperDfs(inorder, pos + 1, inEnd,
                 postorder, postEnd - inEnd + pos, postEnd - 1);
@@ -1727,6 +1728,7 @@ public class LeetCodeTop100 {
         list.add(last + 1);
         dfs(s, list);
     }
+
     /**
      * @description: 199. Binary Tree Right Side View
      * Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of
@@ -1742,16 +1744,17 @@ public class LeetCodeTop100 {
         return result;
     }
 
-    public void rightView(TreeNode curr, List<Integer> result, int currDepth){
-        if(curr == null){
+    public void rightView(TreeNode curr, List<Integer> result, int currDepth) {
+        if (curr == null) {
             return;
         }
-        if(currDepth == result.size()){
+        if (currDepth == result.size()) {
             result.add(curr.val);
         }
         rightView(curr.right, result, currDepth + 1);
         rightView(curr.left, result, currDepth + 1);
     }
+
     /**
      * @description: 1209Remove All Adjacent Duplicates in String II
      * You are given a string s and an integer k, a k duplicate removal consists of choosing k adjacent and equal
@@ -1779,21 +1782,21 @@ public class LeetCodeTop100 {
     public String removeDuplicates1(String s, int k) {
         int[] count = new int[s.length()];
         StringBuilder sb = new StringBuilder();
-        for(char c : s.toCharArray()) {
+        for (char c : s.toCharArray()) {
             sb.append(c);
-            int last = sb.length()-1;
-            count[last] = 1 + (last > 0 && sb.charAt(last) == sb.charAt(last-1) ? count[last-1] : 0);
-            if(count[last] >= k) sb.delete(sb.length()-k, sb.length());
+            int last = sb.length() - 1;
+            count[last] = 1 + (last > 0 && sb.charAt(last) == sb.charAt(last - 1) ? count[last - 1] : 0);
+            if (count[last] >= k) sb.delete(sb.length() - k, sb.length());
         }
         return sb.toString();
     }
-    
+
     /**
      * @description: 1074 Number of Submatrices That Sum to Target
      * Given a matrix and a target, return the number of non-empty submatrices that sum to target.
-     *
+     * <p>
      * A submatrix x1, y1, x2, y2 is the set of all cells matrix[x][y] with x1 <= x <= x2 and y1 <= y <= y2.
-     *
+     * <p>
      * Two submatrices (x1, y1, x2, y2) and (x1', y1', x2', y2') are different if they have some coordinate that is
      * different: for example, if x1 != x1'.
      * @return: 遍历
@@ -1824,11 +1827,13 @@ public class LeetCodeTop100 {
         }
         return res;
     }
+
     class NodeNew {
         public int val;
         public List<NodeNew> children;
 
-        public NodeNew() {}
+        public NodeNew() {
+        }
 
         public NodeNew(int _val) {
             val = _val;
@@ -1839,10 +1844,11 @@ public class LeetCodeTop100 {
             children = _children;
         }
     }
+
     /**
      * @description: N-ary Tree Preorder Traversal
      * Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
-     *
+     * <p>
      * Nary-Tree input serialization is represented in their level order traversal. Each group of children is
      * separated by the null value (See examples)
      * @return: 前序遍历的节点值列表
@@ -1853,20 +1859,22 @@ public class LeetCodeTop100 {
     public List<Integer> preorder(NodeNew root) {
         List<Integer> res = new LinkedList<>();
 
-        recurvePreOrder(root,res);
+        recurvePreOrder(root, res);
         return res;
     }
-    private void recurvePreOrder(NodeNew root,List<Integer> res){
-        if (root != null){
+
+    private void recurvePreOrder(NodeNew root, List<Integer> res) {
+        if (root != null) {
             res.add(root.val);
             List<NodeNew> children = root.children;
-            if (children != null){
-                for (NodeNew no:children) {
-                    recurvePreOrder(no,res);
+            if (children != null) {
+                for (NodeNew no : children) {
+                    recurvePreOrder(no, res);
                 }
             }
         }
     }
+
     /**
      * @description: Combination Sum IV
      * Given an array of distinct integers nums and a target integer target, return the number of
@@ -1878,6 +1886,7 @@ public class LeetCodeTop100 {
      * @date: 2021/4/20 18:01
      */
     private int[] dp;
+
     public int combinationSum4(int[] nums, int target) {
         dp = new int[target + 1];
         Arrays.fill(dp, -1);
@@ -1897,6 +1906,41 @@ public class LeetCodeTop100 {
         }
         dp[target] = res;
         return res;
+    }
+
+    /**
+     * @description: Triangle
+     * Given a triangle array, return the minimum path sum from top to bottom.
+     * <p>
+     * For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on
+     * the current row, you may move to either index i or index i + 1 on the next row.
+     * @return: 从上到下的最小路径和
+     * @author: kami
+     * @备注： 递归-->动态规划
+     * @date: 2021/4/22 8:55
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int row = triangle.size();
+        int col = triangle.get(row - 1).size();
+        // dp[i][j] 代表从上到下 到点i,j的最小路径和
+        int[][] dp = new int[row][col];
+        dp[0][0] = triangle.get(0).get(0);
+        for (int i = 1; i < row; i++) {
+            List<Integer> curList = triangle.get(i);
+            int size = curList.size();
+            dp[i][0] = curList.get(0)+dp[i-1][0];
+            dp[i][size-1] = curList.get(size-1)+dp[i-1][size-2];
+            for (int j = 1,end = curList.size()-1; j < end; j++) {
+                int min = Math.min(dp[i-1][j],dp[i-1][j-1]);
+                dp[i][j] = curList.get(j) + min;
+            }
+        }
+        int lastRow = row-1;
+        int minPath = dp[lastRow][0];
+        for (int i = 0; i < col; i++) {
+            minPath = Math.min(minPath,dp[lastRow][i]);
+        }
+        return minPath;
     }
 
     public static void main(String[] args) {
