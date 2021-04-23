@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.io.PrintStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1928,33 +1929,70 @@ public class LeetCodeTop100 {
         for (int i = 1; i < row; i++) {
             List<Integer> curList = triangle.get(i);
             int size = curList.size();
-            dp[i][0] = curList.get(0)+dp[i-1][0];
-            dp[i][size-1] = curList.get(size-1)+dp[i-1][size-2];
-            for (int j = 1,end = curList.size()-1; j < end; j++) {
-                int min = Math.min(dp[i-1][j],dp[i-1][j-1]);
+            dp[i][0] = curList.get(0) + dp[i - 1][0];
+            dp[i][size - 1] = curList.get(size - 1) + dp[i - 1][size - 2];
+            for (int j = 1, end = curList.size() - 1; j < end; j++) {
+                int min = Math.min(dp[i - 1][j], dp[i - 1][j - 1]);
                 dp[i][j] = curList.get(j) + min;
             }
         }
-        int lastRow = row-1;
+        int lastRow = row - 1;
         int minPath = dp[lastRow][0];
         for (int i = 0; i < col; i++) {
-            minPath = Math.min(minPath,dp[lastRow][i]);
+            minPath = Math.min(minPath, dp[lastRow][i]);
         }
         return minPath;
     }
 
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        TreeNode left = new TreeNode(2);
-        root.left = left;
-        TreeNode right = new TreeNode(3);
-        root.right = right;
-        TreeNode left2 = new TreeNode(4);
-        right.left = left2;
+    /**
+     * @description: 394. Decode String
+     * Given an encoded string, return its decoded string.
+     * The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated
+     * exactly k times. Note that k is guaranteed to be a positive integer.
+     * You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.
+     * Furthermore, you may assume that the original data does not contain any digits and that digits are only for
+     * those repeat numbers, k. For example, there won't be input like 3a or 2[4].
+     * @return: 解密后的字符串
+     * @author: kami
+     * @备注： 觉得这道题是简单级别的,,嘿嘿嘿，当我没说，其实是困难的
+     * @date: 2021/4/23 9:11
+     */
+    public static String decodeString(String s) {
+        String res = "";
+        Stack<Integer> countStack = new Stack<>();
+        Stack<String> resStack = new Stack<>();
+        int idx = 0;
+        int len = s.length();
+        while (idx < len) {
+            if (Character.isDigit(s.charAt(idx))) {
+                int count = 0;
+                while (Character.isDigit(s.charAt(idx))) {
+                    count = 10 * count + (s.charAt(idx) - '0');
+                    idx++;
+                }
+                countStack.push(count);
+            } else if (s.charAt(idx) == '[') {
+                resStack.push(res);
+                res = "";
+                idx++;
+            } else if (s.charAt(idx) == ']') {
+                StringBuilder temp = new StringBuilder(resStack.pop());
+                int repeatTimes = countStack.pop();
+                for (int i = 0; i < repeatTimes; i++) {
+                    temp.append(res);
+                }
+                res = temp.toString();
+                idx++;
+            } else {
+                res += s.charAt(idx++);
+            }
+        }
+        return res;
+    }
 
-        LeetCodeTop100 man = new LeetCodeTop100();
-        List<Integer> integers = man.rightSideView(root);
-        integers.forEach(System.out::println);
+    public static void main(String[] args) {
+        String s = decodeString("3[a]2[bc]");
+        System.out.println(s);
     }
 
 }
