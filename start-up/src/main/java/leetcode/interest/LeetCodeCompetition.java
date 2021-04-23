@@ -1256,6 +1256,43 @@ public class LeetCodeCompetition {
         bigger.next = null; // cut off anything after bigger
         return smallerHead.next;
     }
+    /**
+     * @description: Brick Wall
+     * There is a brick wall in front of you. The wall is rectangular and has several rows of bricks. The bricks have
+     * the same height but different width. You want to draw a vertical line from the top to the bottom and cross
+     * the least bricks.
+     * The brick wall is represented by a list of rows. Each row is a list of integers representing the width of
+     * each brick in this row from left to right.
+     * If your line go through the edge of a brick, then the brick is not considered as crossed. You need to find
+     * out how to draw the line to cross the least bricks and return the number of crossed bricks.
+     * You cannot draw a line just along one of the two vertical edges of the wall, in which case the line will
+     * obviously cross no bricks.
+     * @return: 穿过最少的砖的数量
+     * @author: kami
+     * @备注：
+     * @date: 2021/4/23 8:47
+     */
+    public int leastBricks(List<List<Integer>> wall) {
+        int size = wall.size();
+        // key:列下标 value:此列上砖与砖的连接数
+        Map<Integer,Integer> map = new HashMap<>(size);
+        for (int i = 0; i < size; i++) {
+            List<Integer> bricks = wall.get(i);
+            int len = bricks.size()-1;
+            int preValue = 0;
+            for (int j = 0; j < len; j++) {
+                int curBrick = bricks.get(j);
+                preValue = preValue + curBrick;
+                map.put(preValue,map.getOrDefault(preValue,0) + 1);
+            }
+        }
+        int maxBrick = 0;
+        for (Integer val:map.values()) {
+            maxBrick = Math.max(maxBrick,val);
+        }
+
+        return size-maxBrick;
+    }
     
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
