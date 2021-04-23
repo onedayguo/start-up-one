@@ -2016,6 +2016,39 @@ public class LeetCodeTop100 {
         }
         return res.toString();
     }
+    /**
+     * @description: 438. Find All Anagrams in a String
+     * Given two strings s and p, return an array of all the start indices of p's anagrams in s.
+     * You may return the answer in any order.
+     * @return: 起始坐标数组
+     * @author: kami
+     * @备注： 1.首先判断如何跟P相匹配
+     * @date: 2021/4/23 18:22
+     */
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
+            return list;
+        }
+        int[] hash = new int[256];
+        for (char c : p.toCharArray()) {
+            hash[c]++;
+        }
+        int left = 0, right = 0, count = p.length();
+        int len = count;
+        while (right < s.length()) {
+            if (hash[s.charAt(right++)]-- >= 1) {
+                count--;
+            }
+            if (count == 0) {
+                list.add(left);
+            }
+            if (right - left == len && hash[s.charAt(left++)]++ >= 0) {
+                count++;
+            }
+        }
+        return list;
+    }
 
 
     public static void main(String[] args) {
