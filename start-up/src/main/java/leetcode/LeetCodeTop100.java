@@ -1954,41 +1954,69 @@ public class LeetCodeTop100 {
      * those repeat numbers, k. For example, there won't be input like 3a or 2[4].
      * @return: 解密后的字符串
      * @author: kami
-     * @备注： 觉得这道题是简单级别的,,嘿嘿嘿，当我没说，其实是困难的
+     * @备注： 觉得这道题是简单级别的, , 嘿嘿嘿，当我没说，其实是困难的
+     * 迭代的方法写出来，当然需要用 stack 来辅助运算，我们用两个 stack，一个用来保存个数，一个用来保存字符串，我们遍历输入字符串，
+     * 如果遇到数字，我们更新计数变量 cnt；如果遇到左括号，我们把当前 cnt 压入数字栈中，把当前t压入字符串栈中；如果遇到右括号时，
+     * 我们取出数字栈中顶元素，存入变量k，然后给字符串栈的顶元素循环加上k个t字符串，然后取出顶元素存入字符串t中；如果遇到字母，
+     * 我们直接加入字符串t中即可
      * @date: 2021/4/23 9:11
      */
     public static String decodeString(String s) {
-        String res = "";
-        Stack<Integer> countStack = new Stack<>();
-        Stack<String> resStack = new Stack<>();
-        int idx = 0;
-        int len = s.length();
-        while (idx < len) {
-            if (Character.isDigit(s.charAt(idx))) {
-                int count = 0;
-                while (Character.isDigit(s.charAt(idx))) {
-                    count = 10 * count + (s.charAt(idx) - '0');
-                    idx++;
+        Stack<Integer> intStack = new Stack<>();
+        Stack<StringBuilder> strStack = new Stack<>();
+        StringBuilder cur = new StringBuilder();
+        int k = 0;
+        for (char ch : s.toCharArray()) {
+            // 累读数字 13 1-》10+3
+            if (Character.isDigit(ch)) {
+                k = k * 10 + ch - '0';
+            } else if (ch == '[') {
+                // 入栈当前数字，之前的字符串，开辟一个新的字符串
+                intStack.push(k);
+                strStack.push(cur);
+                cur = new StringBuilder();
+                k = 0;
+            } else if (ch == ']') {
+                //
+                StringBuilder tmp = cur;
+                cur = strStack.pop();
+                for (k = intStack.pop(); k > 0; --k) {
+                    cur.append(tmp);
                 }
-                countStack.push(count);
-            } else if (s.charAt(idx) == '[') {
-                resStack.push(res);
-                res = "";
-                idx++;
-            } else if (s.charAt(idx) == ']') {
-                StringBuilder temp = new StringBuilder(resStack.pop());
-                int repeatTimes = countStack.pop();
-                for (int i = 0; i < repeatTimes; i++) {
-                    temp.append(res);
-                }
-                res = temp.toString();
-                idx++;
             } else {
-                res += s.charAt(idx++);
+                cur.append(ch);
             }
         }
-        return res;
+        return cur.toString();
     }
+
+    public static String decodeStringRecurve(String s) {
+        int size = s.length();
+        return decode(s, 0, size);
+    }
+
+    private static String decode(String s, int i, int size) {
+        StringBuilder res = new StringBuilder();
+        while (i < size && s.charAt(i) != ']') {
+            // 字母或者括号
+            if (!Character.isDigit(s.charAt(i))) {
+                res.append(s.charAt(i++));
+            } else {
+                int cnt = 0;
+                while (Character.isDigit(s.charAt(i))) {
+                    cnt = cnt * 10 + s.charAt(i++) - '0';
+                }
+                ++i;
+                String t = decode(s, i, size);
+                ++i;
+                while (cnt-- > 0) {
+                    res.append(t);
+                }
+            }
+        }
+        return res.toString();
+    }
+
 
     public static void main(String[] args) {
         String s = decodeString("3[a]2[bc]");
