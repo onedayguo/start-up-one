@@ -1293,6 +1293,34 @@ public class LeetCodeCompetition {
 
         return size-maxBrick;
     }
+    /**
+     * @description: Count Binary Substrings
+     * Give a string s, count the number of non-empty (contiguous) substrings that have the same number of 0's and 1's,
+     * and all the 0's and all the 1's in these substrings are grouped consecutively.
+     * Substrings that occur multiple times are counted the number of times they occur.
+     * @return: 连续子串中0 1数量相等的数量
+     * @author: kami
+     * @备注： First, I count the number of 1 or 0 grouped consecutively.
+     * For example "0110001111" will be [1, 2, 3, 4]
+     * Second, for any possible substrings with 1 and 0 grouped consecutively,
+     * the number of valid substring will be the minimum number of 0 and 1.
+     * For example "0001111", will be min(3, 4) = 3, ("01", "0011", "000111")
+     * @date: 2021/4/24 10:00
+     */
+    public int countBinarySubstrings(String s) {
+        int cur = 1, pre = 0, res = 0;
+        for (int i = 1,len=s.length(); i < len; i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                cur++;
+            } else {
+                res += Math.min(cur, pre);
+                pre = cur;
+                cur = 1;
+            }
+        }
+        return res + Math.min(cur, pre);
+
+    }
     
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
