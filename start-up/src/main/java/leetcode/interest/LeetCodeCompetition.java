@@ -1319,9 +1319,71 @@ public class LeetCodeCompetition {
             }
         }
         return res + Math.min(cur, pre);
-
     }
-    
+    /**
+     * @description:  Critical Connections in a Network
+     * There are n servers numbered from 0 to n-1 connected by undirected server-to-server connections
+     * forming a network where connections[i] = [a, b] represents a connection between servers a and b.
+     * Any server can reach any other server directly or indirectly through the network.
+     *
+     * A critical connection is a connection that, if removed, will make some server unable to reach some
+     * other server.
+     *
+     * Return all critical connections in the network in any order.
+     * @return: 断桥集合
+     * @author: kami
+     * @关键词： 图论，深度优先遍历 回溯
+     * @date: 2021/4/25 12:37
+     */
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        // 邻点集合
+        Map<Integer,Set<Integer>> map = buildNeighbor( n, connections);
+        // 存放每个节点的id是什么，下标是i,对应节点i.因为节点范围0到n-1
+        int[] ids = new int[n];
+        Arrays.fill(ids,-1);
+
+        List<List<Integer>> res = new LinkedList<>();
+        dfsNeighborNode(0,0,-1,ids,map,res);
+        return res;
+    }
+
+    private int dfsNeighborNode(int curNode,int curNodeExpectId,int parent,int[] ids,Map<Integer,Set<Integer>> map,List<List<Integer>> res){
+        ids[curNode] = curNodeExpectId;
+        Set<Integer> set = map.get(curNode);
+        for (Integer neighbor:set) {
+            if (neighbor == parent){
+                continue;
+            }else if (ids[neighbor] == -1){
+                ids[curNode] = Math.min(ids[curNode],dfsNeighborNode(neighbor,curNodeExpectId+1,curNode,ids,map,res));
+            }else {
+                ids[curNode] = Math.min(ids[curNode],ids[neighbor]);
+            }
+        }
+        if (ids[curNode] == curNodeExpectId && curNode != 0){
+            res.add(Arrays.asList(parent,curNode));
+        }
+        return ids[curNode];
+    }
+
+    private Map<Integer,Set<Integer>> buildNeighbor(int n,List<List<Integer>> connections){
+        Map<Integer,Set<Integer>> map = new HashMap<>(n);
+        for (List<Integer> edge:connections) {
+            int n1 = edge.get(0);
+            int n2 = edge.get(1);
+
+            Set<Integer> n1Set = map.getOrDefault(n1, new HashSet<>());
+            Set<Integer> n2Set = map.getOrDefault(n2, new HashSet<>());
+
+            n1Set.add(n2);
+            n2Set.add(n1);
+
+            map.put(n1,n1Set);
+            map.put(n2,n2Set);
+        }
+        return map;
+    }
+
+
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
         head.next = new ListNode(4);
