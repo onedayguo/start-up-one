@@ -2027,23 +2027,23 @@ public class LeetCodeTop100 {
      */
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> list = new ArrayList<>();
-        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
+        int pLen = p.length(),sLen = s.length();
+        if (sLen == 0 || pLen == 0) {
             return list;
         }
         int[] hash = new int[256];
         for (char c : p.toCharArray()) {
             hash[c]++;
         }
-        int left = 0, right = 0, count = p.length();
-        int len = count;
-        while (right < s.length()) {
+        int left = 0, right = 0, count = pLen;
+        while (right < sLen) {
             if (hash[s.charAt(right++)]-- >= 1) {
                 count--;
             }
             if (count == 0) {
                 list.add(left);
             }
-            if (right - left == len && hash[s.charAt(left++)]++ >= 0) {
+            if (right - left == pLen && hash[s.charAt(left++)]++ >= 0) {
                 count++;
             }
         }
