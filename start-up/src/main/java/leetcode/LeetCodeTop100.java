@@ -1518,6 +1518,71 @@ public class LeetCodeTop100 {
     }
 
     /**
+     * @description: 337. House Robber III
+     * The thief has found himself a new place for his thievery again. There is only one entrance to this area,
+     * called root.
+     * Besides the root, each house has one and only one parent house. After a tour, the smart thief realized
+     * that all houses in this place form a binary tree. It will automatically contact the police if two directly-linked
+     * houses were broken into on the same night.
+     * Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
+     * @return: 能偷的最多的钱数
+     * @author: kami
+     * @关键词： 动态规划，递归
+     * @date: 2021/4/26 9:55
+     */
+    public static int rob3(TreeNode root) {
+//        return maxHouseVal(root,false);
+        return robSub(root, new HashMap<>());
+    }
+
+    private  static int maxHouseVal(TreeNode cur,boolean parentRobed){
+        if (cur == null){
+            return 0;
+        }
+        if (parentRobed){
+            // 父节点被抢，当前节点不能抢
+            return maxHouseVal(cur.left,false)+maxHouseVal(cur.right,false);
+        }else {
+            // 父节点没被抢，当前节点可以被抢也可以放过
+            int robedVal = cur.val + maxHouseVal(cur.left,true)+maxHouseVal(cur.right,true);
+            int notRobedVal = maxHouseVal(cur.left,false)+maxHouseVal(cur.right,false);
+            return Math.max(robedVal,notRobedVal);
+        }
+    }
+
+    private static int robSub(TreeNode root, Map<TreeNode, Integer> map) {
+        if (root == null) return 0;
+        if (map.containsKey(root)) return map.get(root);
+
+        int val = 0;
+        // 抢当前节点
+        if (root.left != null) {
+            val += robSub(root.left.left, map) + robSub(root.left.right, map);
+        }
+        if (root.right != null) {
+            val += robSub(root.right.left, map) + robSub(root.right.right, map);
+        }
+        // 计算抢当前节点的情况 和 不抢当前节点的情况的 最大值
+        val = Math.max(val + root.val, robSub(root.left, map) + robSub(root.right, map));
+        map.put(root, val);
+        return val;
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(3);
+        TreeNode left = new TreeNode(2);
+        TreeNode lRight = new TreeNode(3);
+        left.right = lRight;
+        root.left = left;
+        TreeNode right = new TreeNode(3);
+        TreeNode rRight = new TreeNode(1);
+        right.right = rRight;
+        root.right = right;
+        int i = rob3(root);
+        System.out.println(i);
+    }
+
+    /**
      * @description: 114. Flatten Binary Tree to Linked List 变换二叉树为链表
      * Given a binary tree, flatten it to a linked list in-place.
      * For example, given the following tree:
@@ -2048,12 +2113,6 @@ public class LeetCodeTop100 {
             }
         }
         return list;
-    }
-
-
-    public static void main(String[] args) {
-        String s = decodeString("3[a]2[bc]");
-        System.out.println(s);
     }
 
 }
