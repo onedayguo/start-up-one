@@ -80,6 +80,27 @@ public class TopInterview {
     public static int trailingZeros1(int n){
         return n == 0 ? 0 : n / 5 + trailingZeros1(n / 5);
     }
+    /**
+     * @description: 204. Count Primes
+     * Count the number of prime numbers less than a non-negative number, n.
+     * @return: 小于N的质数的个数
+     * @author: kami
+     * @关键词：
+     * @date: 2021/4/27 11:22
+     */
+    public int countPrimes(int n) {
+        boolean[] isPrime = new boolean[n];
+        int cnt = 0;
+        for (int i = 2; i < n; i++) {
+            if (!isPrime[i]){
+                cnt++;
+                for (int j = 2*i; j < n; j+=i) {
+                    isPrime[j] = true;
+                }
+            }
+        }
+        return cnt;
+    }
 
     public static void main(String[] args) {
         int i = trailingZeroes(10);
