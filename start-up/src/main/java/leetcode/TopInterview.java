@@ -58,12 +58,31 @@ public class TopInterview {
      * @description: 172. Factorial Trailing Zeroes
      * Given an integer n, return the number of trailing zeroes in n!.
      * Follow up: Could you write a solution that works in logarithmic time complexity?
-     * @return: TODO
+     * @return: 阶乘值0的个数
      * @author: kami
-     * @关键词：TODO
+     * @关键词： 数一下5的个数
      * @date: 2021/4/26 12:49
      */
-    public int trailingZeroes(int n) {
-        return 0;
+    public static int trailingZeroes(int n) {
+        int cntFive = 0;
+        int cur = 5;
+        while (cur <= n){
+            int value = cur;
+            while (value % 5 == 0){
+                cntFive++;
+                value /= 5;
+            }
+            cur += 5;
+        }
+        return cntFive;
+    }
+
+    public static int trailingZeros1(int n){
+        return n == 0 ? 0 : n / 5 + trailingZeros1(n / 5);
+    }
+
+    public static void main(String[] args) {
+        int i = trailingZeroes(10);
+        System.out.println(i);
     }
 }
