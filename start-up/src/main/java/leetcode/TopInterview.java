@@ -39,7 +39,7 @@ public class TopInterview {
      * An integer n is a power of three, if there exists an integer x such that n == 3x.
      * @return: n是否是3的幂次
      * @author: kami
-     * @关键词：
+     * @关键词： 循环除以3
      * @date: 2021/4/26 12:37
      */
     public boolean isPowerOfThree(int n) {
@@ -53,5 +53,17 @@ public class TopInterview {
             n /= 3;
         }
         return true;
+    }
+    /**
+     * @description: 172. Factorial Trailing Zeroes
+     * Given an integer n, return the number of trailing zeroes in n!.
+     * Follow up: Could you write a solution that works in logarithmic time complexity?
+     * @return: TODO
+     * @author: kami
+     * @关键词：TODO
+     * @date: 2021/4/26 12:49
+     */
+    public int trailingZeroes(int n) {
+        return 0;
     }
 }
