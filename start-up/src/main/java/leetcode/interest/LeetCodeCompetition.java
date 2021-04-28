@@ -3,6 +3,7 @@ package leetcode.interest;
 import javax.swing.plaf.IconUIResource;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
@@ -1479,6 +1480,26 @@ public class LeetCodeCompetition {
         }
         return true;
     }
+    /**
+     * @description: Unique Paths II
+     * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+     *
+     * The robot can only move either down or right at any point in time. The robot is trying to reach
+     * the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+     *
+     * Now consider if some obstacles are added to the grids. How many unique paths would there be?
+     *
+     * An obstacle and space is marked as 1 and 0 respectively in the grid.
+     * @return: 路径的个数
+     * @author: kami
+     * @关键词： 动态规划，依次计算到当前点的路径个数
+     * @date: 2021/4/28 15:20
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        return 0;
+    }
+
+
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
         head.next = new ListNode(4);

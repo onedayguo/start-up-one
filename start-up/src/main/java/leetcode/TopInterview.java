@@ -159,12 +159,37 @@ public class TopInterview {
         lives -= board[i][j] & 1;
         return lives;
     }
-//    private int calNextState()
+    /**
+     * @description: 415. Add Strings
+     * Given two non-negative integers, num1 and num2 represented as string,
+     * return the sum of num1 and num2 as a string.
+     * Input: num1 = "11", num2 = "123"
+     * Output: "134"
+     * @return: 字符串数字相加
+     * @author: kami
+     * @关键词： 累加，进位
+     * @date: 2021/4/28 21:41
+     */
+    public String addStrings(String num1, String num2) {
+        int i = num1.length() - 1, j = num2.length() - 1, add = 0;
+        StringBuffer ans = new StringBuffer();
+        while (i >= 0 || j >= 0 || add != 0) {
+            int x = i >= 0 ? num1.charAt(i) - '0' : 0;
+            int y = j >= 0 ? num2.charAt(j) - '0' : 0;
+            int result = x + y + add;
+            ans.append(result % 10);
+            add = result / 10;
+            i--;
+            j--;
+        }
+        // 计算完以后的答案需要翻转过来
+        ans.reverse();
+        return ans.toString();
+    }
 
     public static void main(String[] args) {
         TopInterview top = new TopInterview();
-        int[][] arr = {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
-        top.gameOfLife(arr);
-        System.out.println("2222");
+        String s = top.addStrings("11", "123");
+        System.out.println(s);
     }
 }
