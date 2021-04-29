@@ -329,16 +329,23 @@ public class LeetCode4 {
                 //如果遇到障碍，就把障碍清除，这样最终的结果加和0值就相当于没有加
                 if(obstacleGrid[i][j] == 1) {
                     obstacleGrid[i][j] = 0;
-                }
-                else {
+                } else {
                     //左上角起始点，设置值为1
-                    if(i == 0 && j == 0) obstacleGrid[i][j] = 1;
+                    if(i == 0 && j == 0) {
+                        obstacleGrid[i][j] = 1;
+                    }
                     //如果是第一行，后值设置与前值相同
-                    else if(i == 0 && j > 0) obstacleGrid[i][j] = obstacleGrid[i][j-1];
+                    else if(i == 0 && j > 0) {
+                        obstacleGrid[i][j] = obstacleGrid[i][j-1];
+                    }
                     //如果是第一列，后值设置与前值相同
-                    else if(i > 0 && j == 0) obstacleGrid[i][j] = obstacleGrid[i-1][j];
+                    else if(i > 0 && j == 0) {
+                        obstacleGrid[i][j] = obstacleGrid[i-1][j];
+                    }
                     //如果其他地方的值，则把其同行前值 与 同列前值 相加 赋给此处的值
-                    else obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1];
+                    else {
+                        obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1];
+                    }
                 }
             }
         }
