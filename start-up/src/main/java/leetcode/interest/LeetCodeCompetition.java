@@ -1526,7 +1526,32 @@ public class LeetCodeCompetition {
         //返回最后一个位置的值，其值 为 之前特定值的加和
         return obstacleGrid[m-1][n-1];
     }
+    /**
+     * @description: 328. Odd Even Linked List
+     * Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes
+     * with even indices, and return the reordered list.
+     * The first node is considered odd, and the second node is even, and so on.
+     * Note that the relative order inside both the even and odd groups should remain as it was in the input.
+     * @return: 重排序的链表
+     * @author: kami
+     * @关键词：
+     * @date: 2021/4/30 20:06
+     */
+    public ListNode oddEvenList(ListNode head) {
+        if (head != null) {
 
+            ListNode odd = head, even = head.next, evenHead = even;
+
+            while (even != null && even.next != null) {
+                odd.next = odd.next.next;
+                even.next = even.next.next;
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = evenHead;
+        }
+        return head;
+    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
