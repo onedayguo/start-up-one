@@ -1,9 +1,9 @@
 package interview;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Logger;
+import java.util.Queue;
 
 /**
  * @Description: 字节跳动
@@ -149,6 +149,76 @@ public class ByteDance {
         public void setLogoutTime(Long logoutTime) {
             this.logoutTime = logoutTime;
         }
+    }
+
+    class Node {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() {}
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    }
+
+    /**
+     * @description: 117. Populating Next Right Pointers in Each Node II
+     * Given a binary tree
+     *
+     * struct Node {
+     *   int val;
+     *   Node *left;
+     *   Node *right;
+     *   Node *next;
+     * }
+     * Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+     * Initially, all next pointers are set to NULL.
+     * Follow up:
+     * You may only use constant extra space.
+     * Recursive approach is fine, you may assume implicit stack space does not count as extra space for this problem.
+     * 这道题希望我们把二叉树各个层的点组织成链表，一个非常直观的思路是层次遍历。树的层次遍历基于广度优先搜索，它按照层的顺序遍历二叉树，
+     * 在遍历第 i 层前，一定会遍历完第 i−1 层。
+     * 算法如下：初始化一个队列 qq，将根结点放入队列中。当队列不为空的时候，记录当前队列大小为 n，从队列中以此取出 n 个元素并通过这 n
+     * 个元素拓展新节点。如此循环，直到队列为空。我们不难写出这样的代码：
+     * @return: 填充了next指针的头节点
+     * @author: kami
+     * @关键词： 广度优先遍历使用队列额外存储
+     * @date: 2021/5/1 8:54
+     */
+    public Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            Node last = null;
+            for (int i = 1; i <= n; ++i) {
+                Node f = queue.poll();
+                if (f.left != null) {
+                    queue.offer(f.left);
+                }
+                if (f.right != null) {
+                    queue.offer(f.right);
+                }
+                if (i != 1) {
+                    last.next = f;
+                }
+                last = f;
+            }
+        }
+        return root;
     }
 
     public static void main(String[] args) {
