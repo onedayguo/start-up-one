@@ -186,6 +186,36 @@ public class TopInterview {
         ans.reverse();
         return ans.toString();
     }
+    /**
+     * @description: 378. Kth Smallest Element in a Sorted Matrix
+     * Given an n x n matrix where each of the rows and columns are sorted in ascending order,
+     * return the kth smallest element in the matrix.
+     *
+     * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+     * @return: 第K小的数
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/4 14:51
+     */
+    public int kthSmallest(int[][] matrix, int k) {
+        int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
+        while(lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            int count = 0,  j = matrix[0].length - 1;
+            for(int i = 0; i < matrix.length; i++) {
+                while(j >= 0 && matrix[i][j] > mid) {
+                    j--;
+                }
+                count += (j + 1);
+            }
+            if(count < k) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
 
     public static void main(String[] args) {
         TopInterview top = new TopInterview();
