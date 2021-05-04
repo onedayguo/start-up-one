@@ -1655,6 +1655,22 @@ public class LeetCodeCompetition {
         }
         return pq.size();
     }
+    /**
+     * @description: Running Sum of 1d Array
+     * Given an array nums. We define a running sum of an array as runningSum[i] = sum(nums[0]…nums[i]).
+     *
+     * Return the running sum of nums.
+     * @return: 加和的数组
+     * @author: kami
+     * @关键词： 动态规划
+     * @date: 2021/5/4 14:45
+     */
+    public int[] runningSum(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] = nums[i-1] + nums[i];
+        }
+        return nums;
+    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
