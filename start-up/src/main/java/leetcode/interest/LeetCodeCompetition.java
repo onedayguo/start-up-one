@@ -1618,6 +1618,43 @@ public class LeetCodeCompetition {
             return map.getOrDefault(prefix + "#" + suffix, -1);
         }
     }
+    /**
+     * @description: Course Schedule III
+     * There are n different online courses numbered from 1 to n. You are given an array courses where
+     * courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously for
+     * durationi days and must be finished before or on lastDayi.
+     * You will start on the 1st day and you cannot take two or more courses simultaneously.
+     * Return the maximum number of courses that you can take.
+     *
+     * Approach:
+     * Sort courses by the end date, this way, when we're iterating through the courses,
+     * we can switch out any previous course with the current one without worrying about end date.
+     * Next, we iterate through each course, if we have enough days, we'll add it to our priority queue.
+     * If we don't have enough days, then we can either
+     * 2.1 ignore this course OR
+     * 2.2 We can replace this course with the longest course we added earlier.
+     * @return: 能上最多多少门课
+     * @author: kami
+     * @关键词： 贪心算法
+     * @date: 2021/5/2 17:57
+     */
+    public int scheduleCourse(int[][] courses) {
+        // Sort the courses by their deadlines (Greedy! We have to deal with courses with early deadlines first)
+        Arrays.sort(courses, Comparator.comparingInt(a -> a[1]));
+        // 大顶堆
+        PriorityQueue<Integer> pq=new PriorityQueue<>((a,b)->b-a);
+        int time=0;
+        for (int[] c:courses)
+        {
+            time+=c[0]; // add current course to a priority queue
+            pq.add(c[0]);
+            if (time>c[1]) {
+                // If time exceeds, drop the previous course which costs the most time. (That must be the best choice!)
+                time-=pq.poll();
+            }
+        }
+        return pq.size();
+    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
