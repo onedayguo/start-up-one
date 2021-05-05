@@ -466,6 +466,38 @@ public class TopInterview {
             return (int)list.get(rand.nextInt(list.size()));
         }
     }
+    /**
+     * @description: 162. Find Peak Element
+     * A peak element is an element that is strictly greater than its neighbors.
+     *
+     * Given an integer array nums, find a peak element, and return its index.
+     * If the array contains multiple peaks, return the index to any of the peaks.
+     * You may imagine that nums[-1] = nums[n] = -∞.
+     * @return: 最高点下标
+     * @author: kami
+     * @关键词： 前后比较
+     * @date: 2021/5/5 15:28
+     */
+    public int findPeakElement(int[] nums) {
+        int size = nums.length;
+        if (size == 1 || nums[0] > nums[1]){
+            return 0;
+        }
+        if (nums[size-1] > nums[size-2]){
+            return size-1;
+        }
+        for (int i = 1; i < nums.length-1;) {
+            if (nums[i] > nums[i+1]){
+                if (nums[i] > nums[i-1]){
+                    return i;
+                }
+                i+=2;
+            }else {
+                i++;
+            }
+        }
+        return 0;
+    }
 
     public static void main(String[] args) {
         int[] nums1 = {0};
