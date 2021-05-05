@@ -1,6 +1,8 @@
 package leetcode;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: LeetCode面试最多,由简单到中等再到困难
@@ -216,10 +218,43 @@ public class TopInterview {
         }
         return lo;
     }
+    /**
+     * @description: 454. 4Sum II
+     * Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of
+     * tuples (i, j, k, l) such that:
+     * 0 <= i, j, k, l < n
+     * nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+     * @return: 四数相加和为0的个数
+     * @author: kami
+     * @关键词： map记录搭配数量
+     * @date: 2021/5/5 10:08
+     */
+    public static int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        Map<Integer,Integer> num12 = new HashMap<>();
+        Map<Integer,Integer> num34 = new HashMap<>();
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                int sum = nums1[i]+nums2[j];
+                num12.put(sum,num12.getOrDefault(sum,0)+1);
+            }
+        }
+        for (int i = 0; i < nums3.length; i++) {
+            for (int j = 0; j < nums4.length; j++) {
+                int sum = nums3[i]+nums4[j];
+                num34.put(sum,num34.getOrDefault(sum,0)+1);
+            }
+        }
+        int res = 0;
+        for (Map.Entry<Integer, Integer> entry:num12.entrySet()) {
+            int cnt = entry.getValue();
+            res += (cnt*num34.getOrDefault(-entry.getKey(),0));
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
-        TopInterview top = new TopInterview();
-        String s = top.addStrings("11", "123");
-        System.out.println(s);
+        int[] nums1 = {0};
+        int i = fourSumCount(nums1, nums1, nums1, nums1);
+        System.out.println(i);
     }
 }
