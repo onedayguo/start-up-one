@@ -322,6 +322,23 @@ public class TopInterview {
         }
         return result;
     }
+    /**
+     * @description: 371. Sum of Two Integers
+     * Given two integers a and b, return the sum of the two integers without using the operators + and -.
+     * @return: a+b的值，不能使用 + -
+     * @author: kami
+     * @关键词： Use ^ to remove even exactly same numbers and save the odd, or save the distinct bits and remove the same.
+     * @date: 2021/5/5 13:08
+     */
+    public int getSum(int a, int b) {
+        int c;
+        while(b !=0 ) {
+            c = (a&b);
+            a = a ^ b;
+            b = (c)<<1;
+        }
+        return a;
+    }
 
     public static void main(String[] args) {
         int[] nums1 = {0};
