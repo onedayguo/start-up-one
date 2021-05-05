@@ -2,10 +2,13 @@ package leetcode;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 /**
- * @Description: LeetCode面试最多,由简单到中等再到困难
+ * @Description: LeetCode面试最多, 由简单到中等再到困难
  * @Author: kami
  * @Date: 2021/4/26 11:37
  * @Version: 1.0.0
@@ -29,14 +32,15 @@ public class TopInterview {
      * @date: 2021/4/26 11:38
      */
     public int reverseBits(int n) {
-        int res=0;
-        for(int i=0;i<32;i++){
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
             // 左移扩大
-            res = ( res << 1 ) | ( n & 1 );
+            res = (res << 1) | (n & 1);
             n = n >> 1;
         }
         return res;
     }
+
     /**
      * @description: 326. Power of Three
      * Given an integer n, return true if it is a power of three. Otherwise, return false.
@@ -50,14 +54,15 @@ public class TopInterview {
         if (n <= 0) {
             return false;
         }
-        while (n > 1){
-            if (n%3 != 0){
+        while (n > 1) {
+            if (n % 3 != 0) {
                 return false;
             }
             n /= 3;
         }
         return true;
     }
+
     /**
      * @description: 172. Factorial Trailing Zeroes
      * Given an integer n, return the number of trailing zeroes in n!.
@@ -70,9 +75,9 @@ public class TopInterview {
     public static int trailingZeroes(int n) {
         int cntFive = 0;
         int cur = 5;
-        while (cur <= n){
+        while (cur <= n) {
             int value = cur;
-            while (value % 5 == 0){
+            while (value % 5 == 0) {
                 cntFive++;
                 value /= 5;
             }
@@ -81,9 +86,10 @@ public class TopInterview {
         return cntFive;
     }
 
-    public static int trailingZeros1(int n){
+    public static int trailingZeros1(int n) {
         return n == 0 ? 0 : n / 5 + trailingZeros1(n / 5);
     }
+
     /**
      * @description: 204. Count Primes
      * Count the number of prime numbers less than a non-negative number, n.
@@ -96,20 +102,21 @@ public class TopInterview {
         boolean[] isPrime = new boolean[n];
         int cnt = 0;
         for (int i = 2; i < n; i++) {
-            if (!isPrime[i]){
+            if (!isPrime[i]) {
                 cnt++;
-                for (int j = 2*i; j < n; j+=i) {
+                for (int j = 2 * i; j < n; j += i) {
                     isPrime[j] = true;
                 }
             }
         }
         return cnt;
     }
+
     /**
      * @description: 289. Game of Life
      * According to Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised
      * by the British mathematician John Horton Conway in 1970."
-     *
+     * <p>
      * The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1)
      * or dead (represented by a 0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal)
      * using the following four rules (taken from the above Wikipedia article):
@@ -161,6 +168,7 @@ public class TopInterview {
         lives -= board[i][j] & 1;
         return lives;
     }
+
     /**
      * @description: 415. Add Strings
      * Given two non-negative integers, num1 and num2 represented as string,
@@ -188,11 +196,12 @@ public class TopInterview {
         ans.reverse();
         return ans.toString();
     }
+
     /**
      * @description: 378. Kth Smallest Element in a Sorted Matrix
      * Given an n x n matrix where each of the rows and columns are sorted in ascending order,
      * return the kth smallest element in the matrix.
-     *
+     * <p>
      * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
      * @return: 第K小的数
      * @author: kami
@@ -201,16 +210,16 @@ public class TopInterview {
      */
     public int kthSmallest(int[][] matrix, int k) {
         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
-        while(lo < hi) {
+        while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
-            int count = 0,  j = matrix[0].length - 1;
-            for(int i = 0; i < matrix.length; i++) {
-                while(j >= 0 && matrix[i][j] > mid) {
+            int count = 0, j = matrix[0].length - 1;
+            for (int i = 0; i < matrix.length; i++) {
+                while (j >= 0 && matrix[i][j] > mid) {
                     j--;
                 }
                 count += (j + 1);
             }
-            if(count < k) {
+            if (count < k) {
                 lo = mid + 1;
             } else {
                 hi = mid;
@@ -218,6 +227,7 @@ public class TopInterview {
         }
         return lo;
     }
+
     /**
      * @description: 454. 4Sum II
      * Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of
@@ -230,26 +240,87 @@ public class TopInterview {
      * @date: 2021/5/5 10:08
      */
     public static int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
-        Map<Integer,Integer> num12 = new HashMap<>();
-        Map<Integer,Integer> num34 = new HashMap<>();
+        Map<Integer, Integer> num12 = new HashMap<>();
+        Map<Integer, Integer> num34 = new HashMap<>();
         for (int i = 0; i < nums1.length; i++) {
             for (int j = 0; j < nums2.length; j++) {
-                int sum = nums1[i]+nums2[j];
-                num12.put(sum,num12.getOrDefault(sum,0)+1);
+                int sum = nums1[i] + nums2[j];
+                num12.put(sum, num12.getOrDefault(sum, 0) + 1);
             }
         }
         for (int i = 0; i < nums3.length; i++) {
             for (int j = 0; j < nums4.length; j++) {
-                int sum = nums3[i]+nums4[j];
-                num34.put(sum,num34.getOrDefault(sum,0)+1);
+                int sum = nums3[i] + nums4[j];
+                num34.put(sum, num34.getOrDefault(sum, 0) + 1);
             }
         }
         int res = 0;
-        for (Map.Entry<Integer, Integer> entry:num12.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : num12.entrySet()) {
             int cnt = entry.getValue();
-            res += (cnt*num34.getOrDefault(-entry.getKey(),0));
+            res += (cnt * num34.getOrDefault(-entry.getKey(), 0));
         }
         return res;
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    /**
+     * @description: 103. Binary Tree Zigzag Level Order Traversal
+     * Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left
+     * to right, then right to left for the next level and alternate between).
+     * @return: 层序遍历的列表
+     * @author: kami
+     * @关键词： 广度优先遍历，使用队列，临时队列
+     * @date: 2021/5/5 10:46
+     */
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new LinkedList<>();
+        if (root == null){
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean reverse = false;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            /* use linkedlist to control time complexity of addFirst to O(1) */
+            LinkedList<Integer> tempList = new LinkedList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode curNode = queue.poll();
+                if (reverse) {
+                    tempList.addFirst(curNode.val);
+                }
+                else {
+                    tempList.add(curNode.val);
+                }
+
+                if (curNode.left != null) {
+                    queue.offer(curNode.left);
+                }
+                if (curNode.right != null) {
+                    queue.offer(curNode.right);
+                }
+            }
+            result.add(tempList);
+            reverse = !reverse;
+        }
+        return result;
     }
 
     public static void main(String[] args) {
