@@ -1,11 +1,18 @@
 package leetcode;
 
+import org.w3c.dom.ranges.Range;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * @Description: LeetCode面试最多, 由简单到中等再到困难
@@ -399,6 +406,65 @@ public class TopInterview {
             }
         }
         return root;
+    }
+    /**
+     * @description: 380. Insert Delete GetRandom O(1)
+     * Implement the RandomizedSet class:
+     *
+     * RandomizedSet() Initializes the RandomizedSet object.
+     * bool insert(int val) Inserts an item val into the set if not present. Returns true if the item was not present,
+     * false otherwise.
+     * bool remove(int val) Removes an item val from the set if present. Returns true if the item was present,
+     * false otherwise.
+     * int getRandom() Returns a random element from the current set of elements (it's guaranteed that at least
+     * one element exists when this method is called). Each element must have the same probability of being returned.
+     * @return: 实现一个随机的set集合
+     * @author: kami
+     * @关键词： hashset
+     * @date: 2021/5/5 14:44
+     */
+    class RandomizedSet {
+        Set<Integer> set;
+        List<Object> list;
+        Random rand ;
+        public RandomizedSet() {
+            set = new HashSet<>();
+            rand = new Random();
+            list= new ArrayList<>();
+        }
+        /**
+         * Inserts a value to the set. Returns true if the set did not already contain
+         * the specified element.
+         */
+        public boolean insert(int val) {
+            if (set.contains(val)) {
+                return false;
+            } else {
+                set.add(val);
+                list.add(val);
+                return true;
+            }
+
+        }
+
+        /**
+         * Removes a value from the set. Returns true if the set contained the specified
+         * element.
+         */
+        public boolean remove(int val) {
+            if(set.contains(val)) {
+                list.remove((Object) val);
+                return set.remove(val);
+            } else {
+                return false;
+            }
+
+        }
+
+        /** Get a random element from the set. */
+        public int getRandom() {
+            return (int)list.get(rand.nextInt(list.size()));
+        }
     }
 
     public static void main(String[] args) {
