@@ -498,6 +498,38 @@ public class TopInterview {
         }
         return 0;
     }
+    /**
+     * @description: 395. Longest Substring with At Least K Repeating Characters
+     * Given a string s and an integer k, return the length of the longest substring of s such that the frequency
+     * of each character in this substring is greater than or equal to k.
+     * @return: 最长子串（子串每个字符出现的频率大于等于K）
+     * @author: kami
+     * @关键词：
+     * For each h, apply two pointer technique to find the longest substring with at least K repeating characters
+     * and the number of unique characters in substring is h.
+     * @date: 2021/5/5 15:49
+     */
+    public int longestSubstring(String s, int k) {
+        int length = s.length();
+        if(length < k){
+            return 0;
+        }
+        int[] ch = new int[26];
+        for (char c:s.toCharArray()) {
+            ch[c-'a']++;
+        }
+        int res = 0;
+        for (int i = 0; i < length; i++) {
+            char chr = s.charAt(i);
+            if (ch[chr-'a']<k && ch[chr-'a'] != 0){
+                String part1 = s.substring(0,i);
+                String part2 = s.substring(i+1);
+                res = Math.max(longestSubstring(part1,k),longestSubstring(part2,k));
+                return res;
+            }
+        }
+        return length;
+    }
 
     public static void main(String[] args) {
         int[] nums1 = {0};
