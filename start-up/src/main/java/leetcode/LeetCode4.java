@@ -93,19 +93,26 @@ public class LeetCode4 {
     //55. Jump Game   Given an array of non-negative integers, you are initially positioned at the first index of the array.
     //Each element in the array represents your maximum jump length at that position.
     //Determine if you are able to reach the last index.
-    public boolean canJump(int[] nums) {
+    public static boolean canJump(int[] nums) {
         int len = nums.length;
         for (int i = 1; i < len; i++) {
             nums[i] = Math.max(nums[i],nums[i-1]-1);
         }
-        int jump = 0;
         int index = 0;
         while (index < len-1){
-            jump++;//步数+1
-            index+=nums[index];//更新索引
-            if (nums[index] == 0) return false;
+            if (nums[index] == 0) {
+                return false;
+            }
+            // 更新索引
+            index+=nums[index];
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        int[] num = {3,2,1,0,4};
+        boolean b = canJump(num);
+        System.out.println(b);
     }
 
     //56. Merge Intervals  Given a collection of intervals, merge all overlapping intervals.

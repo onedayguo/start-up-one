@@ -1728,7 +1728,41 @@ public class LeetCodeCompetition {
         }
         return step;
     }
+    /**
+     * @description: Convert Sorted List to Binary Search Tree
+     * Given the head of a singly linked list where elements are sorted in ascending order, convert it to a
+     * height balanced BST.
+     *
+     * For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the
+     * two subtrees of every node never differ by more than 1.
+     * @return: 构建一个平衡二叉树
+     * @author: kami
+     * @关键词： 递归构建二叉树，每次从链表的中间节点构建
+     * @date: 2021/5/6 21:22
+     */
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head==null) {
+            return null;
+        }
+        return toBST(head,null);
 
+    }
+    public TreeNode toBST(ListNode head, ListNode tail){
+        ListNode slow = head;
+        ListNode fast = head;
+        if(head==tail) {
+            return null;
+        }
+
+        while(fast!=tail&&fast.next!=tail){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        TreeNode thead = new TreeNode(slow.val);
+        thead.left = toBST(head,slow);
+        thead.right = toBST(slow.next,tail);
+        return thead;
+    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
