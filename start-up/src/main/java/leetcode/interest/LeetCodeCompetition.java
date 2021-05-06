@@ -1701,6 +1701,34 @@ public class LeetCodeCompetition {
         }
         return cnt<=1;
     }
+    /**
+     * @description: 55Jump Game II
+     * Given an array of non-negative integers nums, you are initially positioned at the first index of the array.
+     * Each element in the array represents your maximum jump length at that position.
+     * Your goal is to reach the last index in the minimum number of jumps.
+     * You can assume that you can always reach the last index.
+     * @return: 跳到末尾的步数
+     * @author: kami
+     * @关键词： 第一步有一个范围框，第二步有一个范围框，一直向后推范围框直到范围框的最远边界到达末尾
+     * @date: 2021/5/6 8:59
+     */
+    public int jump(int[] nums) {
+        // 当前步数能跳到的最大位置，最大位置的下标，步数
+        int newMax = 0,maxI=0,step=0;
+        for (int i = 0; i < nums.length-1; i++) {
+            //
+            newMax = Math.max(newMax,i+nums[i]);
+            if (i == maxI){
+                step++;
+                maxI = newMax;
+                if (maxI >= nums.length-1){
+                    break;
+                }
+            }
+        }
+        return step;
+    }
+
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
