@@ -2,9 +2,13 @@ package interview;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * @Description: 字节跳动
@@ -248,12 +252,37 @@ public class ByteDance {
             cur.remove(cur.size() - 1);
         }
     }
+    /**
+     * @description: 获取数组中连续递增子序列的最大长度
+     * @return: 子序列长度
+     * @author: kami
+     * @关键词： O（n）时间复杂度
+     * @date: 2021/5/8 10:02
+     */
+    public int getContinusIncrementNums(int[] nums){
+        // key: nums[i],value:i
+        Map<Integer,Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i],i);
+        }
+        int max = 1;
+        for (int i = 0; i < nums.length; i++) {
+            int curValue = nums[i]+1;
+            int curIndex = i+1;
+            int cnt = 1;
+            while (map.getOrDefault(curValue++,-1) == curIndex++ ){
+                cnt++;
+            }
+            max = Math.max(max,cnt);
+        }
+        return max;
+    }
 
     public static void main(String[] args) {
         ByteDance b = new ByteDance();
-        int[] nu = {1, 2, 2};
-        List<List<Integer>> allCombination = b.findAllCombination(nu);
-        System.out.println("");
+        int[] nu = {1, 4,3,7,5,6,8,9,10};
+        int continusIncrementNums = b.getContinusIncrementNums(nu);
+        System.out.println(continusIncrementNums);
     }
 
 }
