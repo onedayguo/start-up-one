@@ -1790,6 +1790,61 @@ public class LeetCodeCompetition {
         return word1.length() - val + word2.length() - val;
 
     }
+    /**
+     * @description: Super Palindromes
+     * Let's say a positive integer is a super-palindrome if it is a palindrome, and it is also
+     * the square of a palindrome.
+     * Given two positive integers left and right represented as strings, return the number of super-palindromes
+     * integers in the inclusive range [left, right].
+     * @return: 超级回文数字的个数
+     * @author: kami
+     * @关键词： 构造回文数字而不是遍历所有数字
+     * @date: 2021/5/8 17:38
+     */
+    public int superpalindromesInRange(String L, String R) {
+        List<Long> palindromes = new ArrayList<>();
+        long low = Long.parseLong(L);
+        long high = Long.parseLong(R);
+        int res = 0;
+        // 添加1-9数字
+        for (long i = 1; i <= 9; i++) {
+            palindromes.add(i);
+        }
+        for (long i = 1; i < 10000; i++) {
+            // left: 15 right:51
+            String left = Long.toString(i);
+            String right = new StringBuilder(left).reverse().toString();
+            // 1551
+            palindromes.add(Long.parseLong(left + right));
+            // 15051,15151,15251,15351...15951
+            for (long d = 0; d < 10; d++) {
+                palindromes.add(Long.parseLong(left + d + right));
+            }
+        }
+        for (long palindrome : palindromes) {
+            long square = palindrome * palindrome;
+            if (!isPalindrome(Long.toString(square))) {
+                continue;
+            }
+            if (low <= square && square <= high) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    private boolean isPalindrome(String str) {
+        int i = 0;
+        int j = str.length() - 1;
+        while (i < j) {
+            if (str.charAt(i) != str.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
