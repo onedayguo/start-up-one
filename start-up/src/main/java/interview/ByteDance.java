@@ -278,6 +278,96 @@ public class ByteDance {
         return max;
     }
 
+    /**
+     * @description: 圆环上有10个点，编号为0~9。从0点出发，每次可以逆时针和顺时针走一步，问走n步回到0点共有多少种走法。
+     * 输入: 2
+     * 输出: 2
+     * 解释：有2种方案。分别是0->1->0和0->9->0
+     * @return: 回到原点的走法
+     * @author: kami
+     * @关键词： 动态规划
+     * @date: 2021/5/9 19:50
+     */
+    public int backToStartWays(int n){
+        int[][] dp = new int[n+1][11];
+        dp[0][0] = 1;
+        dp[2][0] = 2;
+        int length = 10;
+        for (int i = 1; i < n+1; i++) {
+            for (int j = 0; j < length; j++) {
+                dp[i][j] = dp[i-1][(j-1+length)%length] + dp[i-1][(j+1)%length];
+            }
+        }
+        return dp[n][0];
+    }
+    /**
+     * @description: 找到比给定数字大的最小的回文数字
+     * @return: 回文数
+     * @author: kami
+     * @关键词： 从中间分开
+     *  A: 如果该数字串数字个数>1, 则按下面处理：
+     *  1:如果该数的位数是偶数，把左数字串反过来，形成一个新的右数字串。
+     *     1.1如果该新的右数字串换成数字后，比原来的右数字串大，则原来的左数字串+新的右数字串=所求之数字串。
+     *     1.2 否则，把左数字加1，重新生成为一个新的左数字串，然后把它反转，形成新的右数字串。
+     *         则 新的左数字串 + 新的右数字串 = 所求之数字串。
+     *
+     *    2 如果该数的位数是奇数，把左数字串反过来，形成一个新的右数字串。
+     *      2.1如果该新的右数字串换成数字后，比原来的右数字串大， 则 原来的左数字串 + 新的右数字串 = 所求之数字串。
+     *      2.2 否则，把中间的那个数字+1。
+     *           2.2.1 如果该中间数字加1后大于9，则把原来的左数字+1，然后形成一个新的左数字串,；如果该中间数字加1后<=9，原来的左数字串不变。
+     *          2.2.2 把上步中的左数字串反转，形成新的右数字串。
+     *          2.2.3 合并上面步骤得到的左数字串+中间数字+右数字串，即为所求之数字串。
+     *
+     *  B: 如果数字串数字个数=1，则按以下处理：
+     *  如果该数字<9,则，该数字+1后为所求的数字。
+     *  如果该数字=9,则11为所求的数字。
+     * @date: 2021/5/10 15:08
+     */
+    public String findMinPalindromeGreaterThan(int num){
+        String str = String.valueOf(num);
+        int len = str.length();
+        // 偶数
+        boolean even = len % 2 == 0;
+        int half = len / 2;
+        String left = str.substring(0,half);
+        int leftNum = Integer.parseInt(left);
+        String right = str.substring(half);
+        int rightNum = Integer.parseInt(right);
+        String mid = str.substring(half,half+1);
+        int midNum = Integer.parseInt(mid);
+        if (num < 9){
+            return String.valueOf(num+1);
+        }else if (num<11){
+            return "11";
+        }else if (even){
+            // 偶数长度
+            String reverseLeft = new StringBuilder(left).reverse().toString();
+            if (Integer.parseInt(reverseLeft) > rightNum){
+                return left+reverseLeft;
+            }else {
+                left = left+1;
+                String reverseLeft1 = new StringBuilder(left).reverse().toString();
+                return left+reverseLeft1;
+            }
+        }else {
+            // 奇数长度
+            String reverseLeft3 = new StringBuilder(left).reverse().toString();
+            if (Integer.parseInt(reverseLeft3) > rightNum){
+                return left+mid+reverseLeft3;
+            }else {
+                int newMid = Integer.parseInt(mid)+1;
+                if (newMid > 9){
+                    int newLeft = leftNum+1;
+                    String reverseLeft4 = new StringBuilder(newLeft).reverse().toString();
+                    return newLeft+newLeft+reverseLeft4;
+                }
+            }
+
+        }
+        return "0";
+    }
+        
+
     public static void main(String[] args) {
         ByteDance b = new ByteDance();
         int[] nu = {1, 4,3,7,5,6,8,9,10};

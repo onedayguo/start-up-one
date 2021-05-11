@@ -1845,16 +1845,44 @@ public class LeetCodeCompetition {
         }
         return true;
     }
+    /**
+     * @description: Construct Target Array With Multiple Sums
+     * Given an array of integers target. From a starting array, A consisting of all 1's,
+     * you may perform the following procedure :
+     *
+     * let x be the sum of all elements currently in your array.
+     * choose index i, such that 0 <= i < target.size and set the value of A at index i to x.
+     * You may repeat this procedure as many times as needed.
+     * Return True if it is possible to construct the target array from A otherwise return False.
+     * @return: 能否按照规则将【1,1，...，】变成 target数组
+     * @author: kami
+     * @关键词： 最大的数字一定是在最后一步填充的
+     * @date: 2021/5/10 16:37
+     */
+    public static boolean isPossible(int[] target) {
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> (b - a));
+        long total = 0;
+        for (int a : target) {
+            total += a;
+            pq.add(a);
+        }
+        while (true) {
+            int a = pq.poll();
+            total -= a;
+            if (a == 1 || total == 1) {
+                return true;
+            }
+            if (a < total || total == 0 || a % total == 0) {
+                return false;
+            }
+            a %= total;
+            total += a;
+            pq.add(a);
+        }
+    }
 
     public static void main(String[] args) {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(4);
-        head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(2);
-        head.next.next.next.next = new ListNode(5);
-        head.next.next.next.next.next = new ListNode(2);
-//        head.next.next.next.next = new ListNode(3);
-        ListNode partition = partition(head, 3);
-        System.out.println(partition);
+        int[] num = {9,3,5};
+        System.out.println(isPossible(num));
     }
 }
