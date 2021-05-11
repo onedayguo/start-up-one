@@ -614,6 +614,33 @@ public class TopInterview {
         // total代表缺油的总量，tank代表汽车剩余的油量
         return (total+tank<0)?-1:start;
     }
+    /**
+     * @description: 334. Increasing Triplet Subsequence
+     * Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k
+     * and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+     * @return: 是否有三个数满足条件
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/11 12:29
+     */
+    public boolean increasingTriplet(int[] nums) {
+        if (nums.length < 3){
+            return false;
+        }
+        for (int i = 0; i < nums.length-2; i++) {
+            for (int j = i+1; j < nums.length-1; j++) {
+                if (nums[i] < nums[j]){
+                    for (int k = j+1; k < nums.length; k++) {
+                        if (nums[j] < nums[k]){
+                            return true;
+                        }
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         int[] nums1 = {0};

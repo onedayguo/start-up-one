@@ -12,14 +12,7 @@ import java.util.Scanner;
 public class AliBaBa {
 
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-            String nHitT = in.nextLine();
-            String hpStr = in.nextLine();
-            maxCount(nHitT,hpStr);
-        }
-    }
+
 
     private static void maxCount(String nHitT,String hpStr){
 
@@ -48,8 +41,37 @@ public class AliBaBa {
     }
 
 
+    /**
+     * @description: 169. Majority Element
+     * Given an array nums of size n, return the majority element.
+     * The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that
+     * the majority element always exists in the array.
+     * @return: 众数
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/11 10:59
+     */
+    public static int majorityElement(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        }
+        int cnt = 0;
+        int res = 0;
+        for (Map.Entry<Integer,Integer> entry:map.entrySet()) {
+            if (entry.getValue() > cnt){
+                res = entry.getKey();
+                cnt = entry.getValue();
+            }
+        }
+        return res;
+    }
 
-
+    public static void main(String[] args) {
+        int[] nums = {4,5,4};
+        int i = majorityElement(nums);
+        System.out.println(i);
+    }
 
 
 

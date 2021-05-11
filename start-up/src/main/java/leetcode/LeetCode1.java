@@ -178,7 +178,9 @@ public class LeetCode1 {
                     break;
                 case ')':
                     if (stack.pop() == '(') break;
-                    else return false;
+                    else {
+                        return false;
+                    }
                 case '}':
                     if (stack.pop() == '{') break;
                     else return false;

@@ -1860,29 +1860,66 @@ public class LeetCodeCompetition {
      * @date: 2021/5/10 16:37
      */
     public static boolean isPossible(int[] target) {
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> (b - a));
-        long total = 0;
-        for (int a : target) {
-            total += a;
-            pq.add(a);
+        if (target.length == 1 && target[0] != 1) {
+            return false;
         }
-        while (true) {
-            int a = pq.poll();
-            total -= a;
-            if (a == 1 || total == 1) {
-                return true;
-            }
-            if (a < total || total == 0 || a % total == 0) {
-                return false;
-            }
-            a %= total;
-            total += a;
-            pq.add(a);
+
+        long sum = 0;			// 和可能越界
+        Queue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+
+        for (int num : target) {
+            sum += num;
+            pq.offer(num);
         }
+
+        while (pq.peek() > 1) {
+            int top = pq.poll();
+            sum -= top;
+            if (sum == 1) {
+                return true;			// 如果剩余之和为1，那么一定能将top还原为1，如：[4,1]
+            }
+            if (top <= sum || top % sum == 0) {
+                return false;		// 特殊情况：[2,2]
+            }
+            top %= sum;			// 还原top
+            sum += top;
+            pq.offer(top);
+        }
+
+        return true;
+    }
+    /**
+     * @description: Count Primes
+     * Count the number of prime numbers less than a non-negative number, n.
+     * @return: 素数的数量
+     * @author: kami
+     * @关键词： 计算合数的数量，用N-合数数量=素数数量
+     * @date: 2021/5/11 9:37
+     */
+    public static int countPrimes(int n) {
+        boolean[] isPrime = new boolean[n];
+        for (int i = 2; i < n; i++) {
+            isPrime[i] = true;
+        }
+        // Loop's ending condition is i * i < n instead of i < sqrt(n)
+        // to avoid repeatedly calling an expensive function sqrt().
+        for (int i = 2; i * i < n; i++) {
+            if (!isPrime[i]) {
+                continue;
+            }
+            for (int j = i * i; j < n; j += i) {
+                isPrime[j] = false;
+            }
+        }
+        int count = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrime[i]) count++;
+        }
+        return count;
     }
 
     public static void main(String[] args) {
-        int[] num = {9,3,5};
-        System.out.println(isPossible(num));
+        int n = 499979;
+        System.out.println(countPrimes(n));
     }
 }
