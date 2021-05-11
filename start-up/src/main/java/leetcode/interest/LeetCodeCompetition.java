@@ -1917,9 +1917,46 @@ public class LeetCodeCompetition {
         }
         return count;
     }
+    /**
+     * @description: Maximum Points You Can Obtain from Cards
+     * There are several cards arranged in a row, and each card has an associated number of points
+     * The points are given in the integer array cardPoints.
+     * In one step, you can take one card from the beginning or from the end of the row. You have
+     * to take exactly k cards.
+     * Your score is the sum of the points of the cards you have taken
+     * Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+     * @return: 获取最高分是多少
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/11 21:01
+     */
+    public static int maxScore(int[] cardPoints, int k) {
+        int size = cardPoints.length;
+        int[] front = new int[size];
+        front[0] = cardPoints[0];
+        int[] back = new int[size];
+        back[size-1] = cardPoints[size-1];
+        for (int i = 1; i < size; i++) {
+            front[i] = front[i-1]+cardPoints[i];
+            back[size-i-1] = back[size-i] + cardPoints[size-i-1];
+        }
+        int max = 0;
+        for (int i = 0; i <= k; i++) {
+            if (i == 0){
+                max = Math.max(max,back[size-k]);
+            }else if (i == k){
+                max = Math.max(max,front[k-1]);
+            }else {
+                max = Math.max(max,front[i-1]+back[size - (k-i)]);
+            }
+        }
+        return max;
+
+    }
 
     public static void main(String[] args) {
-        int n = 499979;
-        System.out.println(countPrimes(n));
+        int[] nu = {1,2,3,4,5,6,1};
+
+        System.out.println(maxScore(nu,3));
     }
 }
