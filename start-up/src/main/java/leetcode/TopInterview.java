@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * @Description: LeetCode面试最多, 由简单到中等再到困难
@@ -641,10 +642,55 @@ public class TopInterview {
         }
         return false;
     }
+    /**
+     * @description: 227. Basic Calculator II
+     * Given a string s which represents an expression, evaluate this expression and return its value.
+     * The integer division should truncate toward zero.
+     * @return: 字符串运算计算结果
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/11 12:34
+     */
+    public static int calculate(String s) {
+        int len;
+        if(s==null || (len = s.length())==0) {
+            return 0;
+        }
+        Stack<Integer> stack = new Stack<>();
+        int num = 0;
+        char sign = '+';
+        for(int i=0;i<len;i++){
+            if(Character.isDigit(s.charAt(i))){
+                num = num*10+s.charAt(i)-'0';
+            }
+            if((!Character.isDigit(s.charAt(i)) &&' '!=s.charAt(i)) || i==len-1){
+                if(sign=='-'){
+                    stack.push(-num);
+                }
+                if(sign=='+'){
+                    stack.push(num);
+                }
+                if(sign=='*'){
+                    stack.push(stack.pop()*num);
+                }
+                if(sign=='/'){
+                    stack.push(stack.pop()/num);
+                }
+                sign = s.charAt(i);
+                num = 0;
+            }
+        }
+
+        int re = 0;
+        for(int i:stack){
+            re += i;
+        }
+        return re;
+    }
 
     public static void main(String[] args) {
-        int[] nums1 = {0};
-        int i = fourSumCount(nums1, nums1, nums1, nums1);
-        System.out.println(i);
+        String s = "3/2";
+        int calculate = calculate(s);
+        System.out.println(calculate);
     }
 }
