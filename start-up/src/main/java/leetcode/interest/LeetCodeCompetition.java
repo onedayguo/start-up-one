@@ -1954,6 +1954,25 @@ public class LeetCodeCompetition {
 
     }
 
+    class NumMatrix {
+        int[][] matrix = null;
+        public NumMatrix(int[][] matrix) {
+            this.matrix=matrix;
+        }
+
+        public int sumRegion(int row1, int col1, int row2, int col2) {
+            int rowMax = matrix.length-1;
+            int colMax = matrix[0].length-1;
+            int sum = 0;
+            for (int i = Math.max(0,row1),rowEnd=Math.min(row2,rowMax); i <= rowEnd; i++) {
+                for (int j = Math.max(0,col1),colEnd=Math.min(col2,colMax); j <= colEnd ; j++) {
+                    sum += matrix[i][j];
+                }
+            }
+            return sum;
+        }
+    }
+
     public static void main(String[] args) {
         int[] nu = {1,2,3,4,5,6,1};
 
