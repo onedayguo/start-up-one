@@ -1568,20 +1568,6 @@ public class LeetCodeTop100 {
         return val;
     }
 
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(3);
-        TreeNode left = new TreeNode(2);
-        TreeNode lRight = new TreeNode(3);
-        left.right = lRight;
-        root.left = left;
-        TreeNode right = new TreeNode(3);
-        TreeNode rRight = new TreeNode(1);
-        right.right = rRight;
-        root.right = right;
-        int i = rob3(root);
-        System.out.println(i);
-    }
-
     /**
      * @description: 114. Flatten Binary Tree to Linked List 变换二叉树为链表
      * Given a binary tree, flatten it to a linked list in-place.
@@ -2113,6 +2099,50 @@ public class LeetCodeTop100 {
             }
         }
         return list;
+    }
+    /**
+     * @description: 150. Evaluate Reverse Polish Notation
+     * Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+     * Valid operators are +, -, *, and /. Each operand may be an integer or another expression.
+     * Note that division between two integers should truncate toward zero.
+     * It is guaranteed that the given RPN expression is always valid. That means the expression would always evaluate
+     * to a result, and there will not be any division by zero operation.
+     * @return: 算数表达式
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/14 15:42
+     */
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> nums = new Stack<>();
+        for (String n:tokens) {
+            if (n.length() == 1 && !Character.isDigit(n.charAt(0))){
+                int pre1 = nums.pop(),pre2 = nums.pop();
+                int result = arithmeticResult(pre1,pre2,n);
+                nums.push(result);
+            }else {
+                nums.push(Integer.parseInt(n));
+            }
+        }
+        return nums.pop();
+    }
+
+    private int arithmeticResult(int pre1,int pre2,String str){
+        switch (str){
+            case "+":
+                return pre1+pre2;
+            case "-":
+                return pre2-pre1;
+            case "*":
+                return pre2*pre1;
+            default:
+                return pre2 / pre1;
+        }
+    }
+    public static void main(String[] args) {
+        LeetCodeTop100 o = new LeetCodeTop100();
+        String[] tokens = {"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
+        int i = o.evalRPN(tokens);
+        System.out.println(i);
     }
 
 }
