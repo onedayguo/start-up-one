@@ -1982,13 +1982,33 @@ public class LeetCodeCompetition {
      * numbers like ".1".
      * The final answer list can be returned in any order.  Also note that all coordinates in the final answer have
      * exactly one space between them (occurring after the comma.)
-     * @return: TODO
+     * @return: 组合的数字列表
      * @author: kami
-     * @关键词：TODO
+     * @关键词： 分成左右两部分，然后组合
      * @date: 2021/5/13 22:09
      */
     public List<String> ambiguousCoordinates(String s) {
-        return null;
+        List<String> list = new ArrayList<>();
+        for (int i = 2; i < s.length() - 1; i++) {
+            for (String left : generate(s.substring(1, i))) {
+                for (String right : generate(s.substring(i, s.length() - 1))) {
+                    list.add("(" + left + ", " + right + ")");
+                }
+            }
+        }
+        return list;
+    }
+
+    private List<String> generate(String s) {
+        List<String> list = new ArrayList<>();
+        for (int i = 1; i <= s.length(); i++) {
+            String left = s.substring(0, i);
+            String right = s.substring(i);
+            if (("0".equals(left) || !left.startsWith("0")) && !right.endsWith("0")) {
+                list.add(left + (i < s.length() ? "." : "") + right);
+            }
+        }
+        return list;
     }
 
     public static void main(String[] args) {
