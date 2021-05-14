@@ -2138,6 +2138,23 @@ public class LeetCodeTop100 {
                 return pre2 / pre1;
         }
     }
+    /**
+     * @description: 189. Rotate Array
+     * Given an array, rotate the array to the right by k steps, where k is non-negative.
+     * @return: 移动后的数组
+     * @author: kami
+     * @关键词： 移位取模
+     * @date: 2021/5/14 16:46
+     */
+    public void rotate(int[] nums, int k) {
+        int[] res = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            res[(i+k)%nums.length] = nums[i];
+        }
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = res[i];
+        }
+    }
     public static void main(String[] args) {
         LeetCodeTop100 o = new LeetCodeTop100();
         String[] tokens = {"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
