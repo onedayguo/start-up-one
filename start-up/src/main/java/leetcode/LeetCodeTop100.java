@@ -2155,10 +2155,41 @@ public class LeetCodeTop100 {
             nums[i] = res[i];
         }
     }
+    /**
+     * @description: 179. Largest Number
+     * Given a list of non-negative integers nums, arrange them such that they form the largest number.
+     * Note: The result may be very large, so you need to return a string instead of an integer.
+     * @return: 组成的最大的数字
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/14 17:28
+     */
+    public String largestNumber(int[] nums) {
+        if (nums == null || nums.length == 0) return "";
+        String[] strs = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            strs[i] = nums[i]+"";
+        }
+        Arrays.sort(strs, (i, j) -> {
+            String s1 = i+j;
+            String s2 = j+i;
+            return s1.compareTo(s2);
+        });
+        if (strs[strs.length-1].charAt(0) == '0') {
+            return "0";
+        }
+        StringBuilder res = new StringBuilder();
+        for (int i = strs.length-1; i > -1; i--) {
+            res.append( strs[i]);
+        }
+        return res.toString();
+
+    }
+
     public static void main(String[] args) {
         LeetCodeTop100 o = new LeetCodeTop100();
-        String[] tokens = {"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
-        int i = o.evalRPN(tokens);
+        int[] nums = {3,30,34,5,9};
+        String i = o.largestNumber(nums);
         System.out.println(i);
     }
 
