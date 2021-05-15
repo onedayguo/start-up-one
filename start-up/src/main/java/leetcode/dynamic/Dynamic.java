@@ -630,7 +630,7 @@ public class Dynamic {
                 int sevenMinCost = Math.min(dp[i - 1] + costs[0], dp[sevenDayAgo] + costs[1]);
                 int thirtyDayAgo = Math.max(0, i - 30);
                 dp[i] = Math.min(sevenMinCost, dp[thirtyDayAgo] + costs[2]);
-                if (++curIndex >= days.length){
+                if (++curIndex >= days.length) {
                     return dp[i];
                 }
             } else {
@@ -640,6 +640,7 @@ public class Dynamic {
 
         return dp[365];
     }
+
     /**
      * @discription 空间复杂度优化了一下
      * @date 2021/3/10 23:16
@@ -649,13 +650,13 @@ public class Dynamic {
         int curIndex = 0;
         for (int i = 1; i < 366; i++) {
             int curI = i % 30;
-            int preI = curI - 1 < 0 ? 29:curI-1;
+            int preI = curI - 1 < 0 ? 29 : curI - 1;
             if (days[curIndex] == i) {
                 int sevenDayAgo = Math.max(0, i - 7) % 30;
                 int sevenMinCost = Math.min(dp[preI] + costs[0], dp[sevenDayAgo] + costs[1]);
                 int thirtyDayAgo = Math.max(0, i - 30) % 30;
                 dp[curI] = Math.min(sevenMinCost, dp[thirtyDayAgo] + costs[2]);
-                if (++curIndex >= days.length){
+                if (++curIndex >= days.length) {
                     return dp[curI];
                 }
             } else {
@@ -664,6 +665,7 @@ public class Dynamic {
         }
         return dp[29];
     }
+
     /**
      * @discription 利用队列直接录前7个旅行日和前30个旅行日
      * @date 2021/3/10 23:52
@@ -673,20 +675,21 @@ public class Dynamic {
         Queue<DayCost> last7 = new LinkedList<>();
         Queue<DayCost> last30 = new LinkedList<>();
         for (int i = 0; i < days.length; i++) {
-            while (!last7.isEmpty() && last7.peek().day+7 <= days[i]){
+            while (!last7.isEmpty() && last7.peek().day + 7 <= days[i]) {
                 last7.poll();
             }
-            while (!last30.isEmpty() && last30.peek().day+30 <= days[i]){
+            while (!last30.isEmpty() && last30.peek().day + 30 <= days[i]) {
                 last30.poll();
             }
-            last7.add(new DayCost(days[i],cost+costs[1]));
-            last30.add(new DayCost(days[i],cost+costs[2]));
-            int minTemp = Math.min(last7.peek().cost,last30.peek().cost);
-            cost = Math.min(cost+costs[0],minTemp);
+            last7.add(new DayCost(days[i], cost + costs[1]));
+            last30.add(new DayCost(days[i], cost + costs[2]));
+            int minTemp = Math.min(last7.peek().cost, last30.peek().cost);
+            cost = Math.min(cost + costs[0], minTemp);
         }
         return cost;
     }
-    static class DayCost{
+
+    static class DayCost {
         int day;
         int cost;
 
@@ -695,11 +698,12 @@ public class Dynamic {
             this.cost = cost;
         }
     }
+
     /**
      * @description: 1227. Airplane Seat Assignment Probability
      * n passengers board an airplane with exactly n seats. The first passenger has lost the ticket and picks
      * a seat randomly. But after that, the rest of passengers will:
-     *
+     * <p>
      * Take their own seat if it is still available,
      * Pick other seats randomly when they find their seat occupied
      * What is the probability that the n-th person can get his own seat?
@@ -714,6 +718,7 @@ public class Dynamic {
         }
         return 1d / n + (n - 2d) / n * nthPersonGetsNthSeat(n - 1);
     }
+
     /**
      * @Description: 1664. Ways to Make a Fair Array
      * You are given an integer array nums. You can choose exactly one index (0-indexed) and remove the element. Notice
@@ -723,10 +728,10 @@ public class Dynamic {
      * Choosing to remove index 2 results in nums = [6,1,4,1].
      * Choosing to remove index 4 results in nums = [6,1,7,4].
      * An array is fair if the sum of the odd-indexed values equals the sum of the even-indexed values.
-     *
+     * <p>
      * Return the number of indices that you could choose such that after the removal, nums is fair.
      * @Param:
-     * @Return: 
+     * @Return:
      * @Author: kami
      * @Date: 2021/3/12 14:52
      */
@@ -735,58 +740,114 @@ public class Dynamic {
         int[] left = new int[2], right = new int[2];
         for (int i = 0; i < n; i++) {
             // right[0]=偶数之和，right[1]=奇数之和
-            right[i%2] += nums[i];
+            right[i % 2] += nums[i];
         }
         for (int i = 0; i < n; i++) {
             // 奇数和或者偶数和 减去当前的数
-            right[i%2] -= nums[i];
+            right[i % 2] -= nums[i];
             //左偶+右偶（原右奇） == 左奇+右奇（原右偶）
-            if (left[0]+right[1] == left[1]+right[0]) {
+            if (left[0] + right[1] == left[1] + right[0]) {
                 res++;
             }
             // left[0]=左边偶数之和 left[1]=左边奇数之和
-            left[i%2] += nums[i];
+            left[i % 2] += nums[i];
         }
         return res;
 
     }
+
     /**
      * @Description: 1504. Count Submatrices With All Ones
      * Given a rows * columns matrix mat of ones and zeros, return how many submatrices have all ones.
      * @Param:
-     * @Return: 
+     * @Return:
      * @Author: kami
      * @Date: 2021/3/15 13:28
      */
     public int numSubmat(int[][] mat) {
         int m = mat.length, n = mat[0].length;
         int cnt = 0;
-        int[][] dp = new int[m+1][n];
+        int[][] dp = new int[m + 1][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (mat[i][j] == 1){
-                    int min = 1+dp[i][j];
-                    cnt+=min;
-                    for (int k = j-1; k >=0 ; k--) {
-                        if (mat[i][k] == 1){
-                            min = Math.min(min,dp[i][k]+1);
-                            cnt+=min;
-                        }else {
+                if (mat[i][j] == 1) {
+                    int min = 1 + dp[i][j];
+                    cnt += min;
+                    for (int k = j - 1; k >= 0; k--) {
+                        if (mat[i][k] == 1) {
+                            min = Math.min(min, dp[i][k] + 1);
+                            cnt += min;
+                        } else {
                             break;
                         }
                     }
-                    dp[i+1][j] = 1+dp[i][j];
+                    dp[i + 1][j] = 1 + dp[i][j];
                 }
             }
         }
         return cnt;
     }
 
+    /**
+     * @description: 1706. Where Will the Ball Fall
+     * You have a 2-D grid of size m x n representing a box, and you have n balls. The box is open on the top and
+     * bottom sides.
+     * Each cell in the box has a diagonal board spanning two corners of the cell that can redirect a ball to the
+     * right or to the left.
+     * A board that redirects the ball to the right spans the top-left corner to the bottom-right corner and is
+     * represented in the grid as 1.
+     * A board that redirects the ball to the left spans the top-right corner to the bottom-left corner and is
+     * represented in the grid as -1.
+     * We drop one ball at the top of each column of the box. Each ball can get stuck in the box or fall out of
+     * the bottom. A ball gets stuck if it hits a "V" shaped pattern between two boards or if a board redirects
+     * the ball into either wall of the box.
+     * Return an array answer of size n where answer[i] is the column that the ball falls out of at the bottom
+     * after dropping the ball from the ith column at the top, or -1 if the ball gets stuck in the box.
+     * @return: 穿过矩阵的球的数组
+     * @author: kami
+     * @关键词： 动态规划
+     * @date: 2021/5/14 21:33
+     */
+    public int[] findBall(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[] res = new int[n];
+        Arrays.fill(res, -1);
+        for (int i = 0; i < n; i++) {
+            int curM = 0, curN = i;
+            while (curM < m) {
+                // 左上右下
+                if (grid[curM][curN] == 1) {
+                    if (curN == n - 1 || grid[curM][curN + 1] == -1) {
+                        break;
+                    } else {
+                        curM++;
+                        curN++;
+                    }
+                }else {
+                // 左下右上
+                    if (curN == 0 || grid[curM][curN - 1] == 1) {
+                        break;
+                    } else {
+                        curM++;
+                        curN--;
+                    }
+                }
+            }
+            if (curM == m){
+                res[i] = curN;
+            }
+        }
+        return res;
+
+    }
+
     public static void main(String[] args) {
 //        String cost = "10.00";
 //        int end = cost.indexOf('1');
 //        System.out.println(cost.substring(0,end==-1?cost.length():end));
-        System.out.println(Integer.valueOf(""));;
+        System.out.println(Integer.valueOf(""));
+        ;
     }
 
     /**
