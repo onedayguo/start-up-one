@@ -2010,6 +2010,28 @@ public class LeetCodeCompetition {
         }
         return list;
     }
+    /**
+     * @description: Flatten Binary Tree to Linked List
+     * Given the root of a binary tree, flatten the tree into a "linked list":
+     * The "linked list" should use the same TreeNode class where the right child pointer points
+     * to the next node in the list and the left child pointer is always null.
+     * The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+     * @return: 二叉树变链表--前序遍历
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/15 10:17
+     */
+    private TreeNode prev = null;
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        flatten(root.right);
+        flatten(root.left);
+        root.right = prev;
+        root.left = null;
+        prev = root;
+    }
 
     public static void main(String[] args) {
         int[] nu = {1,2,3,4,5,6,1};
