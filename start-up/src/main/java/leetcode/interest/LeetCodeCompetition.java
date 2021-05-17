@@ -2032,6 +2032,101 @@ public class LeetCodeCompetition {
         root.left = null;
         prev = root;
     }
+    /**
+     * @description:  Valid Number
+     * A valid number can be split up into these components (in order):
+     *
+     * A decimal number or an integer.
+     * (Optional) An 'e' or 'E', followed by an integer.
+     * A decimal number can be split up into these components (in order):
+     *
+     * (Optional) A sign character (either '+' or '-').
+     * One of the following formats:
+     * At least one digit, followed by a dot '.'.
+     * At least one digit, followed by a dot '.', followed by at least one digit.
+     * A dot '.', followed by at least one digit.
+     * An integer can be split up into these components (in order):
+     * (Optional) A sign character (either '+' or '-').
+     * At least one digit.
+     * For example, all the following are valid numbers: ["2", "0089", "-0.1", "+3.14", "4.", "-.9", "2e10",
+     * "-90E3", "3e+7", "+6e-1", "53.5e93", "-123.456e789"], while the following are not valid numbers: ["abc", "1a", "1e", "e3", "99e2.5", "--6", "-+3", "95a54e53"].
+     *
+     * Given a string s, return true if s is a valid number.
+     * @return: 是否是有效的数字
+     * @author: kami
+     * @关键词： 反向思路，验证哪些不是数字的情况
+     * @date: 2021/5/16 9:01
+     */
+    public boolean isNumber(String s) {
+        s = s.trim();
+        boolean pointSeen = false;
+        boolean eSeen = false;
+        boolean numberSeen = false;
+        for(int i=0; i<s.length(); i++) {
+            if('0' <= s.charAt(i) && s.charAt(i) <= '9') {
+                numberSeen = true;
+            } else if(s.charAt(i) == '.') {
+                if(eSeen || pointSeen) {
+                    return false;
+                }
+                pointSeen = true;
+            } else if(s.charAt(i) == 'e') {
+                if(eSeen || !numberSeen) {
+                    return false;
+                }
+                numberSeen = false;
+                eSeen = true;
+            } else if(s.charAt(i) == '-' || s.charAt(i) == '+') {
+                if(i != 0 && s.charAt(i-1) != 'e') {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return numberSeen;
+    }
+    /**
+     * @description: Binary Tree Cameras
+     * Given a binary tree, we install cameras on the nodes of the tree.
+     *
+     * Each camera at a node can monitor its parent, itself, and its immediate children.
+     *
+     * Calculate the minimum number of cameras needed to monitor all nodes of the tree.
+     *
+     * Apply a recusion function dfs.
+     * Return 0 if it's a leaf.
+     * Return 1 if it's a parent of a leaf, with a camera on this node.
+     * Return 2 if it's coverd, without a camera on this node.
+     *
+     * For each node,
+     * if it has a child, which is leaf (node 0), then it needs camera.
+     * if it has a child, which is the parent of a leaf (node 1), then it's covered.
+     *
+     * If it needs camera, then res++ and we return 1.
+     * If it's covered, we return 2.
+     * Otherwise, we return 0.
+     * @return: 需要摄像头的数量
+     * @author: kami
+     * @关键词： 贪心算法
+     * @date: 2021/5/17 9:27
+     */
+    int res = 0;
+    public int minCameraCover(TreeNode root) {
+        return (dfs(root) < 1 ? 1 : 0) + res;
+    }
+
+    public int dfs(TreeNode root) {
+        if (root == null) {
+            return 2;
+        }
+        int left = dfs(root.left), right = dfs(root.right);
+        if (left == 0 || right == 0) {
+            res++;
+            return 1;
+        }
+        return left == 1 || right == 1 ? 2 : 0;
+    }
 
     public static void main(String[] args) {
         int[] nu = {1,2,3,4,5,6,1};
