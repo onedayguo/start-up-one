@@ -65,6 +65,38 @@ public class Dynamic {
     }
 
     /**
+     * @description: 123. Best Time to Buy and Sell Stock III
+     * You are given an array prices where prices[i] is the price of a given stock on the ith day.
+     * Find the maximum profit you can achieve. You may complete at most two transactions.
+     * Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before
+     * you buy again).
+     * @return: 两次交易的最大收益
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/18 16:56
+     */
+    public static int maxProfit_new(int[] prices) {
+        int buy1 = prices[0], buy2 = prices[0];
+        int sell1 = 0, sell2 = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            // 第一笔交易利润
+            buy1 = Math.min(buy1, prices[i]);
+            sell1 = Math.max(sell1, prices[i] - buy1);
+            // 第一笔利润整合到第二笔的成本
+            buy2 = Math.min(buy2, prices[i] - sell1);
+            sell2 = Math.max(sell2, prices[i] - buy2);
+        }
+
+        return sell2;
+    }
+
+    public static void main(String[] args) {
+        int i = maxProfit_new(new int[]{3, 3, 5, 0, 0, 3, 1, 4});
+        System.out.println(i);
+    }
+
+    /**
      * @description: 198. House Robber
      * You are a professional robber planning to rob houses along a street. Each house has a certain amount of money
      * stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system
@@ -824,8 +856,8 @@ public class Dynamic {
                         curM++;
                         curN++;
                     }
-                }else {
-                // 左下右上
+                } else {
+                    // 左下右上
                     if (curN == 0 || grid[curM][curN - 1] == 1) {
                         break;
                     } else {
@@ -834,7 +866,7 @@ public class Dynamic {
                     }
                 }
             }
-            if (curM == m){
+            if (curM == m) {
                 res[i] = curN;
             }
         }
@@ -842,13 +874,6 @@ public class Dynamic {
 
     }
 
-    public static void main(String[] args) {
-//        String cost = "10.00";
-//        int end = cost.indexOf('1');
-//        System.out.println(cost.substring(0,end==-1?cost.length():end));
-        System.out.println(Integer.valueOf(""));
-        ;
-    }
 
     /**
      * @discription 递归实现，LeetCode超时
