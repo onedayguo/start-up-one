@@ -2127,10 +2127,56 @@ public class LeetCodeCompetition {
         }
         return left == 1 || right == 1 ? 2 : 0;
     }
+    /**
+     * @description: Longest String Chain
+     * Given a list of words, each word consists of English lowercase letters.
+     * Let's say word1 is a predecessor of word2 if and only if we can add exactly one letter
+     * anywhere in word1 to make it equal to word2. For example, "abc" is a predecessor of "abac".
+     * A word chain is a sequence of words [word_1, word_2, ..., word_k] with k >= 1, where word_1
+     * is a predecessor of word_2, word_2 is a predecessor of word_3, and so on.
+     * Return the longest possible length of a word chain with words chosen from the given list of words.
+     * @return: 最长的字符串链
+     * @author: kami
+     * @关键词： 动态规划
+     * @date: 2021/5/18 8:57
+     */
+    public static int longestStrChain(String[] words) {
+        // key: 所有字符串去掉一个字符 value:出现的次数
+        Map<String, Integer> dp = new HashMap<>();
+        Arrays.sort(words, Comparator.comparingInt(String::length));
+        int res = 0;
+        for (String word : words) {
+            int best = 0;
+            for (int i = 0; i < word.length(); ++i) {
+                String prev = word.substring(0, i) + word.substring(i + 1);
+                best = Math.max(best, dp.getOrDefault(prev, 0) + 1);
+            }
+            dp.put(word, best);
+            res = Math.max(res, best);
+        }
+        return res;
+    }
+    private static boolean isPredecessor(String str1,String str2){
+        int len1 = str1.length(),len2 = str2.length();
+        if (len1 - len2 != -1){
+            return false;
+        }
+        int index1 = 0;
+        for (int i = 0; i < len2 && index1 < len1; i++) {
+            if (index1 - i > 1){
+                return false;
+            }
+            if (str2.charAt(i) != str1.charAt(index1)){
+                i++;
+            }
+            index1++;
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         int[] nu = {1,2,3,4,5,6,1};
 
-        System.out.println(maxScore(nu,3));
+        System.out.println(isPredecessor("abc","abcdd"));
     }
 }
