@@ -2,6 +2,7 @@ package interview;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -142,11 +143,38 @@ public class MS {
         }
     }
 
+    static Stack<Integer> stk = new Stack<>();
+    static List<List<Integer>> res = new LinkedList<>();
+    static List<Integer> cur = new LinkedList<>();
+    private static void df(int n,int[] nums){
+        if (n == nums.length){
+            Stack<Integer> clone = (Stack<Integer>)stk.clone();
+            while (!clone.isEmpty()){
+                cur.add(clone.pop());
+            }
+            res.add(new LinkedList<>(cur));
+            return;
+        }
+        stk.push(nums[n]);
+        df(n+1,nums);
+        cur.add(stk.pop());
+        if (!stk.isEmpty()){
+            int a = stk.pop();
+            cur.add(a);
+            df(n,nums);
+            stk.push(a);
+            cur.remove(cur.size()-1);
+        }
+    }
+
     public static void main(String[] args) {
         MS ms = new MS();
         int[] in = {1,2,3};
         ms.fun(0,in,new Stack<>(),new LinkedList<>());
         ms.resStack.forEach(e->e.forEach(System.out::print));
+
+        df(0,new int[]{1,2,3});
+        System.out.println(res);
     }
 
     // helloworld
