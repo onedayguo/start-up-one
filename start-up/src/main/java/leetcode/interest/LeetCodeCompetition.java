@@ -2174,6 +2174,56 @@ public class LeetCodeCompetition {
         }
         return true;
     }
+    /**
+     * @description: Find Duplicate File in System
+     * Given a list paths of directory info, including the directory path, and all the files with contents
+     * in this directory, return all the duplicate files in the file system in terms of their paths.
+     * You may return the answer in any order.
+     *
+     * A group of duplicate files consists of at least two files that have the same content.
+     *
+     * A single directory info string in the input list has the following format:
+     *
+     * "root/d1/d2/.../dm f1.txt(f1_content) f2.txt(f2_content) ... fn.txt(fn_content)"
+     * It means there are n files (f1.txt, f2.txt ... fn.txt) with content (f1_content, f2_content ... fn_content)
+     * respectively in the directory "root/d1/d2/.../dm". Note that n >= 1 and m >= 0. If m = 0, it means the
+     * directory is just the root directory.
+     *
+     * The output is a list of groups of duplicate file paths. For each group, it contains all the file paths of
+     * the files that have the same content. A file path is a string that has the following format:
+     *
+     * "directory_path/file_name.txt"
+     * @return: 所有重复文件的路径
+     * @author: kami
+     * @关键词：
+     * @date: 2021/5/18 23:17
+     */
+    public List<List<String>> findDuplicate(String[] paths) {
+        // key:文件内容，value:文件路径
+        Map<String,List<String>> contentDirMap = new HashMap<>();
+        for (String str:paths) {
+            String[] s = str.split(" ");
+            if (s.length > 1){
+                String dir = s[0]+"/";
+                for (int i = 1; i < s.length; i++) {
+                    int index = s[i].indexOf("(");
+                    String fileName = s[i].substring(0,index);
+                    String content = s[i].substring(index,s[i].length()-1);
+                    List<String> orDefault = contentDirMap.getOrDefault(content, new LinkedList<>());
+                    orDefault.add(dir+fileName);
+                    contentDirMap.put(content,orDefault);
+                }
+            }
+        }
+        List<List<String>> res = new LinkedList<>();
+        Set<Map.Entry<String, List<String>>> entries = contentDirMap.entrySet();
+        for (Map.Entry<String, List<String>> entry:contentDirMap.entrySet()) {
+            if (entry.getValue().size() > 1){
+                res.add(entry.getValue());
+            }
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
         int[] nu = {1,2,3,4,5,6,1};
