@@ -1,7 +1,5 @@
 package interview;
 
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * @Description: 面试中被问到的问题
  * @Author: kami

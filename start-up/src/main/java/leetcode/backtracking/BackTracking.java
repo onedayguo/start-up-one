@@ -184,7 +184,12 @@ public class BackTracking {
         return res;
     }
     public boolean validate(String s){
-        if (s.length() > 3 || s.length() == 0 || (s.charAt(0) == '0' && s.length()>1) || Integer.parseInt(s) > 255) return false;
+        if (s.length() > 3
+                || s.length() == 0
+                || (s.charAt(0) == '0' && s.length()>1)
+                || Integer.parseInt(s) > 255) {
+            return false;
+        }
         return true;
     }
 
