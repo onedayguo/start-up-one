@@ -16,6 +16,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
  * @Description: LeetCode最受欢迎100题
@@ -83,6 +84,20 @@ public class LeetCodeTop100 {
         }
 
         return dp[n - 1];
+    }
+    /**
+     * @description: 140. Word Break II
+     * Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence
+     * where each word is a valid dictionary word. Return all such possible sentences in any order.
+     *
+     * Note that the same word in the dictionary may be reused multiple times in the segmentation.
+     * @return: TODO
+     * @author: kami
+     * @关键词：TODO
+     * @date: 2021/5/19 9:04
+     */
+    public List<String> wordBreak3(String s, List<String> wordDict) {
+        return null;
     }
 
     static class TreeNode {
