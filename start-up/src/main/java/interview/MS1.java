@@ -37,16 +37,19 @@ public class MS1 {
     private static void dfWords(List<String> curRes, Map<Character, List<String>> wordMap, Character lastWord) {
         List<String> exist = wordMap.getOrDefault(lastWord, null);
         if (exist != null) {
+            boolean allUsed = true;
             for (String word : exist) {
                 if (!curRes.contains(word)) {
+                    allUsed = false;
                     curRes.add(word);
                     dfWords(curRes, wordMap, word.charAt(3));
                     curRes.remove(curRes.size() - 1);
                 }
             }
-            result.add(new ArrayList<>(curRes));
+            if (allUsed){
+                result.add(new ArrayList<>(curRes));
+            }
         }
-
     }
 
     public static void main(String[] args) {
