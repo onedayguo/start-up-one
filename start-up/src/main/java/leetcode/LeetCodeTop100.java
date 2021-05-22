@@ -91,13 +91,62 @@ public class LeetCodeTop100 {
      * where each word is a valid dictionary word. Return all such possible sentences in any order.
      *
      * Note that the same word in the dictionary may be reused multiple times in the segmentation.
-     * @return: TODO
+     * @return: 组成的单词列表
      * @author: kami
-     * @关键词：TODO
+     * @关键词： 字典树
      * @date: 2021/5/19 9:04
      */
-    public List<String> wordBreak3(String s, List<String> wordDict) {
-        return null;
+    public List<String> wordBreak2(String s, List<String> wordDict) {
+        TrieNode root = buildTrie(wordDict);
+        // memorization
+        HashMap<String, List<String>> map = new HashMap<>();
+        return backtrack(s, map, root);
+    }
+
+    private List<String> backtrack(String s, HashMap<String, List<String>> map, TrieNode root) {
+        if (map.containsKey(s)) return map.get(s);
+        List<String> res = new ArrayList<>();
+        if (s.isEmpty()) {
+            res.add(s);
+            map.put(s, res);
+            return res;
+        }
+        char[] chars = s.toCharArray();
+        TrieNode curr = root;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (curr.next[c - 'a'] == null) break;
+            curr = curr.next[c - 'a'];
+            if (curr.word != null) {
+                List<String> tmp = backtrack(s.substring(curr.word.length()), map, root);
+                for (String tmps : tmp) {
+                    res.add(curr.word + (tmps.isEmpty() ? "" : (" " + tmps)));
+                }
+            }
+        }
+        map.put(s, res);
+        return res;
+    }
+
+    static class TrieNode {
+        String word;
+        TrieNode[] next = new TrieNode[26];
+    }
+
+    public TrieNode buildTrie(List<String> words) {
+        TrieNode root = new TrieNode();
+        for (String w : words) {
+            TrieNode p = root;
+            for (char c : w.toCharArray()) {
+                int i = c - 'a';
+                if (p.next[i] == null) {
+                    p.next[i] = new TrieNode();
+                }
+                p = p.next[i];
+            }
+            p.word = w;
+        }
+        return root;
     }
 
     static class TreeNode {
@@ -1282,8 +1331,12 @@ public class LeetCodeTop100 {
             int levelNum = queue.size();
             List<Integer> subList = new LinkedList<>();
             for (int i = 0; i < levelNum; i++) {
-                if (queue.peek().left != null) queue.offer(queue.peek().left);
-                if (queue.peek().right != null) queue.offer(queue.peek().right);
+                if (queue.peek().left != null) {
+                    queue.offer(queue.peek().left);
+                }
+                if (queue.peek().right != null) {
+                    queue.offer(queue.peek().right);
+                }
                 subList.add(queue.poll().val);
             }
             wrapList.add(subList);
