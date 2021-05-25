@@ -2,8 +2,10 @@ package leetcode.interest;
 
 import leetcode.LeetCodeTop100;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -108,5 +110,41 @@ public class LeetCodeCompetition2021 {
             wrapList.add(subList);
         }
         return wrapList;
+    }
+    /**
+     * @description: Find and Replace Pattern
+     * Given a list of strings words and a string pattern, return a list of words[i] that match pattern.
+     * You may return the answer in any order.
+     *
+     * A word matches the pattern if there exists a permutation of letters p so that after replacing every
+     * letter x in the pattern with p(x), we get the desired word.
+     *
+     * Recall that a permutation of letters is a bijection from letters to letters: every letter maps to another
+     * letter, and no two letters map to the same letter.
+     * @return: 符合格式的单词列表
+     * @author: kami
+     * @关键词： 匹配
+     * @date: 2021/5/22 15:39
+     */
+    public List<String> findAndReplacePattern(String[] words, String pattern) {
+        int[] p = F(pattern);
+        List<String> res = new ArrayList<String>();
+        for (String w : words) {
+            if (Arrays.equals(F(w), p)) {
+                res.add(w);
+            }
+        }
+        return res;
+    }
+
+    public int[] F(String w) {
+        HashMap<Character, Integer> m = new HashMap<>();
+        int n = w.length();
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            m.putIfAbsent(w.charAt(i), m.size());
+            res[i] = m.get(w.charAt(i));
+        }
+        return res;
     }
 }
