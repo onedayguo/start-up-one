@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * @Description: 周挑战
@@ -111,14 +114,15 @@ public class LeetCodeCompetition2021 {
         }
         return wrapList;
     }
+
     /**
      * @description: Find and Replace Pattern
      * Given a list of strings words and a string pattern, return a list of words[i] that match pattern.
      * You may return the answer in any order.
-     *
+     * <p>
      * A word matches the pattern if there exists a permutation of letters p so that after replacing every
      * letter x in the pattern with p(x), we get the desired word.
-     *
+     * <p>
      * Recall that a permutation of letters is a bijection from letters to letters: every letter maps to another
      * letter, and no two letters map to the same letter.
      * @return: 符合格式的单词列表
@@ -146,5 +150,37 @@ public class LeetCodeCompetition2021 {
             res[i] = m.get(w.charAt(i));
         }
         return res;
+    }
+
+    /**
+     * @description: Maximum Erasure Value
+     * You are given an array of positive integers nums and want to erase a subarray containing unique elements.
+     * The score you get by erasing the subarray is equal to the sum of its elements.
+     * <p>
+     * Return the maximum score you can get by erasing exactly one subarray.
+     * <p>
+     * An array b is called to be a subarray of a if it forms a contiguous subsequence of a, that is, if it is equal
+     * to a[l],a[l+1],...,a[r] for some (l,r).
+     * @return: 最大唯一子串的数字和
+     * @author: kami
+     * @关键词： 滑动窗口，左右指针
+     * @date: 2021/5/29 10:00
+     */
+    public int maximumUniqueSubarray(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        int sum = 0, ans = 0;
+        int j = 0;
+        int i = 0;
+        while (i < nums.length && j < nums.length) {
+            if (!set.contains(nums[j])) {
+                sum += nums[j];
+                ans = Math.max(sum, ans);
+                set.add(nums[j++]);
+            } else {
+                sum = sum - nums[i];
+                set.remove(nums[i++]);
+            }
+        }
+        return ans;
     }
 }
