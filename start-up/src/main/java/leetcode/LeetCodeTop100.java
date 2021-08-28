@@ -1025,6 +1025,38 @@ public class LeetCodeTop100 {
     }
 
     /**
+     * @description: 113. Path Sum II
+     * Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the
+     * node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
+     * A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children
+     * @return: 节点之和等于目标值的所有路径
+     * @author: kami
+     * @关键词： 递归
+     * @date: 2021/8/28 11:38
+     */
+    public List<List<Integer>> pathSum2(TreeNode root, int targetSum) {
+        List<List<Integer>> res = new ArrayList<>();
+        helperPathSum(root,targetSum,res,new ArrayList<>());
+        return res;
+    }
+
+    private void helperPathSum(TreeNode curNode,int curTargetSum,List<List<Integer>> res,List<Integer> curList){
+        if (curNode == null){
+            return;
+        }
+
+        curList.add(curNode.val);
+
+        if (curNode.left == null && curNode.right == null && curNode.val == curTargetSum){
+            res.add(curList);
+            return;
+        }
+
+        helperPathSum(curNode.left,curTargetSum-curNode.val,res,new ArrayList<>(curList));
+        helperPathSum(curNode.right,curTargetSum-curNode.val,res,new ArrayList<>(curList));
+    }
+
+    /**
      * @description: 141. Linked List Cycle
      * Given a linked list, determine if it has a cycle in it.
      * To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed)

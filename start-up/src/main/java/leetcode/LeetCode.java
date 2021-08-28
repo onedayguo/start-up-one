@@ -25,7 +25,7 @@ public class LeetCode {
     public int[] twoSum2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            if (!map.containsKey(nums[i])){
+            if (!map.containsKey(nums[i])) {
                 map.put(nums[i], i);
             }
         }
@@ -100,10 +100,10 @@ public class LeetCode {
     /**
      * @description: 2.Add Two Numbers
      * 思路：1.新建一个虚拟头结点，遍历量表1，2，计算当前节点之和，计算个位数字，放在尾结点后
-     *      2.总和 除以10取整拿到进位，再累加当前节点之和，取个位数字放在尾结点后
-     *      3.循环第2步，直到链表1,2都遍历完
-     *      4.计算剩余进位，如果有，放在尾结点
-     *      5.返回虚拟头结点的下一节点
+     * 2.总和 除以10取整拿到进位，再累加当前节点之和，取个位数字放在尾结点后
+     * 3.循环第2步，直到链表1,2都遍历完
+     * 4.计算剩余进位，如果有，放在尾结点
+     * 5.返回虚拟头结点的下一节点
      * @return:
      * @auther: kami
      * @date: 2020/3/29 22:20
@@ -137,9 +137,9 @@ public class LeetCode {
      * @description: 3.Longest Substring Without Repeating Characters 给定字符串找出其中最长的无重复的子字符串的长度
      * 暴力破解， O(n^3)
      * 思路：1.第一重for循环遍历字符串
-     *      2.第二重for循环遍历从当前字符往后计算是否有重复字符串，如果没有重复则更新 最大长度
+     * 2.第二重for循环遍历从当前字符往后计算是否有重复字符串，如果没有重复则更新 最大长度
      * 优化：1.第二重循环中，可以改为如果发现有重复的字符再更新 最大长度，避免每次没有重复字符都要更新
-     *      2.时间复杂度过高，通不过LeetCode
+     * 2.时间复杂度过高，通不过LeetCode
      * @return:
      * @auther: kami
      * @date: 2020/3/29 22:47
@@ -148,8 +148,8 @@ public class LeetCode {
         int n = s.length();//获取字符串长度
         int ans = 0;        //最长不重复字符串的长度
         for (int i = 0; i < n; i++)
-            for (int j = i + 1; j <= n; j++){
-                if (allUnique(s, i, j)){
+            for (int j = i + 1; j <= n; j++) {
+                if (allUnique(s, i, j)) {
                     ans = Math.max(ans, j - i);
 //                    break;
                 }
@@ -177,12 +177,12 @@ public class LeetCode {
     /**
      * @description: 3.Longest Substring Without Repeating Characters
      * 思路：Sliding Window，这个思路更容易理解，和人思考的过程类似
-     *     1.新建一个Set集合用于存储已经遍历的字符
-     *     2.维护两个下标，一个是开始下标，一个是结束下标
-     *          1.判断当前set集合是否包含end节点的值
-     *              1.如果不包含，则把当前节点值加入set，更新最大长度
-     *              2.如果包含，则把开始节点值从set集合中移除
-     *     3.返回最大长度
+     * 1.新建一个Set集合用于存储已经遍历的字符
+     * 2.维护两个下标，一个是开始下标，一个是结束下标
+     * 1.判断当前set集合是否包含end节点的值
+     * 1.如果不包含，则把当前节点值加入set，更新最大长度
+     * 2.如果包含，则把开始节点值从set集合中移除
+     * 3.返回最大长度
      * @return:
      * @auther: kami
      * @date: 2020/3/29 23:04
@@ -331,7 +331,9 @@ public class LeetCode {
     //leetcode 8   "-42" -> 42  "kami 1235" -> 0
     public static int myAtoi(String str) {
         str = str.trim();
-        if (str == "" || str == "+" || str == "-" || Character.isLetter(str.charAt(0))) return 0;
+        if ("".equals(str) || "+".equals(str) || "-".equals(str) || Character.isLetter(str.charAt(0))) {
+            return 0;
+        }
         int length = str.length();
         int indexEnd = 0;
         boolean firstPos = false, firstNeg = false;
@@ -374,6 +376,7 @@ public class LeetCode {
     }
 
     //leetcode 10 匹配字符串
+
     /**
      * some examples:
      * isMatch{"aa","a"}   false
@@ -391,13 +394,13 @@ public class LeetCode {
      * 1. p.charAt(j) == s,charAt(i)  更新 dp[i][j] = dp[i-1][j-1]跟前一级保持同步         如 "a","a"
      * 2. if p.charAt(j) == '.'      更新 dp[i][j] = dp[i-1][j-1]                             "a", "."
      * 3. if p.chharAt(j) == '*',较为复杂                                                     "a", "*"
-     *      3.1 if p.charAt(j-1) != s.charAt(i) 更新 dp[i][j] = dp[i][j-2]  a* counts empty      "a","b*"
-     *      3.2 if p.charAt(j-1) == s.charAt(i) || p.charAt(j-1) == '.'                           "a","a*" 或者 "a", ".*"
-     *          1.dp[i][j] = dp[i][j-1] a* counts single a                                          三者中只要有一个是true即可
-     *          2.dp[i][j] = dp[i-1][j] a* counts multiple a
-     *          3.dp[i][j] = dp[i][j-2] a* counts empty
+     * 3.1 if p.charAt(j-1) != s.charAt(i) 更新 dp[i][j] = dp[i][j-2]  a* counts empty      "a","b*"
+     * 3.2 if p.charAt(j-1) == s.charAt(i) || p.charAt(j-1) == '.'                           "a","a*" 或者 "a", ".*"
+     * 1.dp[i][j] = dp[i][j-1] a* counts single a                                          三者中只要有一个是true即可
+     * 2.dp[i][j] = dp[i-1][j] a* counts multiple a
+     * 3.dp[i][j] = dp[i][j-2] a* counts empty
      */
-    public boolean isMatch (String s, String p){
+    public boolean isMatch(String s, String p) {
         boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
         dp[s.length()][p.length()] = true;
 
@@ -416,26 +419,26 @@ public class LeetCode {
         return dp[0][0];
     }
 
-    public static boolean isMatch1 (String s, String p){
+    public static boolean isMatch1(String s, String p) {
         if (s == null || p == null) return false;
-        boolean[][] dp = new boolean[s.length()+1][p.length()+1];
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
         //预处理
         dp[0][0] = true;
-        for (int i = 0; i < p.length() ; i++) {
+        for (int i = 0; i < p.length(); i++) {
             // "aab" ,"c*aab"
-            if (p.charAt(i) == '*' && dp[0][i-1]) {
-                dp[0][i+1] = true;
+            if (p.charAt(i) == '*' && dp[0][i - 1]) {
+                dp[0][i + 1] = true;
             }
         }
         //条件分析
-        for (int i = 0; i < s.length() ; i++) {
-            for (int j = 0; j < p.length() ; j++) {
-                if (p.charAt(j) == s.charAt(i))  dp[i+1][j+1] = dp[i][j];
-                if (p.charAt(j) == '.')  dp[i+1][j+1] = dp[i][j];
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == s.charAt(i)) dp[i + 1][j + 1] = dp[i][j];
+                if (p.charAt(j) == '.') dp[i + 1][j + 1] = dp[i][j];
                 if (p.charAt(j) == '*') {
-                    if (p.charAt(j-1) != s.charAt(i) && p.charAt(j-1) != '.')
-                        dp[i+1][j+1] = dp[i+1][j-1];
-                    else dp[i+1][j+1] = (dp[i+1][j] || dp[i][j+1] || dp[i+1][j-1]);
+                    if (p.charAt(j - 1) != s.charAt(i) && p.charAt(j - 1) != '.')
+                        dp[i + 1][j + 1] = dp[i + 1][j - 1];
+                    else dp[i + 1][j + 1] = (dp[i + 1][j] || dp[i][j + 1] || dp[i + 1][j - 1]);
                 }
             }
         }
@@ -448,20 +451,21 @@ public class LeetCode {
         if (height == null) return 0;
         int max = 0;
         int len = height.length;
-        for (int i = 0; i <len -1 ; i++) {
-            for (int j = i+1; j < len ; j++) {
-                int minHeight = Math.min(height[i],height[j]);
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = i + 1; j < len; j++) {
+                int minHeight = Math.min(height[i], height[j]);
                 max = Math.max((j - i) * minHeight, max);
             }
         }
         return max;
     }
-        // 双指针， start,end
-    public int maxArea1(int[] height){
-        int start = 0,end = height.length-1;
+
+    // 双指针， start,end
+    public int maxArea1(int[] height) {
+        int start = 0, end = height.length - 1;
         int max = 0;
-        while (start < end){
-            int tempArea = (end-start) * Math.min(height[start],height[end]);
+        while (start < end) {
+            int tempArea = (end - start) * Math.min(height[start], height[end]);
             if (tempArea > max) {
                 max = tempArea;
             }
@@ -473,11 +477,11 @@ public class LeetCode {
 
     //leetcode 12 Integer to Roman
     public String intToRoman(int num) { //2543
-        int[] N = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
-        String[] S = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] N = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] S = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < N.length ; i++) {
-            while (num >= N[i]){
+        for (int i = 0; i < N.length; i++) {
+            while (num >= N[i]) {
                 stringBuilder.append(S[i]);
                 num -= N[i];
             }
@@ -489,21 +493,20 @@ public class LeetCode {
     //leetcode 13 Roman to Integer "MCMXCIV" -> 1994
     public int romanToInt(String s) {
         //int[] N = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
-        Map<Character,Integer> map = new HashMap<>();
-        map.put('M',1000);
-        map.put('D',500);
-        map.put('C',100);
-        map.put('L',50);
-        map.put('X',10);
-        map.put('V',5);
-        map.put('I',1);
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('M', 1000);
+        map.put('D', 500);
+        map.put('C', 100);
+        map.put('L', 50);
+        map.put('X', 10);
+        map.put('V', 5);
+        map.put('I', 1);
         int result = 0;
-        for (int i = 0; i <s.length(); i++) {
-            if ( i+1 < s.length() &&  map.get(s.charAt(i)) < map.get(s.charAt(i+1)) ){
-                result += (map.get(s.charAt(i+1)) - map.get(s.charAt(i)));
+        for (int i = 0; i < s.length(); i++) {
+            if (i + 1 < s.length() && map.get(s.charAt(i)) < map.get(s.charAt(i + 1))) {
+                result += (map.get(s.charAt(i + 1)) - map.get(s.charAt(i)));
                 i++;
-            }
-            else result += map.get(s.charAt(i));
+            } else result += map.get(s.charAt(i));
         }
 
         return result;
@@ -526,15 +529,15 @@ public class LeetCode {
     public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums);//对原数组排序
-        for (int i = 0; i <nums.length ; i++) {
+        for (int i = 0; i < nums.length; i++) {
             //定义两个指针
             int targt = -nums[i];
-            int left = i+1,right = nums.length-1;
-            while (left < right){
+            int left = i + 1, right = nums.length - 1;
+            while (left < right) {
                 if (nums[left] + nums[right] > targt) right--;
                 else if (nums[left] + nums[right] < targt) left++;
                 else {
-                    List<Integer> list = Arrays.asList(nums[i],nums[left++],nums[right--]);
+                    List<Integer> list = Arrays.asList(nums[i], nums[left++], nums[right--]);
                     if (!result.contains(list)) result.add(list);
                 }
             }
