@@ -1,5 +1,7 @@
 package leetcode.time;
 
+import java.util.Arrays;
+
 /**
  * @Description: 8月份刷题
  * @Author: kami
@@ -53,5 +55,46 @@ public class August2021 {
                 }
             }
         }
+    }
+
+    /**
+     * @description: 135. Candy
+     * There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.
+     *
+     * You are giving candies to these children subjected to the following requirements:
+     *
+     * Each child must have at least one candy.
+     * Children with a higher rating get more candies than their neighbors.
+     * Return the minimum number of candies you need to have to distribute the candies to the children.
+     * @return: 最少需要的糖果数量
+     * @author: kami
+     * @关键词： 记录前两个值
+     * @date: 2021/8/29 8:59
+     */
+    public int candy(int[] ratings) {
+        int size=ratings.length;
+        if(size<=1) {
+            return size;
+        }
+        int[] num = new int[size];
+        Arrays.fill(num,1);
+        for (int i = 1; i < size; i++)
+        {
+            if(ratings[i]>ratings[i-1]) {
+                num[i]=num[i-1]+1;
+            }
+        }
+        for (int i= size-1; i>0 ; i--)
+        {
+            if(ratings[i-1]>ratings[i]) {
+                num[i-1]=Math.max(num[i]+1,num[i-1]);
+            }
+        }
+        int result=0;
+        for (int i = 0; i < size; i++)
+        {
+            result+=num[i];
+        }
+        return result;
     }
 }
