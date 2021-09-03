@@ -38,4 +38,30 @@ public class September2021 {
         }
         return nums[left];
     }
+    /**
+     * @description: 137. Single Number II
+     * Given an integer array nums where every element appears three times except for one, which appears
+     * exactly once. Find the single element and return it.
+     * You must implement a solution with a linear runtime complexity and use only constant extra space.
+     * @return: 只出现一次的数字
+     * @author: kami
+     * @关键词： 时间O（n），空间O（1）
+     * @date: 2021/9/3 8:11
+     */
+    public int singleNumber(int[] nums) {
+        int ans = 0;
+        for(int i = 0; i < 32; i++) {
+            int sum = 0;
+            for (int num : nums) {
+                if (((num >> i) & 1) == 1) {
+                    sum++;
+                    sum %= 3;
+                }
+            }
+            if(sum != 0) {
+                ans |= sum << i;
+            }
+        }
+        return ans;
+    }
 }
