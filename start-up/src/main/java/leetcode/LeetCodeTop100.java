@@ -71,7 +71,7 @@ public class LeetCodeTop100 {
             return false;
         }
         int n = s.length();
-        // dp[i] represents whether s[0...i] can be formed by dict
+        // dp[i] 表示 s[0...i]是否可以被拼成
         boolean[] dp = new boolean[n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j <= i; j++) {
