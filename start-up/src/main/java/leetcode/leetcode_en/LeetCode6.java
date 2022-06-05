@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.leetcode_en;
 
 /**
  * @Description: leetcode第6个类

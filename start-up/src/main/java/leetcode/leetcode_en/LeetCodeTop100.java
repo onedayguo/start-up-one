@@ -1,6 +1,5 @@
-package leetcode;
+package leetcode.leetcode_en;
 
-import java.io.PrintStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +14,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
  * @Description: LeetCode最受欢迎100题

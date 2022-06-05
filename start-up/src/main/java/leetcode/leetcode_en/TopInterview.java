@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.leetcode_en;
 
 import org.w3c.dom.ranges.Range;
 
