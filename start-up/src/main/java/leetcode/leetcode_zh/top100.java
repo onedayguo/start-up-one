@@ -21,8 +21,30 @@ public class top100 {
         return isValidBST(root.right);
     }
 
+    /**
+     * 169. 多数元素 简单
+     * @param nums
+     * @return
+     */
+    public int majorityElement(int[] nums) {
+        int cnt = 1;
+        int preValue = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == preValue) {
+                cnt++;
+            } else {
+                if (cnt == 1) {
+                    preValue = nums[i];
+                } else {
+                    cnt--;
+                }
+            }
+        }
+        return preValue;
+    }
+
     public static void main(String[] args) {
-        TreeNode node = new TreeNode(1, new TreeNode(1), null);
+        TreeNode node = new TreeNode(0, null, null);
         top100 tree = new top100();
         boolean is = tree.isValidBST(node);
         System.out.println(is);
