@@ -1,6 +1,11 @@
 package leetcode.leetcode_zh;
 
 
+import leetcode.leetcode_en.LeetCode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class top100 {
     long pre = Long.MIN_VALUE;
 
